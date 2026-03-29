@@ -1,0 +1,180 @@
+/* ══════════════════════════════════════════
+   HERO (Home)
+══════════════════════════════════════════ */
+.hero{
+  min-height:calc(100vh - 68px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:4rem 2rem;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Mandala SVG BG */
+.mandala-bg{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:700px;height:700px;
+  opacity:0.06;
+  animation:spin-slow 80s linear infinite;
+  pointer-events:none;
+}
+@keyframes spin-slow{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+.hero-pre{
+  font-family:'Tiro Devanagari Sanskrit',serif;
+  font-size:4.5rem;
+  color:var(--gold);
+  line-height:1;
+  animation:pulse-glow 3s ease-in-out infinite;
+  margin-bottom:1.2rem;
+}
+.hero-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(2.6rem,7vw,5rem);
+  font-weight:700;
+  color:var(--cream);
+  letter-spacing:0.08em;
+  line-height:1.15;
+}
+.hero-title .accent{color:var(--gold-lt);}
+.hero-sub{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:1.2rem;
+  color:rgba(250,240,220,0.6);
+  margin:1rem 0 2.5rem;
+  max-width:560px;
+  letter-spacing:0.03em;
+}
+.hero-cta{
+  display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+}
+
+/* ══════════════════════════════════════════
+   FACTS CARDS (Home)
+══════════════════════════════════════════ */
+.facts-strip{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;
+  margin-top:2rem;
+}
+.fact-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:2rem 1.75rem;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.3s,border-color 0.3s;
+}
+.fact-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.fact-card:hover{transform:translateY(-4px);border-color:rgba(212,160,23,0.6);}
+.fact-icon{
+  font-family:'Tiro Devanagari Sanskrit',serif;
+  font-size:2.2rem;
+  color:var(--gold);
+  margin-bottom:0.75rem;
+  display:block;
+}
+.fact-card h3{
+  font-family:'Cinzel',serif;
+  font-size:0.95rem;
+  letter-spacing:0.12em;
+  color:var(--gold-pale);
+  margin-bottom:0.6rem;
+  text-transform:uppercase;
+}
+.fact-card p{
+  font-size:0.95rem;
+  color:rgba(250,240,220,0.7);
+  line-height:1.65;
+}
+
+/* ══════════════════════════════════════════
+   TEXTS TIMELINE
+══════════════════════════════════════════ */
+.timeline{
+  position:relative;
+  padding-left:2rem;
+  border-left:1px solid var(--border);
+}
+.timeline-item{
+  position:relative;
+  padding:0 0 2.5rem 2rem;
+}
+.timeline-item::before{
+  content:'';
+  position:absolute;left:-6px;top:6px;
+  width:11px;height:11px;
+  background:var(--gold);
+  border-radius:50%;
+  box-shadow:0 0 10px rgba(212,160,23,0.5);
+}
+.timeline-year{
+  font-family:'Cinzel',serif;
+  font-size:0.75rem;
+  letter-spacing:0.2em;
+  color:var(--saffron);
+  text-transform:uppercase;
+  margin-bottom:0.3rem;
+}
+.timeline-item h3{
+  font-family:'Cinzel',serif;
+  font-size:1.15rem;
+  color:var(--gold-pale);
+  margin-bottom:0.4rem;
+}
+.timeline-item p{
+  font-size:0.97rem;
+  color:rgba(250,240,220,0.65);
+  max-width:680px;
+}
+
+/* ══════════════════════════════════════════
+   DEITY CARDS
+══════════════════════════════════════════ */
+.deity-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.25rem;
+}
+.deity-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  cursor:default;
+  transition:all 0.3s;
+  position:relative;overflow:hidden;
+}
+.deity-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,160,23,0.05),transparent);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.deity-card:hover::after{opacity:1;}
+.deity-card:hover{transform:translateY(-3px);border-color:rgba(212,160,23,0.5);}
+.deity-symbol{
+  font-family:'Tiro Devanagari Sanskrit',serif;
+  font-size:3rem;
+  color:var(--gold);
+  display:block;
+  margin-bottom:0.75rem;
+}
+.deity-card h3{
+  font-family:'Cinzel',serif;
+  font-size:0.95rem;
+  letter-spacing:0.12em;
+  color:var(--gold-pale);
+  margin-bottom:0.5rem;
+}
+.deity-card p{font-size:0.9rem;color:rgba(250,240,220,0.6);line-height:1.6;}

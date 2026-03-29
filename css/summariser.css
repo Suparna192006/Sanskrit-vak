@@ -1,0 +1,86 @@
+/* ═══════════════════════════════════════
+   VOICE DETECTOR BUTTON STYLING
+═══════════════════════════════════════ */
+
+/* BASE BUTTON */
+.svd-btn {
+  padding: 0.85rem 1.6rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
+}
+
+/* 🎙 RECORD BUTTON */
+.svd-btn-record {
+  background: linear-gradient(135deg, #8B1A1A, #D4A017);
+  color: #FAF0DC;
+  box-shadow: 0 4px 15px rgba(212,160,23,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.svd-btn-record::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #D4A017, #8B1A1A);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.svd-btn-record:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(212,160,23,0.7);
+}
+
+.svd-btn-record:hover::before {
+  opacity: 1;
+}
+
+/* 🔴 RECORDING STATE */
+.svd-btn-record.recording {
+  background: linear-gradient(135deg, #ff3b3b, #8B0000);
+  box-shadow: 0 0 20px rgba(255,0,0,0.6), 0 0 40px rgba(255,0,0,0.3);
+  border-color: rgba(255, 59, 59, 0.4);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,0,0,0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,0,0,0.8), 0 0 50px rgba(255,0,0,0.5); }
+  100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,0,0,0.6); }
+}
+
+/* 📊 ANALYSE BUTTON */
+.svd-btn-analyse {
+  background: linear-gradient(135deg, #D4A017, #E07B39);
+  color: #1A0A00;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.svd-btn-analyse:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 18px rgba(224,123,57,0.6), 0 0 30px rgba(224,123,57,0.3);
+}
+
+/* 🗑️ CLEAR BUTTON */
+.svd-btn-clear {
+  background: linear-gradient(135deg, #2a2a2a, #4a4a4a);
+  color: #FAF0DC;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.svd-btn-clear:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(135deg, #3a3a3a, #5a5a5a);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}

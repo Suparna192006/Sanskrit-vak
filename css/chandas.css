@@ -1,0 +1,88 @@
+/* ══════════════════════════════════════════
+   RESULT PANELS
+══════════════════════════════════════════ */
+.results-panel{
+  display:none;
+  margin-top:2.5rem;
+  animation:fadeIn 0.5s ease;
+}
+.result-verse{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:2rem;
+  text-align:center;
+  margin-bottom:1.25rem;
+  position:relative;
+}
+.result-verse::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.result-verse .skt{
+  font-family:'Tiro Devanagari Sanskrit',serif;
+  font-size:1.8rem;color:var(--cream);line-height:1.9;
+}
+.result-verse .translit{
+  font-style:italic;color:var(--gold);font-size:1rem;margin-top:0.4rem;
+}
+.result-verse .source-pill{
+  display:inline-block;margin-top:0.75rem;
+  padding:0.2rem 1rem;
+  background:rgba(212,160,23,0.08);
+  border:1px solid var(--border);border-radius:20px;
+  font-size:0.8rem;color:rgba(250,240,220,0.5);
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+@media(max-width:600px){.result-grid{grid-template-columns:1fr;}}
+.rcard{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:1.5rem;
+}
+.rcard.full{grid-column:1/-1;}
+.rcard-label{
+  font-family:'Cinzel',serif;
+  font-size:0.65rem;letter-spacing:0.22em;
+  color:var(--saffron);text-transform:uppercase;
+  margin-bottom:0.7rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.rcard-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.rcard-body{font-size:0.97rem;color:rgba(250,240,220,0.8);line-height:1.75;}
+.rcard-body.skt{font-family:'Tiro Devanagari Sanskrit',serif;font-size:1.1rem;}
+
+.meter-name{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);margin-bottom:0.4rem;}
+.meter-pill{
+  display:inline-block;
+  font-family:monospace;font-size:0.85rem;
+  background:rgba(0,0,0,0.3);
+  color:var(--saffron);
+  padding:0.3rem 0.8rem;border-radius:2px;
+  letter-spacing:0.12em;margin:0.4rem 0;
+}
+.meter-stats{display:flex;gap:2rem;margin-top:0.75rem;flex-wrap:wrap;}
+.mstat{display:flex;flex-direction:column;}
+.mstat-val{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold);line-height:1;}
+.mstat-lbl{font-size:0.7rem;color:rgba(250,240,220,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;}
+
+/* ══════════════════════════════════════════
+   WORD CHIPS
+══════════════════════════════════════════ */
+.word-chips{display:flex;flex-wrap:wrap;gap:0.6rem;}
+.chip{
+  background:rgba(212,160,23,0.06);
+  border:1px solid var(--border);
+  border-radius:2px;padding:0.5rem 0.85rem;
+  cursor:default;transition:background 0.2s;
+}
+.chip:hover{background:rgba(212,160,23,0.14);}
+.chip .cw{font-family:'Tiro Devanagari Sanskrit',serif;font-size:1rem;color:var(--cream);display:block;}
+.chip .cr{font-size:0.7rem;color:var(--saffron);font-style:italic;}
+.chip .cm{font-size:0.75rem;color:rgba(250,240,220,0.5);margin-top:0.1rem;}

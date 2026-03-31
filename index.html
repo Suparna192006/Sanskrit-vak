@@ -1,1406 +1,1687 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Vāk — The Voice of Sanskrit</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vāk — The Voice of Sanskrit</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet" />
 
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/heritage.css">
-<link rel="stylesheet" href="css/generator.css">
-<link rel="stylesheet" href="css/chandas.css">
-<link rel="stylesheet" href="css/karaoke.css">
-<link rel="stylesheet" href="css/summariser.css">
-
-
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/heritage.css">
+  <link rel="stylesheet" href="css/generator.css">
+  <link rel="stylesheet" href="css/chandas.css">
+  <link rel="stylesheet" href="css/karaoke.css">
+  <link rel="stylesheet" href="css/summariser.css">
+  <link rel="stylesheet" href="css/translator.css">
 </head>
+
 <body>
 
-<div class="bg-layer"></div>
-<div class="noise-overlay"></div>
+  <div class="bg-layer"></div>
+  <div class="noise-overlay"></div>
 
-<!-- ═══════════════ NAV ═══════════════ -->
-<nav>
-  <div class="nav-logo" onclick="showPage('home')">
-    <span class="devanagari">वाक्</span>
-    <span>Vāk</span>
-  </div>
-  <ul class="nav-links">
-    <li><a onclick="showPage('home')"    class="active" id="nav-home">Home</a></li>
-    <li><a onclick="showPage('summary')"         id="nav-summary">Analyser</a></li>
-    <li><a onclick="showPage('karaoke')"         id="nav-karaoke">Karaoke</a></li>
-    <li><a onclick="showPage('chant')"           id="nav-chant">Chant Generator</a></li>
-    <li><a onclick="showPage('texts')"           id="nav-texts">Ancient Texts</a></li>
-  </ul>
-  <span class="nav-om">ॐ</span>
-</nav>
+  <!-- ═══════════════ NAV ═══════════════ -->
+  <nav>
+    <div class="nav-logo" onclick="showPage('home')">
+      <span class="devanagari">वाक्</span>
+      <span>Vāk</span>
+    </div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+      <li><a onclick="showPage('translator')" id="nav-translator">Translator</a></li>
+      <li><a onclick="showPage('summary')" id="nav-summary">Analyser</a></li>
+      <li><a onclick="showPage('karaoke')" id="nav-karaoke">Karaoke</a></li>
+      <li><a onclick="showPage('chant')" id="nav-chant">Chant Generator</a></li>
+      <li><a onclick="showPage('texts')" id="nav-texts">Ancient Texts</a></li>
+    </ul>
+    <span class="nav-om">ॐ</span>
+  </nav>
 
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      PAGE: HOME
 ═══════════════════════════════════════ -->
-<div class="page active" id="page-home">
+  <div class="page active" id="page-home">
 
-  <section class="hero">
-    <!-- Mandala SVG -->
-    <svg class="mandala-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-      <g fill="none" stroke="#D4A017" stroke-width="0.8">
-        <circle cx="250" cy="250" r="240"/><circle cx="250" cy="250" r="200"/>
-        <circle cx="250" cy="250" r="160"/><circle cx="250" cy="250" r="120"/>
-        <circle cx="250" cy="250" r="80"/> <circle cx="250" cy="250" r="40"/>
-        <!-- petals -->
-        <g transform="translate(250,250)">
-          <ellipse rx="20" ry="60" transform="rotate(0)"  />
-          <ellipse rx="20" ry="60" transform="rotate(30)" />
-          <ellipse rx="20" ry="60" transform="rotate(60)" />
-          <ellipse rx="20" ry="60" transform="rotate(90)" />
-          <ellipse rx="20" ry="60" transform="rotate(120)"/>
-          <ellipse rx="20" ry="60" transform="rotate(150)"/>
-          <ellipse rx="20" ry="60" transform="rotate(180)"/>
-          <ellipse rx="20" ry="60" transform="rotate(210)"/>
-          <ellipse rx="20" ry="60" transform="rotate(240)"/>
-          <ellipse rx="20" ry="60" transform="rotate(270)"/>
-          <ellipse rx="20" ry="60" transform="rotate(300)"/>
-          <ellipse rx="20" ry="60" transform="rotate(330)"/>
+    <section class="hero">
+      <!-- Mandala SVG -->
+      <svg class="mandala-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#D4A017" stroke-width="0.8">
+          <circle cx="250" cy="250" r="240" />
+          <circle cx="250" cy="250" r="200" />
+          <circle cx="250" cy="250" r="160" />
+          <circle cx="250" cy="250" r="120" />
+          <circle cx="250" cy="250" r="80" />
+          <circle cx="250" cy="250" r="40" />
+          <!-- petals -->
+          <g transform="translate(250,250)">
+            <ellipse rx="20" ry="60" transform="rotate(0)" />
+            <ellipse rx="20" ry="60" transform="rotate(30)" />
+            <ellipse rx="20" ry="60" transform="rotate(60)" />
+            <ellipse rx="20" ry="60" transform="rotate(90)" />
+            <ellipse rx="20" ry="60" transform="rotate(120)" />
+            <ellipse rx="20" ry="60" transform="rotate(150)" />
+            <ellipse rx="20" ry="60" transform="rotate(180)" />
+            <ellipse rx="20" ry="60" transform="rotate(210)" />
+            <ellipse rx="20" ry="60" transform="rotate(240)" />
+            <ellipse rx="20" ry="60" transform="rotate(270)" />
+            <ellipse rx="20" ry="60" transform="rotate(300)" />
+            <ellipse rx="20" ry="60" transform="rotate(330)" />
+          </g>
+          <!-- outer petals -->
+          <g transform="translate(250,250)">
+            <ellipse rx="12" ry="100" transform="rotate(15)" />
+            <ellipse rx="12" ry="100" transform="rotate(45)" />
+            <ellipse rx="12" ry="100" transform="rotate(75)" />
+            <ellipse rx="12" ry="100" transform="rotate(105)" />
+            <ellipse rx="12" ry="100" transform="rotate(135)" />
+            <ellipse rx="12" ry="100" transform="rotate(165)" />
+            <ellipse rx="12" ry="100" transform="rotate(195)" />
+            <ellipse rx="12" ry="100" transform="rotate(225)" />
+            <ellipse rx="12" ry="100" transform="rotate(255)" />
+            <ellipse rx="12" ry="100" transform="rotate(285)" />
+            <ellipse rx="12" ry="100" transform="rotate(315)" />
+            <ellipse rx="12" ry="100" transform="rotate(345)" />
+          </g>
+          <!-- spokes -->
+          <line x1="250" y1="10" x2="250" y2="490" />
+          <line x1="10" y1="250" x2="490" y2="250" />
+          <line x1="74" y1="74" x2="426" y2="426" />
+          <line x1="426" y1="74" x2="74" y2="426" />
+          <line x1="148" y1="10" x2="352" y2="490" />
+          <line x1="352" y1="10" x2="148" y2="490" />
+          <line x1="10" y1="148" x2="490" y2="352" />
+          <line x1="10" y1="352" x2="490" y2="148" />
         </g>
-        <!-- outer petals -->
-        <g transform="translate(250,250)">
-          <ellipse rx="12" ry="100" transform="rotate(15)"  />
-          <ellipse rx="12" ry="100" transform="rotate(45)"  />
-          <ellipse rx="12" ry="100" transform="rotate(75)"  />
-          <ellipse rx="12" ry="100" transform="rotate(105)" />
-          <ellipse rx="12" ry="100" transform="rotate(135)" />
-          <ellipse rx="12" ry="100" transform="rotate(165)" />
-          <ellipse rx="12" ry="100" transform="rotate(195)" />
-          <ellipse rx="12" ry="100" transform="rotate(225)" />
-          <ellipse rx="12" ry="100" transform="rotate(255)" />
-          <ellipse rx="12" ry="100" transform="rotate(285)" />
-          <ellipse rx="12" ry="100" transform="rotate(315)" />
-          <ellipse rx="12" ry="100" transform="rotate(345)" />
-        </g>
-        <!-- spokes -->
-        <line x1="250" y1="10"  x2="250" y2="490"/>
-        <line x1="10"  y1="250" x2="490" y2="250"/>
-        <line x1="74"  y1="74"  x2="426" y2="426"/>
-        <line x1="426" y1="74"  x2="74"  y2="426"/>
-        <line x1="148" y1="10"  x2="352" y2="490"/>
-        <line x1="352" y1="10"  x2="148" y2="490"/>
-        <line x1="10"  y1="148" x2="490" y2="352"/>
-        <line x1="10"  y1="352" x2="490" y2="148"/>
-      </g>
-    </svg>
+      </svg>
 
-    <div class="hero-pre">ॐ</div>
-    <h1 class="hero-title">The Voice of <span class="accent">Sanskrit</span></h1>
-    <p class="hero-sub">Devanāgarī · Chandas · Rāga — where ancient verse meets living voice</p>
-    <div class="hero-cta">
-      <button class="btn btn-primary" onclick="showPage('summary')">Verse Analyser</button>
-      <button class="btn btn-outline" onclick="showPage('karaoke')">Sanskrit Karaoke</button>
-      <button class="btn btn-outline" onclick="showPage('chant')">Chant Generator</button>
-    </div>
-  </section>
+      <div class="hero-pre">ॐ</div>
+      <h1 class="hero-title">The Voice of <span class="accent">Sanskrit</span></h1>
+      <p class="hero-sub">Devanāgarī · Chandas · Rāga — where ancient verse meets living voice</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="showPage('translator')">English Translator</button>
+        <button class="btn btn-outline" onclick="showPage('summary')">Verse Analyser</button>
+        <button class="btn btn-outline" onclick="showPage('karaoke')">Sanskrit Karaoke</button>
+        <button class="btn btn-outline" onclick="showPage('chant')">Chant Generator</button>
+      </div>
+    </section>
 
-  <!-- Quick Facts -->
-  <section class="section">
-    <div class="section-inner">
-      <h2 class="section-title">The Sacred Tongue</h2>
-      <p class="section-subtitle">A few wonders of the world's most precisely crafted language</p>
-      <div class="ornament">❧ ❧ ❧</div>
-      <div class="facts-strip">
-        <div class="fact-card">
-          <span class="fact-icon">𑀲</span>
-          <h3>3500+ Years Old</h3>
-          <p>The Rigveda, composed c. 1500 BCE, contains the oldest known Sanskrit texts — hymns so precisely preserved that scholars can still reconstruct the original pronunciation.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">व</span>
-          <h3>49 Phonemes</h3>
-          <p>Sanskrit's Devanāgarī script is perfectly phonetic — each symbol maps to exactly one sound. Pāṇini's Ashtādhyāyī described Sanskrit grammar with 3,959 sutras around 400 BCE.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">छ</span>
-          <h3>Chandas — The Science of Metre</h3>
-          <p>Over 600 distinct metrical patterns were catalogued by Piṅgala c. 200 BCE. His work, the Chandaśāstra, invented binary notation 2,000 years before Leibniz.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">र</span>
-          <h3>Mother of Indo-European</h3>
-          <p>Sanskrit shares deep roots with Greek, Latin, Persian, English and most European languages. "Father" (pitṛ), "mother" (mātr), "name" (nāman) — the echoes reach everywhere.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">स</span>
-          <h3>Computer-Ready Grammar</h3>
-          <p>NASA scientists noted in the 1980s that Sanskrit's paninian grammar is the only natural human language suitable for unambiguous machine-language programming.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">ध</span>
-          <h3>96 Words for Love</h3>
-          <p>Sanskrit has a staggering vocabulary of emotional nuance — 96 words for love, 67 for water, distinct terms for every shade of beauty, time, and consciousness.</p>
+    <!-- Quick Facts -->
+    <section class="section">
+      <div class="section-inner">
+        <h2 class="section-title">The Sacred Tongue</h2>
+        <p class="section-subtitle">A few wonders of the world's most precisely crafted language</p>
+        <div class="ornament">❧ ❧ ❧</div>
+        <div class="facts-strip">
+          <div class="fact-card">
+            <span class="fact-icon">𑀲</span>
+            <h3>3500+ Years Old</h3>
+            <p>The Rigveda, composed c. 1500 BCE, contains the oldest known Sanskrit texts — hymns so precisely
+              preserved that scholars can still reconstruct the original pronunciation.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">व</span>
+            <h3>49 Phonemes</h3>
+            <p>Sanskrit's Devanāgarī script is perfectly phonetic — each symbol maps to exactly one sound. Pāṇini's
+              Ashtādhyāyī described Sanskrit grammar with 3,959 sutras around 400 BCE.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">छ</span>
+            <h3>Chandas — The Science of Metre</h3>
+            <p>Over 600 distinct metrical patterns were catalogued by Piṅgala c. 200 BCE. His work, the Chandaśāstra,
+              invented binary notation 2,000 years before Leibniz.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">र</span>
+            <h3>Mother of Indo-European</h3>
+            <p>Sanskrit shares deep roots with Greek, Latin, Persian, English and most European languages. "Father"
+              (pitṛ), "mother" (mātr), "name" (nāman) — the echoes reach everywhere.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">स</span>
+            <h3>Computer-Ready Grammar</h3>
+            <p>NASA scientists noted in the 1980s that Sanskrit's paninian grammar is the only natural human language
+              suitable for unambiguous machine-language programming.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">ध</span>
+            <h3>96 Words for Love</h3>
+            <p>Sanskrit has a staggering vocabulary of emotional nuance — 96 words for love, 67 for water, distinct
+              terms for every shade of beauty, time, and consciousness.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Quote -->
-  <div class="quote-banner">
-    <blockquote>विद्या ददाति विनयं, विनयाद् याति पात्रताम्</blockquote>
-    <cite>Knowledge gives humility; from humility comes worthiness — Hitopadeśa</cite>
+    <!-- Quote -->
+    <div class="quote-banner">
+      <blockquote>विद्या ददाति विनयं, विनयाद् याति पात्रताम्</blockquote>
+      <cite>Knowledge gives humility; from humility comes worthiness — Hitopadeśa</cite>
+    </div>
+
+    <!-- Deity connections -->
+    <section class="section">
+      <div class="section-inner">
+        <h2 class="section-title">Sanskrit & the Divine</h2>
+        <p class="section-subtitle">The sacred deities who preside over language, sound, and wisdom</p>
+        <div class="ornament">✦ ✦ ✦</div>
+        <div class="deity-grid">
+          <div class="deity-card">
+            <span class="deity-symbol">सरस्वती</span>
+            <h3>Sarasvatī</h3>
+            <p>Goddess of knowledge, music, arts, wisdom and learning. She holds the vīṇā and the Vedas, patron of
+              Sanskrit itself.</p>
+          </div>
+          <div class="deity-card">
+            <span class="deity-symbol">गणेश</span>
+            <h3>Gaṇeśa</h3>
+            <p>The scribe of the Mahābhārata — said to have written down Vyāsa's dictation with his own broken tusk as a
+              pen without pause.</p>
+          </div>
+          <div class="deity-card">
+            <span class="deity-symbol">ब्रह्म</span>
+            <h3>Brahmā</h3>
+            <p>The creator who is said to have first spoken Sanskrit — the language of creation, arising from the
+              primordial sound OM.</p>
+          </div>
+          <div class="deity-card">
+            <span class="deity-symbol">शिव</span>
+            <h3>Śiva Nāṭarāja</h3>
+            <p>His drum, the ḍamaru, gave the 14 Māheśvara Sūtras — the seed sounds from which Pāṇini derived the entire
+              Sanskrit grammar.</p>
+          </div>
+          <div class="deity-card">
+            <span class="deity-symbol">विष्णु</span>
+            <h3>Viṣṇu</h3>
+            <p>The preserver, Nārāyaṇa — around whom swirl 1,000 names (Viṣṇu Sahasranāma), one of the greatest Sanskrit
+              verses ever composed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-  <!-- Deity connections -->
-  <section class="section">
-    <div class="section-inner">
-      <h2 class="section-title">Sanskrit & the Divine</h2>
-      <p class="section-subtitle">The sacred deities who preside over language, sound, and wisdom</p>
-      <div class="ornament">✦ ✦ ✦</div>
-      <div class="deity-grid">
-        <div class="deity-card">
-          <span class="deity-symbol">सरस्वती</span>
-          <h3>Sarasvatī</h3>
-          <p>Goddess of knowledge, music, arts, wisdom and learning. She holds the vīṇā and the Vedas, patron of Sanskrit itself.</p>
+  <!-- ═══════════════════════════════════
+     PAGE: TRANSLATOR
+═══════════════════════════════════════ -->
+  <div class="page" id="page-translator">
+    <div class="page-banner">
+      <span class="devanagari-title">अनुवादक</span>
+      <h1>English to Sanskrit Translator</h1>
+      <p>Enter an English word to discover its Sanskrit equivalent, meaning, and roots</p>
+    </div>
+    <div class="tool-container" style="max-width:800px">
+      <div class="translator-form">
+        <label class="form-label">Search English Word</label>
+        <div style="display:flex; gap:1rem; align-items:center;">
+          <input type="text" id="engInput" placeholder="e.g. love, peace, water, knowledge..." class="translator-input"
+            onkeypress="if(event.key === 'Enter') translateWord()" />
+          <button class="btn btn-primary" onclick="translateWord()">Translate</button>
         </div>
-        <div class="deity-card">
-          <span class="deity-symbol">गणेश</span>
-          <h3>Gaṇeśa</h3>
-          <p>The scribe of the Mahābhārata — said to have written down Vyāsa's dictation with his own broken tusk as a pen without pause.</p>
+        <div class="suggestion-chips">
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">love</span>
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">peace</span>
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">water</span>
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">fire</span>
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">knowledge</span>
+          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">devotion</span>
         </div>
-        <div class="deity-card">
-          <span class="deity-symbol">ब्रह्म</span>
-          <h3>Brahmā</h3>
-          <p>The creator who is said to have first spoken Sanskrit — the language of creation, arising from the primordial sound OM.</p>
-        </div>
-        <div class="deity-card">
-          <span class="deity-symbol">शिव</span>
-          <h3>Śiva Nāṭarāja</h3>
-          <p>His drum, the ḍamaru, gave the 14 Māheśvara Sūtras — the seed sounds from which Pāṇini derived the entire Sanskrit grammar.</p>
-        </div>
-        <div class="deity-card">
-          <span class="deity-symbol">विष्णु</span>
-          <h3>Viṣṇu</h3>
-          <p>The preserver, Nārāyaṇa — around whom swirl 1,000 names (Viṣṇu Sahasranāma), one of the greatest Sanskrit verses ever composed.</p>
+      </div>
+
+      <div class="error-box" id="transError" style="margin-top:1rem; display:none;"></div>
+
+      <div id="transLoader" style="display:none;" class="trans-loader-wrap">
+        <div class="trans-spinner"></div>
+        <div>Consulting the ancient texts...</div>
+      </div>
+
+      <div class="results-panel" id="transResults" style="display:none; margin-top:2rem;">
+        <div class="rcard full">
+          <div class="rcard-label">Sanskrit Vocabulary</div>
+          <div class="trans-sanskrit" id="trans-skt-word"></div>
+          <div class="trans-roman" id="trans-roman-word"></div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="rcard" style="background:rgba(0,0,0,0.2);">
+              <div class="rcard-label">Root (Dhātu)</div>
+              <div class="rcard-body cr" id="trans-root-word"
+                style="font-size:1.4rem; padding-top:0.5rem; color:var(--saffron);"></div>
+            </div>
+            <div class="rcard" style="background:rgba(0,0,0,0.2);">
+              <div class="rcard-label">Context / Meaning</div>
+              <div class="rcard-body trans-meaning-text" id="trans-meaning-word"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-</div>
-
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      PAGE: SUMMARISER
 ═══════════════════════════════════════ -->
-<div class="page" id="page-summary">
-  <div class="page-banner">
-    <span class="devanagari-title">विश्लेषण</span>
-    <h1>Verse Analyser</h1>
-    <p>Speak or type a Sanskrit verse — receive instant English translation, sandhi breakdown, and word-by-word analysis</p>
-  </div>
-
-  <div class="tool-container">
-
-    <!-- ── Sanskrit Voice Detector ── -->
-<div id="svd-block">
-  <div class="svd-wrapper">
-
-    <div class="svd-header">
-      <span class="svd-title-icon">🎙</span>
-      <div>
-        <div class="svd-title">Sanskrit Voice Detector</div>
-        <div class="svd-subtitle">Chant or speak a śloka — detected, transcribed & analysed instantly</div>
-      </div>
-      <div class="svd-lang-badge">देवनागरी</div>
+  <div class="page" id="page-summary">
+    <div class="page-banner">
+      <span class="devanagari-title">विश्लेषण</span>
+      <h1>Verse Analyser</h1>
+      <p>Speak or type a Sanskrit verse — receive instant English translation, sandhi breakdown, and word-by-word
+        analysis</p>
     </div>
 
-    <div class="svd-visualizer" id="svd-visualizer">
-      <div class="svd-vis-bars" id="svd-bars"></div>
-      <div class="svd-vis-idle" id="svd-idle">
-        <span class="svd-idle-om">ॐ</span>
-        <span class="svd-idle-text">Press record to begin chanting</span>
-      </div>
-    </div>
+    <div class="tool-container">
 
-    <div class="svd-status-row">
-      <div class="svd-status-dot" id="svd-dot"></div>
-      <div class="svd-status-text" id="svd-status">Ready — click Start Recording and chant your śloka</div>
-      <div class="svd-timer" id="svd-timer">0:00</div>
-    </div>
+      <!-- ── Sanskrit Voice Detector ── -->
+      <div id="svd-block">
+        <div class="svd-wrapper">
 
-    <div class="svd-transcript-wrap" id="svd-transcript-wrap" style="display:none">
-      <div class="svd-transcript-label">
-        <span>Detected Sanskrit</span>
-        <span class="svd-confidence" id="svd-confidence"></span>
-      </div>
-      <div class="svd-transcript" id="svd-transcript"></div>
-      <div class="svd-transcript-roman" id="svd-transcript-roman"></div>
-    </div>
+          <div class="svd-header">
+            <span class="svd-title-icon">🎙</span>
+            <div>
+              <div class="svd-title">Sanskrit Voice Detector</div>
+              <div class="svd-subtitle">Chant or speak a śloka — detected, transcribed & analysed instantly</div>
+            </div>
+            <div class="svd-lang-badge">देवनागरी</div>
+          </div>
 
-    <div class="svd-phoneme-strip" id="svd-phoneme-strip" style="display:none">
-      <div class="svd-phoneme-label">Phoneme Analysis</div>
-      <div class="svd-phonemes" id="svd-phonemes"></div>
-    </div>
+          <div class="svd-visualizer" id="svd-visualizer">
+            <div class="svd-vis-bars" id="svd-bars"></div>
+            <div class="svd-vis-idle" id="svd-idle">
+              <span class="svd-idle-om">ॐ</span>
+              <span class="svd-idle-text">Press record to begin chanting</span>
+            </div>
+          </div>
 
-    <div class="svd-controls">
-      <button class="svd-btn svd-btn-record" id="svd-record-btn">
-        <span class="svd-btn-icon" id="svd-btn-icon">⏺</span>
-        <span id="svd-btn-label">Start Recording</span>
-      </button>
-      <button class="svd-btn svd-btn-clear" id="svd-clear-btn" style="display:none">✕ Clear</button>
-      <button class="svd-btn svd-btn-analyse" id="svd-analyse-btn" style="display:none">
-        विश्लेष — Analyse Detected Verse
-      </button>
-    </div>
+          <div class="svd-status-row">
+            <div class="svd-status-dot" id="svd-dot"></div>
+            <div class="svd-status-text" id="svd-status">Ready — click Start Recording and chant your śloka</div>
+            <div class="svd-timer" id="svd-timer">0:00</div>
+          </div>
 
-    <!-- Browser compatibility note (shown only for unsupported browsers) -->
-    <div class="svd-browser-note" id="svd-browser-note"></div>
+          <div class="svd-transcript-wrap" id="svd-transcript-wrap" style="display:none">
+            <div class="svd-transcript-label">
+              <span>Detected Sanskrit</span>
+              <span class="svd-confidence" id="svd-confidence"></span>
+            </div>
+            <div class="svd-transcript" id="svd-transcript"></div>
+            <div class="svd-transcript-roman" id="svd-transcript-roman"></div>
+          </div>
 
-    <!-- Manual text fallback (shown for Brave / Firefox / unsupported) -->
-    <div class="svd-manual-block" id="svd-manual-block">
-      <label class="svd-manual-label">✍ Type or Paste Sanskrit Verse Instead</label>
-      <textarea class="svd-manual-input" id="svd-manual-input"
-        rows="3"
-        placeholder="अत्र संस्कृतश्लोकं लिखत… (Type or paste Devanāgarī or romanised Sanskrit)"></textarea>
-      <button class="svd-manual-submit" id="svd-manual-submit">
-        ✦ Use This Text → Analyse
-      </button>
-    </div>
+          <div class="svd-phoneme-strip" id="svd-phoneme-strip" style="display:none">
+            <div class="svd-phoneme-label">Phoneme Analysis</div>
+            <div class="svd-phonemes" id="svd-phonemes"></div>
+          </div>
 
-    <div class="svd-tip">
-      💡 Voice works in Chrome &amp; Edge. Safari: allow mic when prompted. Brave: lower Shields for this site.
-    </div>
+          <div class="svd-controls">
+            <button class="svd-btn svd-btn-record" id="svd-record-btn">
+              <span class="svd-btn-icon" id="svd-btn-icon">⏺</span>
+              <span id="svd-btn-label">Start Recording</span>
+            </button>
+            <button class="svd-btn svd-btn-clear" id="svd-clear-btn" style="display:none">✕ Clear</button>
+            <button class="svd-btn svd-btn-analyse" id="svd-analyse-btn" style="display:none">
+              विश्लेष — Analyse Detected Verse
+            </button>
+          </div>
 
-  </div>
-</div>
-<!-- ── End Voice Detector ── -->
-    <!-- Upload zone -->
-    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('audioInput').click()">
-      <span class="upload-icon">🎙</span>
-      <p><strong>Drop an audio file</strong> or click to browse</p>
-      <p style="font-size:0.82rem;margin-top:0.3rem;opacity:0.6">.wav · .mp3 · .m4a · .ogg · .flac</p>
-    </div>
-    <input type="file" id="audioInput" accept="audio/*"/>
-    <div class="file-badge" id="fileBadge">📁 <span id="fileName"></span></div>
+          <!-- Browser compatibility note (shown only for unsupported browsers) -->
+          <div class="svd-browser-note" id="svd-browser-note"></div>
 
-    <div class="or-line">or enter Sanskrit text directly</div>
-    <textarea id="sktInput" rows="3" placeholder="अत्र संस्कृतश्लोकं लिखत…"></textarea>
+          <!-- Manual text fallback (shown for Brave / Firefox / unsupported) -->
+          <div class="svd-manual-block" id="svd-manual-block">
+            <label class="svd-manual-label">✍ Type or Paste Sanskrit Verse Instead</label>
+            <textarea class="svd-manual-input" id="svd-manual-input" rows="3"
+              placeholder="अत्र संस्कृतश्लोकं लिखत… (Type or paste Devanāgarī or romanised Sanskrit)"></textarea>
+            <button class="svd-manual-submit" id="svd-manual-submit">
+              ✦ Use This Text → Analyse
+            </button>
+          </div>
 
-    <button class="btn-tool" id="analyzeBtn" onclick="analyzeVerse()">
-      विश्लेष — Analyse Verse
-    </button>
-    <div class="error-box" id="summaryError"></div>
+          <div class="svd-tip">
+            💡 Voice works in Chrome &amp; Edge. Safari: allow mic when prompted. Brave: lower Shields for this site.
+          </div>
 
-    <!-- Loader -->
-    <div class="loader" id="summaryLoader">
-      <div class="loader-ring"></div>
-      <p>Invoking the Chandas… consulting the scholars…</p>
-    </div>
-
-    <!-- Results -->
-    <div class="results-panel" id="summaryResults">
-      <div class="result-verse">
-        <div class="skt" id="r-verse"></div>
-        <div class="translit" id="r-translit"></div>
-        <div class="source-pill" id="r-source"></div>
-      </div>
-      <div class="result-grid">
-        <div class="rcard">
-          <div class="rcard-label">English Translation</div>
-          <div class="rcard-body" id="r-translation"></div>
         </div>
-        <div class="rcard">
-          <div class="rcard-label">Deeper Meaning</div>
-          <div class="rcard-body" id="r-meaning"></div>
+      </div>
+      <!-- ── End Voice Detector ── -->
+      <!-- Upload zone -->
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('audioInput').click()">
+        <span class="upload-icon">🎙</span>
+        <p><strong>Drop an audio file</strong> or click to browse</p>
+        <p style="font-size:0.82rem;margin-top:0.3rem;opacity:0.6">.wav · .mp3 · .m4a · .ogg · .flac</p>
+      </div>
+      <input type="file" id="audioInput" accept="audio/*" />
+      <div class="file-badge" id="fileBadge">📁 <span id="fileName"></span></div>
+
+      <div class="or-line">or enter Sanskrit text directly</div>
+      <textarea id="sktInput" rows="3" placeholder="अत्र संस्कृतश्लोकं लिखत…"></textarea>
+
+      <button class="btn-tool" id="analyzeBtn" onclick="analyzeVerse()">
+        विश्लेष — Analyse Verse
+      </button>
+      <div class="error-box" id="summaryError"></div>
+
+      <!-- Loader -->
+      <div class="loader" id="summaryLoader">
+        <div class="loader-ring"></div>
+        <p>Invoking the Chandas… consulting the scholars…</p>
+      </div>
+
+      <!-- Results -->
+      <div class="results-panel" id="summaryResults">
+        <div class="result-verse">
+          <div class="skt" id="r-verse"></div>
+          <div class="translit" id="r-translit"></div>
+          <div class="source-pill" id="r-source"></div>
         </div>
-        <div class="rcard full">
-          <div class="rcard-label">Chandas · Metrical Analysis</div>
-          <div class="meter-name" id="r-meter"></div>
-          <div class="meter-pill" id="r-pattern"></div>
-          <div class="rcard-body" id="r-meter-desc" style="margin-top:0.5rem;font-style:italic;opacity:0.7;font-size:0.92rem;"></div>
-          <div class="meter-stats">
-            <div class="mstat"><span class="mstat-val" id="r-padas"></span><span class="mstat-lbl">Pādas</span></div>
-            <div class="mstat"><span class="mstat-val" id="r-syllables"></span><span class="mstat-lbl">Syllables</span></div>
+        <div class="result-grid">
+          <div class="rcard">
+            <div class="rcard-label">English Translation</div>
+            <div class="rcard-body" id="r-translation"></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-label">Deeper Meaning</div>
+            <div class="rcard-body" id="r-meaning"></div>
+          </div>
+          <div class="rcard full">
+            <div class="rcard-label">Chandas · Metrical Analysis</div>
+            <div class="meter-name" id="r-meter"></div>
+            <div class="meter-pill" id="r-pattern"></div>
+            <div class="rcard-body" id="r-meter-desc"
+              style="margin-top:0.5rem;font-style:italic;opacity:0.7;font-size:0.92rem;"></div>
+            <div class="meter-stats">
+              <div class="mstat"><span class="mstat-val" id="r-padas"></span><span class="mstat-lbl">Pādas</span></div>
+              <div class="mstat"><span class="mstat-val" id="r-syllables"></span><span
+                  class="mstat-lbl">Syllables</span></div>
+            </div>
+          </div>
+          <div class="rcard full">
+            <div class="rcard-label">Simplified Sanskrit</div>
+            <div class="rcard-body skt" id="r-simplified"></div>
+          </div>
+          <div class="rcard full">
+            <div class="rcard-label">Word by Word</div>
+            <div class="word-chips" id="r-words"></div>
           </div>
         </div>
-        <div class="rcard full">
-          <div class="rcard-label">Simplified Sanskrit</div>
-          <div class="rcard-body skt" id="r-simplified"></div>
-        </div>
-        <div class="rcard full">
-          <div class="rcard-label">Word by Word</div>
-          <div class="word-chips" id="r-words"></div>
-        </div>
       </div>
+
     </div>
-
   </div>
-</div>
 
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      PAGE: KARAOKE
 ═══════════════════════════════════════ -->
-<div class="page" id="page-karaoke">
-  <div class="page-banner">
-    <span class="devanagari-title">कराओके</span>
-    <h1>Sanskrit Karaoke</h1>
-    <p>Follow the highlighted words as they are chanted — learn pronunciation, rhythm, and meaning in real time</p>
-  </div>
+  <div class="page" id="page-karaoke">
+    <div class="page-banner">
+      <span class="devanagari-title">कराओके</span>
+      <h1>Sanskrit Karaoke</h1>
+      <p>Follow the highlighted words as they are chanted — learn pronunciation, rhythm, and meaning in real time</p>
+    </div>
 
-  <div class="tool-container" style="max-width:960px">
+    <div class="tool-container" style="max-width:960px">
 
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;" id="karaokeLayout">
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;" id="karaokeLayout">
 
-      <!-- Verse selector -->
-      <div>
-        <div style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--saffron);text-transform:uppercase;margin-bottom:1rem;">Select a Verse</div>
-        <div class="karaoke-verses" id="kVerseList"></div>
-      </div>
+        <!-- Verse selector -->
+        <div>
+          <div
+            style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--saffron);text-transform:uppercase;margin-bottom:1rem;">
+            Select a Verse</div>
+          <div class="karaoke-verses" id="kVerseList"></div>
+        </div>
 
-      <!-- Stage -->
-      <div>
-        <div class="karaoke-stage">
-          <div class="k-line" id="kLine">
-            <span class="k-word waiting">Select a verse to begin...</span>
+        <!-- Stage -->
+        <div>
+          <div class="karaoke-stage">
+            <div class="k-line" id="kLine">
+              <span class="k-word waiting">Select a verse to begin...</span>
+            </div>
+            <div class="k-meaning" id="kMeaning"></div>
+            <div class="k-progress">
+              <div class="k-progress-bar" id="kBar"></div>
+            </div>
           </div>
-          <div class="k-meaning" id="kMeaning"></div>
-          <div class="k-progress"><div class="k-progress-bar" id="kBar"></div></div>
-        </div>
 
-        <div class="karaoke-controls">
-          <button class="k-btn" id="kPlay"  onclick="karaoke.play()">▶ Play</button>
-          <button class="k-btn" id="kPause" onclick="karaoke.pause()" style="display:none">⏸ Pause</button>
-          <button class="k-btn" onclick="karaoke.reset()">↺ Reset</button>
-          <span class="speed-label">Speed:</span>
-          <button class="k-btn" onclick="karaoke.setSpeed(0.6)">Slow</button>
-          <button class="k-btn" onclick="karaoke.setSpeed(1)">Normal</button>
-          <button class="k-btn" onclick="karaoke.setSpeed(1.6)">Fast</button>
-        </div>
+          <div class="karaoke-controls">
+            <button class="k-btn" id="kPlay" onclick="karaoke.play()">▶ Play</button>
+            <button class="k-btn" id="kPause" onclick="karaoke.pause()" style="display:none">⏸ Pause</button>
+            <button class="k-btn" onclick="karaoke.reset()">↺ Reset</button>
+            <span class="speed-label">Speed:</span>
+            <button class="k-btn" onclick="karaoke.setSpeed(0.6)">Slow</button>
+            <button class="k-btn" onclick="karaoke.setSpeed(1)">Normal</button>
+            <button class="k-btn" onclick="karaoke.setSpeed(1.6)">Fast</button>
+          </div>
 
-        <!-- Meaning panel -->
-        <div class="rcard" style="margin-top:1.5rem;">
-          <div class="rcard-label">Current Verse · Full Meaning</div>
-          <div class="rcard-body" id="kFullMeaning" style="font-style:italic;opacity:0.7;">Choose a verse from the list to see its meaning.</div>
+          <!-- Meaning panel -->
+          <div class="rcard" style="margin-top:1.5rem;">
+            <div class="rcard-label">Current Verse · Full Meaning</div>
+            <div class="rcard-body" id="kFullMeaning" style="font-style:italic;opacity:0.7;">Choose a verse from the
+              list to see its meaning.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      PAGE: CHANT GENERATOR
 ═══════════════════════════════════════ -->
-<div class="page" id="page-chant">
-  <div class="page-banner">
-    <span class="devanagari-title">मन्त्र</span>
-    <h1>Sanskrit Chant Generator</h1>
-    <p>Compose a Sanskrit verse with metrical and melodic constraints — rhythm from Chandas, pitch from Rāga</p>
-  </div>
+  <div class="page" id="page-chant">
+    <div class="page-banner">
+      <span class="devanagari-title">मन्त्र</span>
+      <h1>Sanskrit Chant Generator</h1>
+      <p>Compose a Sanskrit verse with metrical and melodic constraints — rhythm from Chandas, pitch from Rāga</p>
+    </div>
 
-  <div class="tool-container">
-    <div class="chant-form">
-      <div class="form-row">
-        <label class="form-label">Sanskrit Verse (Devanāgarī)</label>
-        <textarea id="chantVerse" rows="3" placeholder="ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यम्…"></textarea>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div class="tool-container">
+      <div class="chant-form">
         <div class="form-row">
-          <label class="form-label">Chandas (Metrical Framework)</label>
-          <select class="select-styled" id="chandas">
-            <option value="anushtubh">Anuṣṭubh (Śloka) — 8×4 syllables</option>
-            <option value="trishtubh">Triṣṭubh — 11×4 syllables</option>
-            <option value="jagati">Jagatī — 12×4 syllables</option>
-            <option value="mandakranta">Mandākrāntā — 17 syllables/line</option>
-            <option value="shardula">Śārdūlavikrīḍita — 19 syllables/line</option>
-            <option value="vasantatilaka">Vasantatilakā — 14 syllables/line</option>
-            <option value="gayatri">Gāyatrī — 8×3 syllables</option>
+          <label class="form-label">Sanskrit Verse (Devanāgarī)</label>
+          <textarea id="chantVerse" rows="3" placeholder="ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यम्…"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-row">
+            <label class="form-label">Chandas (Metrical Framework)</label>
+            <select class="select-styled" id="chandas">
+              <option value="anushtubh">Anuṣṭubh (Śloka) — 8×4 syllables</option>
+              <option value="trishtubh">Triṣṭubh — 11×4 syllables</option>
+              <option value="jagati">Jagatī — 12×4 syllables</option>
+              <option value="mandakranta">Mandākrāntā — 17 syllables/line</option>
+              <option value="shardula">Śārdūlavikrīḍita — 19 syllables/line</option>
+              <option value="vasantatilaka">Vasantatilakā — 14 syllables/line</option>
+              <option value="gayatri">Gāyatrī — 8×3 syllables</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Rāga (Melodic Framework)</label>
+            <select class="select-styled" id="raga">
+              <option value="bhairav">Bhairav — dawn, serenity, devotion</option>
+              <option value="yaman">Yāman — evening, romance, longing</option>
+              <option value="bhairavi">Bhairavī — morning, pathos, farewell</option>
+              <option value="darbari">Darbārī Kānaḍā — midnight, grandeur</option>
+              <option value="yaman_kalyan">Yāman Kalyāṇ — evening, beauty</option>
+              <option value="malkauns">Mālkauṃs — midnight, deep meditation</option>
+              <option value="bihag">Bihāg — night, romance, joy</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Tāla (Rhythmic Cycle)</label>
+          <select class="select-styled" id="tala">
+            <option value="ektaal">Ektāl — 12 beats</option>
+            <option value="teentaal">Tīntāl — 16 beats (most common)</option>
+            <option value="jhaptaal">Jhaptāl — 10 beats</option>
+            <option value="rupak">Rūpak — 7 beats</option>
+            <option value="chautaal">Cautāl — 12 beats (dhrupad)</option>
           </select>
         </div>
+        <!-- NEW ROW 1: Emotion / Rasa -->
         <div class="form-row">
-          <label class="form-label">Rāga (Melodic Framework)</label>
-          <select class="select-styled" id="raga">
-            <option value="bhairav">Bhairav — dawn, serenity, devotion</option>
-            <option value="yaman">Yāman — evening, romance, longing</option>
-            <option value="bhairavi">Bhairavī — morning, pathos, farewell</option>
-            <option value="darbari">Darbārī Kānaḍā — midnight, grandeur</option>
-            <option value="yaman_kalyan">Yāman Kalyāṇ — evening, beauty</option>
-            <option value="malkauns">Mālkauṃs — midnight, deep meditation</option>
-            <option value="bihag">Bihāg — night, romance, joy</option>
+          <label class="form-label">Rasa (Emotional Quality)</label>
+          <select class="select-styled" id="chantEmotion">
+            <option value="shanta">Śānta — Peace &amp; Serenity</option>
+            <option value="bhakti">Bhakti — Devotion &amp; Love</option>
+            <option value="vira">Vīra — Heroic &amp; Powerful</option>
+            <option value="karuna">Karuṇā — Compassion &amp; Pathos</option>
+            <option value="adbhuta">Adbhuta — Wonder &amp; Awe</option>
           </select>
         </div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Tāla (Rhythmic Cycle)</label>
-        <select class="select-styled" id="tala">
-          <option value="ektaal">Ektāl — 12 beats</option>
-          <option value="teentaal">Tīntāl — 16 beats (most common)</option>
-          <option value="jhaptaal">Jhaptāl — 10 beats</option>
-          <option value="rupak">Rūpak — 7 beats</option>
-          <option value="chautaal">Cautāl — 12 beats (dhrupad)</option>
-        </select>
-      </div>
-      <!-- NEW ROW 1: Emotion / Rasa -->
-<div class="form-row">
-  <label class="form-label">Rasa (Emotional Quality)</label>
-  <select class="select-styled" id="chantEmotion">
-    <option value="shanta">Śānta — Peace &amp; Serenity</option>
-    <option value="bhakti">Bhakti — Devotion &amp; Love</option>
-    <option value="vira">Vīra — Heroic &amp; Powerful</option>
-    <option value="karuna">Karuṇā — Compassion &amp; Pathos</option>
-    <option value="adbhuta">Adbhuta — Wonder &amp; Awe</option>
-  </select>
-</div>
 
-<!-- NEW ROW 2: Voice Controls (Pitch + Speed sliders) -->
-<div class="form-row">
-  <label class="form-label">Voice Controls</label>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-top:0.3rem;">
-    <div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
-        <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Pitch</span>
-        <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);" id="chantPitchVal">0</span>
-      </div>
-      <input type="range" id="chantPitch" min="-8" max="8" value="0" step="1"
-        style="width:100%;accent-color:var(--gold);" oninput="document.getElementById('chantPitchVal').textContent=(this.value>0?'+':'')+this.value"/>
-    </div>
-    <div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
-        <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Speed</span>
-        <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);" id="chantSpeedVal">1.0×</span>
-      </div>
-      <input type="range" id="chantSpeed" min="0.5" max="1.8" value="1.0" step="0.1"
-        style="width:100%;accent-color:var(--gold);" oninput="document.getElementById('chantSpeedVal').textContent=parseFloat(this.value).toFixed(1)+'×'"/>
-    </div>
-    <div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
-        <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Melody</span>
-        <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);" id="chantMelodyVal">50%</span>
-      </div>
-      <input type="range" id="chantMelody" min="0" max="100" value="50" step="5"
-        style="width:100%;accent-color:var(--gold);" oninput="document.getElementById('chantMelodyVal').textContent=this.value+'%'"/>
-    </div>
-  </div>
-</div>
-
-<!-- NEW ROW 3: Language toggle -->
-<div class="form-row">
-  <label class="form-label">Output Language</label>
-  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-    <button type="button" class="k-btn active-btn" id="langSa" onclick="selectChantLang('sa',this)">संस्कृत Sanskrit</button>
-    <button type="button" class="k-btn" id="langHi" onclick="selectChantLang('hi',this)">हिन्दी Hindi</button>
-    <button type="button" class="k-btn" id="langEn" onclick="selectChantLang('en',this)">English</button>
-  </div>
-</div>
-
-<!-- NEW ROW 4: Voice Profile -->
-<div class="form-row">
-  <label class="form-label">Voice Profile</label>
-  <select class="select-styled" id="chantVoiceProfile">
-    <option value="pandit">🧘 Pandit — deep vedic resonance</option>
-    <option value="devi">🌸 Devī — soft, melodious</option>
-    <option value="sage">🔱 Ṛṣi — ancient, slow, wise</option>
-    <option value="narrator">📖 Narrator — clear, measured</option>
-  </select>
-</div>
-<div style="display:grid;grid-template-columns:1fr auto;gap:0.75rem;align-items:end;">
-  <button class="btn-tool" id="chantGenerateBtn" onclick="generateChant()">
-    उत्पन्न करें — Generate Chant Pattern
-  </button>
-  <button class="btn-tool" id="chantSpeakBtn" onclick="speakChant()" disabled
-    style="width:auto;padding:0.95rem 1.5rem;background:linear-gradient(135deg,#1A6B6B,#0D4040);">
-    🔊 Speak
-  </button>
-</div>
-     
-    </div>
-
-    <div class="loader" id="chantLoader">
-      <div class="loader-ring"></div>
-      <p>Consulting Pāṇini and the Gandharvas…</p>
-    </div>
-
-    <div class="chant-output" id="chantOutput">
-      <div class="chant-raga-tag" id="chantRagaTag">🎵 Rāga · Chandas Pattern</div>
-      <div class="chant-verse-main" id="chantVerseOut"></div>
-      <div class="notation-line" id="chantNotation"></div>
-
-      <div class="visualizer" id="chantVisualizer">
-        <div class="v-bar" style="height:20px"></div>
-        <div class="v-bar" style="height:35px"></div>
-        <div class="v-bar" style="height:15px"></div>
-        <div class="v-bar" style="height:45px"></div>
-        <div class="v-bar" style="height:28px"></div>
-        <div class="v-bar" style="height:50px"></div>
-        <div class="v-bar" style="height:22px"></div>
-        <div class="v-bar" style="height:40px"></div>
-        <div class="v-bar" style="height:18px"></div>
-        <div class="v-bar" style="height:38px"></div>
-      </div>
-
-      <!-- Audio playback controls — shown after generation -->
-<div id="chantAudioControls" style="display:none;margin-top:1.2rem;">
-  <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;">
-    <button class="k-btn" id="chantPlayBtn" onclick="speakChant()">▶ Play</button>
-    <button class="k-btn" onclick="pauseChant()">⏸ Pause</button>
-    <button class="k-btn" onclick="stopChant()">⏹ Stop</button>
-    <button class="k-btn" onclick="downloadChantAudio()">⬇ Save</button>
-  </div>
-  <div id="chantPhonemes" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.5rem;"></div>
-</div>
-
-<!-- AI Analysis card — shown after generation -->
-<div class="rcard" id="chantAiCard" style="display:none;margin-top:1.5rem;text-align:left;">
-  <div class="rcard-label">AI Chant Analysis</div>
-  <div class="rcard-body" id="chantAiBody" style="white-space:pre-line;line-height:1.85;"></div>
-</div>
-
-<!-- Error -->
-<div class="error-box" id="chantError" style="margin-top:1rem;"></div>
-
-      <div class="chant-details" id="chantDetails"></div>
-    </div>
-
-    <!-- Info cards -->
-    <div style="margin-top:3rem">
-      <h3 style="font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.15em;color:var(--gold-pale);margin-bottom:1.2rem;text-align:center;text-transform:uppercase;">What Is Chandas?</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
-        <div class="rcard">
-          <div class="rcard-label">Guru · Heavy</div>
-          <div class="rcard-body">A <strong style="color:var(--gold)">G (Guru)</strong> syllable is "heavy" — it contains a long vowel (ā, ī, ū) or is followed by a consonant cluster. It takes 2 mātrās (time units).</div>
+        <!-- NEW ROW 2: Voice Controls (Pitch + Speed sliders) -->
+        <div class="form-row">
+          <label class="form-label">Voice Controls</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-top:0.3rem;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                <span
+                  style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Pitch</span>
+                <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);" id="chantPitchVal">0</span>
+              </div>
+              <input type="range" id="chantPitch" min="-8" max="8" value="0" step="1"
+                style="width:100%;accent-color:var(--gold);"
+                oninput="document.getElementById('chantPitchVal').textContent=(this.value>0?'+':'')+this.value" />
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                <span
+                  style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Speed</span>
+                <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);"
+                  id="chantSpeedVal">1.0×</span>
+              </div>
+              <input type="range" id="chantSpeed" min="0.5" max="1.8" value="1.0" step="0.1"
+                style="width:100%;accent-color:var(--gold);"
+                oninput="document.getElementById('chantSpeedVal').textContent=parseFloat(this.value).toFixed(1)+'×'" />
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                <span
+                  style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--saffron);text-transform:uppercase;">Melody</span>
+                <span style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);"
+                  id="chantMelodyVal">50%</span>
+              </div>
+              <input type="range" id="chantMelody" min="0" max="100" value="50" step="5"
+                style="width:100%;accent-color:var(--gold);"
+                oninput="document.getElementById('chantMelodyVal').textContent=this.value+'%'" />
+            </div>
+          </div>
         </div>
-        <div class="rcard">
-          <div class="rcard-label">Laghu · Light</div>
-          <div class="rcard-body">A <strong style="color:var(--gold)">L (Laghu)</strong> syllable is "light" — it contains a short vowel (a, i, u) not followed by a cluster. It takes 1 mātrā.</div>
+
+        <!-- NEW ROW 3: Language toggle -->
+        <div class="form-row">
+          <label class="form-label">Output Language</label>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <button type="button" class="k-btn active-btn" id="langSa" onclick="selectChantLang('sa',this)">संस्कृत
+              Sanskrit</button>
+            <button type="button" class="k-btn" id="langHi" onclick="selectChantLang('hi',this)">हिन्दी Hindi</button>
+            <button type="button" class="k-btn" id="langEn" onclick="selectChantLang('en',this)">English</button>
+          </div>
         </div>
-        <div class="rcard">
-          <div class="rcard-label">Pāda · Foot</div>
-          <div class="rcard-body">A <strong style="color:var(--gold)">Pāda</strong> is a quarter-verse. Most Sanskrit metres have 4 pādas. The Anuṣṭubh śloka (32 syllables, 4×8) is the most widely used metre in all of Sanskrit literature.</div>
+
+        <!-- NEW ROW 4: Voice Profile -->
+        <div class="form-row">
+          <label class="form-label">Voice Profile</label>
+          <select class="select-styled" id="chantVoiceProfile">
+            <option value="pandit">🧘 Pandit — deep vedic resonance</option>
+            <option value="devi">🌸 Devī — soft, melodious</option>
+            <option value="sage">🔱 Ṛṣi — ancient, slow, wise</option>
+            <option value="narrator">📖 Narrator — clear, measured</option>
+          </select>
         </div>
-        <div class="rcard">
-          <div class="rcard-label">Gāyatrī Metre</div>
-          <div class="rcard-body">The sacred Gāyatrī mantra uses the Gāyatrī metre: 3 pādas of 8 syllables each (24 total). It is considered the "mother of all metres" in the Vedas.</div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:0.75rem;align-items:end;">
+          <button class="btn-tool" id="chantGenerateBtn" onclick="generateChant()">
+            उत्पन्न करें — Generate Chant Pattern
+          </button>
+          <button class="btn-tool" id="chantSpeakBtn" onclick="speakChant()" disabled
+            style="width:auto;padding:0.95rem 1.5rem;background:linear-gradient(135deg,#1A6B6B,#0D4040);">
+            🔊 Speak
+          </button>
+        </div>
+
+      </div>
+
+      <div class="loader" id="chantLoader">
+        <div class="loader-ring"></div>
+        <p>Consulting Pāṇini and the Gandharvas…</p>
+      </div>
+
+      <div class="chant-output" id="chantOutput">
+        <div class="chant-raga-tag" id="chantRagaTag">🎵 Rāga · Chandas Pattern</div>
+        <div class="chant-verse-main" id="chantVerseOut"></div>
+        <div class="notation-line" id="chantNotation"></div>
+
+        <div class="visualizer" id="chantVisualizer">
+          <div class="v-bar" style="height:20px"></div>
+          <div class="v-bar" style="height:35px"></div>
+          <div class="v-bar" style="height:15px"></div>
+          <div class="v-bar" style="height:45px"></div>
+          <div class="v-bar" style="height:28px"></div>
+          <div class="v-bar" style="height:50px"></div>
+          <div class="v-bar" style="height:22px"></div>
+          <div class="v-bar" style="height:40px"></div>
+          <div class="v-bar" style="height:18px"></div>
+          <div class="v-bar" style="height:38px"></div>
+        </div>
+
+        <!-- Audio playback controls — shown after generation -->
+        <div id="chantAudioControls" style="display:none;margin-top:1.2rem;">
+          <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;">
+            <button class="k-btn" id="chantPlayBtn" onclick="speakChant()">▶ Play</button>
+            <button class="k-btn" onclick="pauseChant()">⏸ Pause</button>
+            <button class="k-btn" onclick="stopChant()">⏹ Stop</button>
+            <button class="k-btn" onclick="downloadChantAudio()">⬇ Save</button>
+          </div>
+          <div id="chantPhonemes"
+            style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.5rem;"></div>
+        </div>
+
+        <!-- AI Analysis card — shown after generation -->
+        <div class="rcard" id="chantAiCard" style="display:none;margin-top:1.5rem;text-align:left;">
+          <div class="rcard-label">AI Chant Analysis</div>
+          <div class="rcard-body" id="chantAiBody" style="white-space:pre-line;line-height:1.85;"></div>
+        </div>
+
+        <!-- Error -->
+        <div class="error-box" id="chantError" style="margin-top:1rem;"></div>
+
+        <div class="chant-details" id="chantDetails"></div>
+      </div>
+
+      <!-- Info cards -->
+      <div style="margin-top:3rem">
+        <h3
+          style="font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.15em;color:var(--gold-pale);margin-bottom:1.2rem;text-align:center;text-transform:uppercase;">
+          What Is Chandas?</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+          <div class="rcard">
+            <div class="rcard-label">Guru · Heavy</div>
+            <div class="rcard-body">A <strong style="color:var(--gold)">G (Guru)</strong> syllable is "heavy" — it
+              contains a long vowel (ā, ī, ū) or is followed by a consonant cluster. It takes 2 mātrās (time units).
+            </div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-label">Laghu · Light</div>
+            <div class="rcard-body">A <strong style="color:var(--gold)">L (Laghu)</strong> syllable is "light" — it
+              contains a short vowel (a, i, u) not followed by a cluster. It takes 1 mātrā.</div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-label">Pāda · Foot</div>
+            <div class="rcard-body">A <strong style="color:var(--gold)">Pāda</strong> is a quarter-verse. Most Sanskrit
+              metres have 4 pādas. The Anuṣṭubh śloka (32 syllables, 4×8) is the most widely used metre in all of
+              Sanskrit literature.</div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-label">Gāyatrī Metre</div>
+            <div class="rcard-body">The sacred Gāyatrī mantra uses the Gāyatrī metre: 3 pādas of 8 syllables each (24
+              total). It is considered the "mother of all metres" in the Vedas.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      PAGE: ANCIENT TEXTS
 ═══════════════════════════════════════ -->
-<div class="page" id="page-texts">
-  <div class="page-banner">
-    <span class="devanagari-title">ग्रन्थ</span>
-    <h1>Ancient Texts & History</h1>
-    <p>From the primordial hymns of the Ṛgveda to the mathematical elegance of Pāṇini — a journey through 5,000 years</p>
-  </div>
+  <div class="page" id="page-texts">
+    <div class="page-banner">
+      <span class="devanagari-title">ग्रन्थ</span>
+      <h1>Ancient Texts & History</h1>
+      <p>From the primordial hymns of the Ṛgveda to the mathematical elegance of Pāṇini — a journey through 5,000 years
+      </p>
+    </div>
 
-  <div class="tool-container" style="max-width:900px">
+    <div class="tool-container" style="max-width:900px">
 
-    <div class="section-inner" style="padding:2rem 0">
-      <h2 class="section-title" style="text-align:left;margin-bottom:0.3rem;">The Śruti — "That Which Is Heard"</h2>
-      <p style="font-style:italic;color:rgba(250,240,220,0.5);margin-bottom:2.5rem;font-size:0.97rem;">The directly revealed scriptures, passed orally for millennia before being written</p>
+      <div class="section-inner" style="padding:2rem 0">
+        <h2 class="section-title" style="text-align:left;margin-bottom:0.3rem;">The Śruti — "That Which Is Heard"</h2>
+        <p style="font-style:italic;color:rgba(250,240,220,0.5);margin-bottom:2.5rem;font-size:0.97rem;">The directly
+          revealed scriptures, passed orally for millennia before being written</p>
 
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-year">c. 1500–1200 BCE</div>
-          <h3>Ṛgveda</h3>
-          <p>The oldest religious text in any Indo-European language. 10,552 mantras in 1,028 hymns, composed across 10 maṇḍalas (books). Primarily hymns to Agni (fire), Indra, and Varuṇa. The word "veda" itself means "knowledge."</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">c. 1500–1200 BCE</div>
+            <h3>Ṛgveda</h3>
+            <p>The oldest religious text in any Indo-European language. 10,552 mantras in 1,028 hymns, composed across
+              10 maṇḍalas (books). Primarily hymns to Agni (fire), Indra, and Varuṇa. The word "veda" itself means
+              "knowledge."</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 1200–900 BCE</div>
+            <h3>Sāmaveda & Yajurveda</h3>
+            <p>The Sāmaveda is the "Veda of melodies" — most of its 1,875 verses are drawn from the Ṛgveda but set to
+              musical notation (sāman). It is the direct ancestor of Indian classical music. The Yajurveda contains
+              prose mantras for ritual.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 900–700 BCE</div>
+            <h3>Atharvaveda</h3>
+            <p>The fourth Veda — more earthly in focus, containing hymns for healing, longevity, cosmology, marriage,
+              and statecraft. It contains early mathematical and astronomical observations.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 800–200 BCE</div>
+            <h3>Upaniṣads (108 texts)</h3>
+            <p>The philosophical culmination of the Vedic period. The word means "to sit near" — as a student sits near
+              a teacher. They introduce the key concepts of Brahman (universal consciousness), Ātman (self), karma, and
+              mokṣa. The Bṛhadāraṇyaka and Chāndogya Upaniṣads are among the oldest philosophical texts in the world.
+            </p>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 1200–900 BCE</div>
-          <h3>Sāmaveda & Yajurveda</h3>
-          <p>The Sāmaveda is the "Veda of melodies" — most of its 1,875 verses are drawn from the Ṛgveda but set to musical notation (sāman). It is the direct ancestor of Indian classical music. The Yajurveda contains prose mantras for ritual.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 900–700 BCE</div>
-          <h3>Atharvaveda</h3>
-          <p>The fourth Veda — more earthly in focus, containing hymns for healing, longevity, cosmology, marriage, and statecraft. It contains early mathematical and astronomical observations.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 800–200 BCE</div>
-          <h3>Upaniṣads (108 texts)</h3>
-          <p>The philosophical culmination of the Vedic period. The word means "to sit near" — as a student sits near a teacher. They introduce the key concepts of Brahman (universal consciousness), Ātman (self), karma, and mokṣa. The Bṛhadāraṇyaka and Chāndogya Upaniṣads are among the oldest philosophical texts in the world.</p>
-        </div>
-      </div>
 
-      <div style="height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0;"></div>
+        <div style="height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0;">
+        </div>
 
-      <h2 class="section-title" style="text-align:left;margin-bottom:0.3rem;">The Smṛti — "That Which Is Remembered"</h2>
-      <p style="font-style:italic;color:rgba(250,240,220,0.5);margin-bottom:2.5rem;font-size:0.97rem;">The authored epics, purāṇas, and law codes of classical Sanskrit literature</p>
+        <h2 class="section-title" style="text-align:left;margin-bottom:0.3rem;">The Smṛti — "That Which Is Remembered"
+        </h2>
+        <p style="font-style:italic;color:rgba(250,240,220,0.5);margin-bottom:2.5rem;font-size:0.97rem;">The authored
+          epics, purāṇas, and law codes of classical Sanskrit literature</p>
 
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-year">c. 400 BCE – 400 CE</div>
-          <h3>Mahābhārata</h3>
-          <p>The world's longest epic poem — approximately 1.8 million words, roughly ten times the length of the Iliad and Odyssey combined. Attributed to sage Vyāsa, scribed by Gaṇeśa. Contains the Bhagavad Gītā (700 verses), the Viṣṇu Sahasranāma, and encyclopaedic lore spanning dharma, artha, kāma, and mokṣa.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">c. 400 BCE – 400 CE</div>
+            <h3>Mahābhārata</h3>
+            <p>The world's longest epic poem — approximately 1.8 million words, roughly ten times the length of the
+              Iliad and Odyssey combined. Attributed to sage Vyāsa, scribed by Gaṇeśa. Contains the Bhagavad Gītā (700
+              verses), the Viṣṇu Sahasranāma, and encyclopaedic lore spanning dharma, artha, kāma, and mokṣa.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 500 BCE – 300 CE</div>
+            <h3>Rāmāyaṇa</h3>
+            <p>24,000 verses in 7 kāṇḍas (books) by Vālmīki — the "first poet" (ādi kavi). The story of Rāma and Sītā is
+              one of the most beloved and widely adapted narratives on earth, influencing the cultures of South and
+              Southeast Asia for three millennia.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 300–1200 CE</div>
+            <h3>18 Mahāpurāṇas</h3>
+            <p>The great encyclopaedic texts — the Bhāgavata Purāṇa, Viṣṇu Purāṇa, Śiva Purāṇa, and 15 others. Together
+              they contain cosmology, genealogies, geography, pilgrimage sites, temple architecture, and devotional
+              theology. The Bhāgavata alone runs to 18,000 verses.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 400 BCE</div>
+            <h3>Aṣṭādhyāyī by Pāṇini</h3>
+            <p>Perhaps the most extraordinary intellectual achievement of antiquity — a complete, generative grammar of
+              Sanskrit in 3,959 sūtras (rules), so precise and economical that modern linguists consider it a
+              masterpiece of formal linguistics, anticipating Chomskyan generative grammar by 2,400 years.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 200 BCE</div>
+            <h3>Chandaśāstra by Piṅgala</h3>
+            <p>The science of Sanskrit metres. In cataloguing syllable patterns, Piṅgala described binary sequences
+              (using laghu = 0, guru = 1) and the Pascal's triangle — making this the earliest known description of
+              binary arithmetic and combinatorics in history.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">c. 200 BCE – 200 CE</div>
+            <h3>Arthaśāstra by Kauṭilya</h3>
+            <p>A remarkably sophisticated treatise on statecraft, economic policy, military strategy, and espionage by
+              Candragupta Maurya's minister. Often compared to Machiavelli's Prince, but written 1,800 years earlier,
+              covering everything from foreign policy to market regulation.</p>
+          </div>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 500 BCE – 300 CE</div>
-          <h3>Rāmāyaṇa</h3>
-          <p>24,000 verses in 7 kāṇḍas (books) by Vālmīki — the "first poet" (ādi kavi). The story of Rāma and Sītā is one of the most beloved and widely adapted narratives on earth, influencing the cultures of South and Southeast Asia for three millennia.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 300–1200 CE</div>
-          <h3>18 Mahāpurāṇas</h3>
-          <p>The great encyclopaedic texts — the Bhāgavata Purāṇa, Viṣṇu Purāṇa, Śiva Purāṇa, and 15 others. Together they contain cosmology, genealogies, geography, pilgrimage sites, temple architecture, and devotional theology. The Bhāgavata alone runs to 18,000 verses.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 400 BCE</div>
-          <h3>Aṣṭādhyāyī by Pāṇini</h3>
-          <p>Perhaps the most extraordinary intellectual achievement of antiquity — a complete, generative grammar of Sanskrit in 3,959 sūtras (rules), so precise and economical that modern linguists consider it a masterpiece of formal linguistics, anticipating Chomskyan generative grammar by 2,400 years.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 200 BCE</div>
-          <h3>Chandaśāstra by Piṅgala</h3>
-          <p>The science of Sanskrit metres. In cataloguing syllable patterns, Piṅgala described binary sequences (using laghu = 0, guru = 1) and the Pascal's triangle — making this the earliest known description of binary arithmetic and combinatorics in history.</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">c. 200 BCE – 200 CE</div>
-          <h3>Arthaśāstra by Kauṭilya</h3>
-          <p>A remarkably sophisticated treatise on statecraft, economic policy, military strategy, and espionage by Candragupta Maurya's minister. Often compared to Machiavelli's Prince, but written 1,800 years earlier, covering everything from foreign policy to market regulation.</p>
-        </div>
-      </div>
 
-      <div style="height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0;"></div>
+        <div style="height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem 0;">
+        </div>
 
-      <h2 class="section-title" style="text-align:left;margin-bottom:1.5rem;">Sanskrit by the Numbers</h2>
-      <div class="facts-strip">
-        <div class="fact-card">
-          <span class="fact-icon">१</span>
-          <h3>1.8 Million Words</h3>
-          <p>The Mahābhārata — the longest literary work in human history.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">२</span>
-          <h3>30 Million Manuscripts</h3>
-          <p>India holds more surviving handwritten manuscripts than any other civilisation — the vast majority in Sanskrit.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">३</span>
-          <h3>600+ Metres</h3>
-          <p>Piṅgala catalogued over 600 Sanskrit prosodic metres, each with precise rules governing syllable weight and arrangement.</p>
-        </div>
-        <div class="fact-card">
-          <span class="fact-icon">४</span>
-          <h3>3,959 Sūtras</h3>
-          <p>Pāṇini's Aṣṭādhyāyī — a complete generative grammar of a natural language — in under 4,000 rules.</p>
+        <h2 class="section-title" style="text-align:left;margin-bottom:1.5rem;">Sanskrit by the Numbers</h2>
+        <div class="facts-strip">
+          <div class="fact-card">
+            <span class="fact-icon">१</span>
+            <h3>1.8 Million Words</h3>
+            <p>The Mahābhārata — the longest literary work in human history.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">२</span>
+            <h3>30 Million Manuscripts</h3>
+            <p>India holds more surviving handwritten manuscripts than any other civilisation — the vast majority in
+              Sanskrit.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">३</span>
+            <h3>600+ Metres</h3>
+            <p>Piṅgala catalogued over 600 Sanskrit prosodic metres, each with precise rules governing syllable weight
+              and arrangement.</p>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">४</span>
+            <h3>3,959 Sūtras</h3>
+            <p>Pāṇini's Aṣṭādhyāyī — a complete generative grammar of a natural language — in under 4,000 rules.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════
+  <!-- ═══════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
-<footer>
-  <span class="footer-om">ॐ</span>
-  <p>Vāk — The Voice of Sanskrit &nbsp;·&nbsp; Built for the IKS Online Hackathon</p>
-  <p style="margin-top:0.4rem;opacity:0.5;">सर्वे भवन्तु सुखिनः · May all beings be happy</p>
-</footer>
+  <footer>
+    <span class="footer-om">ॐ</span>
+    <p>Vāk — The Voice of Sanskrit &nbsp;·&nbsp; Built for the IKS Online Hackathon</p>
+    <p style="margin-top:0.4rem;opacity:0.5;">सर्वे भवन्तु सुखिनः · May all beings be happy</p>
+  </footer>
 
-<!-- ═══════════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════
      JAVASCRIPT
 ═══════════════════════════════════════════════════ -->
-<script>
-// ── PAGE ROUTING ─────────────────────────────
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.getElementById('nav-'+id).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// ── DRAG & DROP UPLOAD ────────────────────────
-const uploadZone = document.getElementById('uploadZone');
-const audioInput = document.getElementById('audioInput');
-let selectedFile = null;
-
-if(uploadZone){
-  uploadZone.addEventListener('dragover',e=>{e.preventDefault();uploadZone.classList.add('drag-over');});
-  uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag-over'));
-  uploadZone.addEventListener('drop',e=>{
-    e.preventDefault();uploadZone.classList.remove('drag-over');
-    if(e.dataTransfer.files[0]) setAudioFile(e.dataTransfer.files[0]);
-  });
-  audioInput.addEventListener('change',e=>{if(e.target.files[0]) setAudioFile(e.target.files[0]);});
-}
-function setAudioFile(f){
-  selectedFile=f;
-  document.getElementById('fileName').textContent=f.name;
-  document.getElementById('fileBadge').style.display='inline-block';
-}
-
-// ══════════════════════════════════════════════════════════════
-// LOCAL SANSKRIT ANALYSIS ENGINE — no API key required
-// ══════════════════════════════════════════════════════════════
-
-/* ── 1. Known-verse database ── */
-const KNOWN_VERSES = [
-  {
-    pattern: ['नमो','नम','नमः'],
-    transcribed_text: 'नमो नमः',
-    transliteration: 'namo namaḥ',
-    source_context: 'Common Sanskrit salutation',
-    english_translation: 'Salutations, salutations — a reverent bow repeated in devotion.',
-    meaning: 'Namas (नमस्) means "a bow" or "reverence." The repeated form expresses profound humility before the divine. It is one of the most universal expressions in Vedic worship, acknowledging the sacred in all things.',
-    simplified_sanskrit: 'मैं प्रणाम करता हूँ, पुनः प्रणाम।',
-    chandas_analysis:{ meter_name:'Prose/Mantra fragment', syllable_pattern:'—', description:'A devotional salutation, not bound to a formal metre.', pada_count:1, total_syllables:4 },
-    word_by_word:[{word:'नमो',root:'नमस्',meaning:'salutation / bow'},{word:'नमः',root:'नमस्',meaning:'salutation / bow (ḥ visarga ending)'}]
-  },
-  {
-    pattern: ['गायत्री','सवितुर','भर्गो','धीमहि'],
-    transcribed_text: 'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्',
-    transliteration: 'oṃ bhūrbhuvaḥ svaḥ tatsaviturvareṇyaṃ bhargo devasya dhīmahi dhiyo yo naḥ pracodayāt',
-    source_context: 'Ṛgveda 3.62.10 — Gāyatrī Mantra',
-    english_translation: 'We meditate upon the radiant divine light of the Sun. May that supreme brilliance illuminate our intellect and inspire us toward righteousness.',
-    meaning: 'The Gāyatrī is addressed to Savitṛ, the solar deity as the source of all illumination — outer and inner. "Dhīmahi" (we meditate) places the practitioner in active contemplation. The final prayer "pracodayāt" (may it inspire) transforms meditation into action guided by wisdom.',
-    simplified_sanskrit: 'हम उस सूर्य के श्रेष्ठ प्रकाश का ध्यान करते हैं जो हमारी बुद्धि को प्रेरित करे।',
-    chandas_analysis:{ meter_name:'Gāyatrī', syllable_pattern:'8-8-8 (tripadā)', description:'The Gāyatrī metre has three pādas of eight syllables each — the most sacred metre in the Vedas, presided over by Savitṛ.', pada_count:3, total_syllables:24 },
-    word_by_word:[
-      {word:'ॐ',root:'OM',meaning:'the primordial sound'},
-      {word:'भूर्',root:'भू',meaning:'earth / physical plane'},
-      {word:'भुवः',root:'भुवस्',meaning:'atmosphere / vital plane'},
-      {word:'स्वः',root:'स्वर्',meaning:'heaven / causal plane'},
-      {word:'तत्',root:'तद्',meaning:'that (the Supreme)'},
-      {word:'सवितुर्',root:'सवितृ',meaning:'of the Sun / Savitṛ'},
-      {word:'वरेण्यं',root:'वर',meaning:'most adorable / choiceworthy'},
-      {word:'भर्गो',root:'भर्गस्',meaning:'radiance / effulgence'},
-      {word:'देवस्य',root:'देव',meaning:'of the divine / God'},
-      {word:'धीमहि',root:'ध्यै',meaning:'we meditate upon'},
-      {word:'धियो',root:'धी',meaning:'intellect / understanding'},
-      {word:'यो',root:'यद्',meaning:'who / that which'},
-      {word:'नः',root:'अस्मद्',meaning:'our'},
-      {word:'प्रचोदयात्',root:'प्र+चुद्',meaning:'may it inspire / impel'}
-    ]
-  },
-  {
-    pattern: ['कर्मण्य','अधिकार','फलेषु','कर्मफल'],
-    transcribed_text: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
-    transliteration: 'karmaṇyevādhikāraste mā phaleṣu kadācana | mā karmaphalaheturbhūrmā te saṅgo\'stvakarmaṇi ||',
-    source_context: 'Bhagavad Gītā 2.47',
-    english_translation: 'You have the right to perform your actions alone, but never to their fruits. Let not the fruit of action be your motive, nor let your attachment be to inaction.',
-    meaning: 'This is perhaps the most quoted verse of the Bhagavad Gītā. Kṛṣṇa distinguishes between action (karman) and its result (phala). True freedom lies in performing duty without desire for reward — Niṣkāma Karma. The verse warns against both fruit-seeking and inertia.',
-    simplified_sanskrit: 'तुम्हारा अधिकार केवल कर्म करने में है, फल में नहीं। फल की इच्छा से कर्म मत करो और न ही कर्म न करने में आसक्त हो।',
-    chandas_analysis:{ meter_name:'Anuṣṭubh (Śloka)', syllable_pattern:'8-8-8-8 (catuṣpadā)', description:'The Anuṣṭubh is the dominant metre of the epics — each of the four pādas has eight syllables. It is the metre of the Rāmāyaṇa and most of the Mahābhārata.', pada_count:4, total_syllables:32 },
-    word_by_word:[
-      {word:'कर्मणि',root:'कर्मन्',meaning:'in action / duty'},
-      {word:'एव',root:'एव',meaning:'only / alone'},
-      {word:'अधिकारः',root:'अधिकार',meaning:'right / entitlement'},
-      {word:'ते',root:'युष्मद्',meaning:'your'},
-      {word:'मा',root:'मा',meaning:'not (prohibitive particle)'},
-      {word:'फलेषु',root:'फल',meaning:'in the fruits / results'},
-      {word:'कदाचन',root:'कदाचन',meaning:'ever / at any time'},
-      {word:'कर्मफल',root:'कर्म+फल',meaning:'fruit of action'},
-      {word:'हेतुः',root:'हेतु',meaning:'cause / motive'},
-      {word:'भूः',root:'भू',meaning:'be (imperative)'},
-      {word:'सङ्गः',root:'सङ्ग',meaning:'attachment'},
-      {word:'अस्तु',root:'अस्',meaning:'let there be'},
-      {word:'अकर्मणि',root:'अ+कर्मन्',meaning:'in inaction'}
-    ]
-  },
-  {
-    pattern: ['सर्वे','भवन्तु','सुखिनः','सन्तु','निरामया'],
-    transcribed_text: 'सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः। सर्वे भद्राणि पश्यन्तु। मा कश्चिद् दुःखभाग् भवेत्॥',
-    transliteration: 'sarve bhavantu sukhinaḥ | sarve santu nirāmayāḥ | sarve bhadrāṇi paśyantu | mā kaścid duḥkhabhāg bhavet ||',
-    source_context: 'Bṛhadāraṇyaka Upaniṣad — Universal Peace Prayer',
-    english_translation: 'May all be happy. May all be free from illness. May all see auspiciousness. May no one suffer.',
-    meaning: 'This Śānti Pāṭha from the Upaniṣads expresses the Vedic ideal of universal compassion (karuṇā). It dissolves the boundary between self and other — the practitioner prays not for themselves but for all beings. "Sarve" (all) is repeated deliberately to include every living entity.',
-    simplified_sanskrit: 'सभी सुखी हों, सभी निरोगी हों, सभी मंगल देखें, कोई दुखी न हो।',
-    chandas_analysis:{ meter_name:'Anuṣṭubh variant', syllable_pattern:'8-8-8-8', description:'A prayer in roughly Anuṣṭubh metre — four pādas ending in the auspicious benediction "bhavet."', pada_count:4, total_syllables:32 },
-    word_by_word:[
-      {word:'सर्वे',root:'सर्व',meaning:'all / everyone'},
-      {word:'भवन्तु',root:'भू',meaning:'may they be'},
-      {word:'सुखिनः',root:'सुखिन्',meaning:'happy / joyful ones'},
-      {word:'सन्तु',root:'अस्',meaning:'may they be'},
-      {word:'निरामयाः',root:'निर्+आमय',meaning:'free from disease'},
-      {word:'भद्राणि',root:'भद्र',meaning:'auspicious things'},
-      {word:'पश्यन्तु',root:'दृश्',meaning:'may they see'},
-      {word:'मा',root:'मा',meaning:'not (prohibition)'},
-      {word:'कश्चित्',root:'किम्+चित्',meaning:'anyone at all'},
-      {word:'दुःखभाग्',root:'दुःख+भाज्',meaning:'partaker of sorrow'},
-      {word:'भवेत्',root:'भू',meaning:'may become / let be'}
-    ]
-  },
-  {
-    pattern: ['पूर्णमदः','पूर्णमिदं','पूर्णात्','अवशिष्यते'],
-    transcribed_text: 'ॐ पूर्णमदः पूर्णमिदं पूर्णात् पूर्णमुदच्यते। पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते॥',
-    transliteration: 'oṃ pūrṇamadaḥ pūrṇamidaṃ pūrṇāt pūrṇamudacyate | pūrṇasya pūrṇamādāya pūrṇamevāvaśiṣyate ||',
-    source_context: 'Bṛhadāraṇyaka Upaniṣad — Śānti Pāṭha',
-    english_translation: 'That (Brahman) is whole. This (universe) is whole. From wholeness, wholeness is born. Even when wholeness is taken from wholeness, wholeness alone remains.',
-    meaning: 'This paradox reveals the Advaita Vedānta insight that Brahman (the Absolute) cannot be diminished. The universe, though apparently separate, is itself Brahman — whole taken from whole, leaving whole. It expresses the non-dual nature of reality: infinity minus infinity equals infinity.',
-    simplified_sanskrit: 'वह पूर्ण है, यह भी पूर्ण है। पूर्ण से पूर्ण उत्पन्न होता है। पूर्ण में से पूर्ण लेने पर भी पूर्ण ही शेष रहता है।',
-    chandas_analysis:{ meter_name:'Anuṣṭubh', syllable_pattern:'8-8-8-8', description:'Classic Anuṣṭubh, the metre of Upaniṣadic prose-poetry. The repetition of pūrṇa creates a meditative, incantatory effect.', pada_count:4, total_syllables:32 },
-    word_by_word:[
-      {word:'पूर्णम्',root:'पूर्ण',meaning:'complete / whole / full'},
-      {word:'अदः',root:'अदस्',meaning:'that (Brahman / the Absolute)'},
-      {word:'इदं',root:'इदम्',meaning:'this (the manifest universe)'},
-      {word:'पूर्णात्',root:'पूर्ण',meaning:'from wholeness (ablative)'},
-      {word:'उदच्यते',root:'उद्+अञ्च्',meaning:'arises / is born'},
-      {word:'पूर्णस्य',root:'पूर्ण',meaning:'of the whole (genitive)'},
-      {word:'आदाय',root:'आ+दा',meaning:'having taken'},
-      {word:'अवशिष्यते',root:'अव+शिष्',meaning:'remains / is left over'}
-    ]
-  },
-  {
-    pattern: ['त्र्यम्बकं','यजामहे','मृत्योर्','अमृतात्','बन्धनान्'],
-    transcribed_text: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय माऽमृतात्॥',
-    transliteration: 'oṃ tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam | urvārukamiva bandhanān mṛtyormukṣīya mā\'mṛtāt ||',
-    source_context: 'Ṛgveda 7.59.12 — Mahāmṛtyuñjaya Mantra',
-    english_translation: 'We worship the three-eyed Lord who is fragrant and who nourishes all. As the cucumber is freed from its stem, may we be liberated from the bondage of death, not from immortality.',
-    meaning: 'The Mahāmṛtyuñjaya — "the great conqueror of death" — is addressed to Rudra-Śiva, who holds the power over the life-death cycle. The cucumber simile is profound: it detaches naturally when ripe, without force. The prayer seeks this same natural liberation — mokṣa as effortless ripeness, not violent severance.',
-    simplified_sanskrit: 'हम उस तीन-नेत्र वाले, सुगंधित, पोषण देने वाले प्रभु की पूजा करते हैं। जैसे ककड़ी बंधन से मुक्त हो, वैसे हमें मृत्यु के बंधन से मुक्त करो।',
-    chandas_analysis:{ meter_name:'Anuṣṭubh (Triṣṭubh origin)', syllable_pattern:'8-8-8-8', description:'Originally a Triṣṭubh verse in the Ṛgveda, often recited in the Anuṣṭubh frame in later tradition.', pada_count:4, total_syllables:32 },
-    word_by_word:[
-      {word:'त्र्यम्बकं',root:'त्रि+अम्बक',meaning:'three-eyed one (Śiva)'},
-      {word:'यजामहे',root:'यज्',meaning:'we worship'},
-      {word:'सुगन्धिं',root:'सु+गन्ध',meaning:'fragrant / sweet-scented'},
-      {word:'पुष्टिवर्धनम्',root:'पुष्टि+वर्धन',meaning:'increaser of nourishment'},
-      {word:'उर्वारुकम्',root:'उर्वारुक',meaning:'cucumber / gourd'},
-      {word:'इव',root:'इव',meaning:'like / as'},
-      {word:'बन्धनान्',root:'बन्धन',meaning:'from bondage'},
-      {word:'मृत्योः',root:'मृत्यु',meaning:'from death'},
-      {word:'मुक्षीय',root:'मुच्',meaning:'may I be freed'},
-      {word:'अमृतात्',root:'अमृत',meaning:'from immortality (not from it)'}
-    ]
-  },
-  {
-    pattern: ['विद्या','ददाति','विनयं','पात्रताम्'],
-    transcribed_text: 'विद्या ददाति विनयं विनयाद् याति पात्रताम्। पात्रत्वात् धनमाप्नोति धनात् धर्मस्ततः सुखम्॥',
-    transliteration: 'vidyā dadāti vinayaṃ vinayād yāti pātratām | pātratvāt dhanamāpnoti dhanāt dharmastatḥ sukham ||',
-    source_context: 'Hitopadeśa',
-    english_translation: 'Knowledge gives humility; from humility comes worthiness. From worthiness one attains wealth; from wealth, righteousness; and from righteousness, happiness.',
-    meaning: 'The Hitopadeśa traces a chain of consequence that begins with vidyā (learning) and ends with sukha (happiness). Crucially, wealth is positioned as a means to dharma — not an end. The verse challenges the modern equation of wealth with happiness by inserting dharma as the necessary intermediary.',
-    simplified_sanskrit: 'विद्या विनम्रता देती है, विनम्रता से योग्यता आती है, योग्यता से धन मिलता है, धन से धर्म होता है और धर्म से सुख।',
-    chandas_analysis:{ meter_name:'Anuṣṭubh', syllable_pattern:'8-8-8-8', description:'Standard Anuṣṭubh śloka — four pādas of eight syllables. The chain structure (anadiplosis) mirrors the logical chain being described.', pada_count:4, total_syllables:32 },
-    word_by_word:[
-      {word:'विद्या',root:'विद्',meaning:'knowledge / learning'},
-      {word:'ददाति',root:'दा',meaning:'gives / bestows'},
-      {word:'विनयं',root:'विनय',meaning:'humility / discipline'},
-      {word:'याति',root:'या',meaning:'goes / attains'},
-      {word:'पात्रताम्',root:'पात्र',meaning:'worthiness / fitness'},
-      {word:'धनम्',root:'धन',meaning:'wealth'},
-      {word:'आप्नोति',root:'आप्',meaning:'obtains'},
-      {word:'धर्मः',root:'धर्म',meaning:'righteousness / duty'},
-      {word:'सुखम्',root:'सुख',meaning:'happiness / joy'}
-    ]
-  }
-];
-
-/* ── 2. Devanagari → IAST transliteration map ── */
-const IAST_MAP = {
-  'अ':'a','आ':'ā','इ':'i','ई':'ī','उ':'u','ऊ':'ū',
-  'ऋ':'ṛ','ॠ':'ṝ','ऌ':'ḷ','ए':'e','ऐ':'ai','ओ':'o','औ':'au',
-  'ं':'ṃ','ः':'ḥ','ँ':'m̐',
-  'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ṅ',
-  'च':'c','छ':'ch','ज':'j','झ':'jh','ञ':'ñ',
-  'ट':'ṭ','ठ':'ṭh','ड':'ḍ','ढ':'ḍh','ण':'ṇ',
-  'त':'t','थ':'th','द':'d','ध':'dh','न':'n',
-  'प':'p','फ':'ph','ब':'b','भ':'bh','म':'m',
-  'य':'y','र':'r','ल':'l','व':'v',
-  'श':'ś','ष':'ṣ','स':'s','ह':'h',
-  'ा':'ā','ि':'i','ी':'ī','ु':'u','ू':'ū',
-  'ृ':'ṛ','े':'e','ै':'ai','ो':'o','ौ':'au',
-  '्':'','ॐ':'oṃ','।':' |','॥':' ||','ऽ':'\''
-};
-
-function toIAST(text) {
-  let out = '';
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (IAST_MAP[ch] !== undefined) {
-      out += IAST_MAP[ch];
-    } else if (ch >= '\u0900' && ch <= '\u097F') {
-      // Consonant with inherent 'a' — add if next char is not a virama or vowel sign
-      const next = text[i+1];
-      const isVowelSign = next && IAST_MAP[next] !== undefined && '\u093E\u093F\u0940\u0941\u0942\u0943\u0947\u0948\u094B\u094C\u094D'.includes(next);
-      out += (IAST_MAP[ch] || ch) + (!isVowelSign && next !== '्' ? '' : '');
-      out = out; // placeholder
-      if (IAST_MAP[ch]) out = out.slice(0, -IAST_MAP[ch].length) + IAST_MAP[ch];
-      else out += '';
-    } else {
-      out += ch === ' ' ? ' ' : ch;
+  <script>
+    // ── PAGE ROUTING ─────────────────────────────
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      document.getElementById('nav-' + id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }
-  return out.replace(/\s+/g, ' ').trim();
-}
 
-/* Simplified but working IAST conversion */
-function devaToIAST(text) {
-  const vowelSigns = {'ा':'ā','ि':'i','ी':'ī','ु':'u','ू':'ū','ृ':'ṛ','े':'e','ै':'ai','ो':'o','ौ':'au','ं':'ṃ','ः':'ḥ','्':''};
-  const consonants = {'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ṅ','च':'c','छ':'ch','ज':'j','झ':'jh','ञ':'ñ','ट':'ṭ','ठ':'ṭh','ड':'ḍ','ढ':'ḍh','ण':'ṇ','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v','श':'ś','ष':'ṣ','स':'s','ह':'h'};
-  const vowels = {'अ':'a','आ':'ā','इ':'i','ई':'ī','उ':'u','ऊ':'ū','ऋ':'ṛ','ए':'e','ऐ':'ai','ओ':'o','औ':'au'};
-  let res = '', i = 0;
-  const chars = [...text];
-  while (i < chars.length) {
-    const c = chars[i];
-    if (c === 'ॐ') { res += 'oṃ'; i++; continue; }
-    if (vowels[c]) { res += vowels[c]; i++; continue; }
-    if (consonants[c]) {
-      res += consonants[c];
-      if (chars[i+1] === '्') { i += 2; continue; }           // virama — no vowel
-      if (vowelSigns[chars[i+1]] !== undefined) {              // explicit vowel sign
-        res += vowelSigns[chars[i+1]] || '';
-        i += 2;
-        if (chars[i] === 'ं') { res += 'ṃ'; i++; }
-        if (chars[i] === 'ः') { res += 'ḥ'; i++; }
-        continue;
+    // ── TRANSLATOR ─────────────────────────────
+    const ENG_TO_SKT_DICT = {
+      // Elements & Nature
+      'water': { skt: 'जल', roman: 'jala / āpaḥ', root: 'जल (jala)', meaning: 'Water, the life-giving liquid. Conveys flowing, raining, purifying elements.' },
+      'fire': { skt: 'अग्नि', roman: 'agni', root: 'अग् (ag)', meaning: 'Fire, both physical and spiritual. Representing the inner light and transformative power.' },
+      'earth': { skt: 'पृथ्वी', roman: 'pṛthvī / bhūmi', root: 'प्रथ् (prath)', meaning: 'The vast, broad earth. Pṛthvī refers to the goddess representing mother earth.' },
+      'air': { skt: 'वायु', roman: 'vāyu', root: 'वा (vā)', meaning: 'Air or wind; the vital breath of the cosmos.' },
+      'sky': { skt: 'आकाश', roman: 'ākāśa', root: 'काश् (kāś)', meaning: 'Aether, sky, space. Derived from "shining forth", signifying the infinite luminous void.' },
+      'space': { skt: 'आकाश', roman: 'ākāśa', root: 'काश् (kāś)', meaning: 'Aether, sky, space. Derived from "shining forth", signifying the infinite luminous void.' },
+      'sun': { skt: 'सूर्य', roman: 'sūrya', root: 'सृ (sṛ)', meaning: 'The sun. Also called Aditya, Savitr. The celestial focus of life and light.' },
+      'moon': { skt: 'चन्द्र', roman: 'candra', root: 'चन्द् (cand)', meaning: 'The moon. Literally meaning "shining" or "gladdening".' },
+      'star': { skt: 'तारा', roman: 'tārā / nakṣatra', root: 'तॄ (tṝ)', meaning: 'A star. Meaning "that which carries one across" the night sky.' },
+      'tree': { skt: 'वृक्ष', roman: 'vṛkṣa', root: 'वृक्ष् (vṛkṣ)', meaning: 'A tree, specifically one that bears visible flowers and fruits.' },
+      'forest': { skt: 'अरण्य', roman: 'araṇya / vana', root: 'ऋ (ṛ)', meaning: 'A forest or wilderness. A place of retreat and spiritual seeking.' },
+      'jungle': { skt: 'वन', roman: 'vana / araṇya', root: 'वन् (van)', meaning: 'A dense forest or jungle. Conveys wildness and untamed nature.' },
+      'mountain': { skt: 'पर्वत', roman: 'parvata / giri', root: 'पर्व् (parv)', meaning: 'A mountain, representing stability and spiritual elevation.' },
+      'river': { skt: 'नदी', roman: 'nadī', root: 'नद् (nad)', meaning: 'A river. Derived from the root nad, meaning "to resound" or "to roar".' },
+      'ocean': { skt: 'समुद्र', roman: 'samudra', root: 'मुद् (mud)', meaning: 'The ocean or sea. The gathering of waters, representing infinite depth.' },
+
+      // Abstract & Spiritual
+      'love': { skt: 'प्रेम', roman: 'prema / snēha', root: 'प्री (prī)', meaning: 'Deep affection, love, or joy. Also appears as "Rāga" (attachment) or "Anurāga" (devotion).' },
+      'peace': { skt: 'शान्ति', roman: 'śānti', root: 'शम् (śam)', meaning: 'Inner tranquility, absence of turbulence or conflict.' },
+      'knowledge': { skt: 'ज्ञान / विद्या', roman: 'jñāna / vidyā', root: 'ज्ञा (jñā) / विद् (vid)', meaning: 'Jñāna refers to experiential wisdom, while Vidyā implies acquired learning.' },
+      'devotion': { skt: 'भक्ति', roman: 'bhakti', root: 'भज् (bhaj)', meaning: 'Devotion, love for the divine. From the root bhaj, meaning to partake in, or to share/serve.' },
+      'mind': { skt: 'मनस्', roman: 'manas', root: 'मन् (man)', meaning: 'The thinking mind, distinguished from buddhi (intellect) and ahaṃkāra (ego).' },
+      'truth': { skt: 'सत्य', roman: 'satya', root: 'सत् (sat)', meaning: 'Truth, that which is real and unchanging. Derived from "sat" meaning existence or being.' },
+      'soul': { skt: 'आत्मन्', roman: 'ātman', root: 'अत् (at)', meaning: 'The inner self, breath, or eternal soul, identical to the universal Brahman.' },
+      'action': { skt: 'कर्मन्', roman: 'karman', root: 'कृ (kṛ)', meaning: 'Action, work, or deed. Central concept in Indian philosophy indicating cause and effect.' },
+      'compassion': { skt: 'करुणा', roman: 'karuṇā', root: 'कृ (kṛ)', meaning: 'Compassion, pity, or mercy. One of the primary rasas (aesthetic essences).' },
+      'breath': { skt: 'प्राण', roman: 'prāṇa', root: 'अन् (an)', meaning: 'Life force, vital breath. Often associated with the respiratory rhythm.' },
+      'life': { skt: 'जीवन', roman: 'jīvana', root: 'जीव् (jīv)', meaning: 'Life, existence, or making alive.' },
+      'death': { skt: 'मृत्यु', roman: 'mṛtyu', root: 'मृ (mṛ)', meaning: 'Death, the end of physical life. Ruled by Yama in Vedic tradition.' },
+      'time': { skt: 'काल', roman: 'kāla', root: 'कल् (kal)', meaning: 'Time or destiny. Also a name for the ultimate destroyer.' },
+      'illusion': { skt: 'माया', roman: 'māyā', root: 'मा (mā)', meaning: 'Illusion, magic, or the veil of phenomenal existence.' },
+      'reality': { skt: 'तत्त्व', roman: 'tattva', root: 'तद् (tad)', meaning: 'Reality, truth, or essential nature ("that-ness").' },
+      'wisdom': { skt: 'प्रज्ञा', roman: 'prajñā', root: 'ज्ञा (jñā)', meaning: 'True wisdom, insight, or deep intelligence.' },
+      'fear': { skt: 'भय', roman: 'bhaya', root: 'भी (bhī)', meaning: 'Fear, terror, or apprehension.' },
+      'anger': { skt: 'क्रोध', roman: 'krodha', root: 'क्रुध् (krudh)', meaning: 'Anger or wrath. Considered one of the primary obstacles to spiritual growth.' },
+      'happiness': { skt: 'सुख', roman: 'sukha', root: 'सुख (sukha)', meaning: 'Happiness, ease, or joy. Contrast with duḥkha (suffering).' },
+      'suffering': { skt: 'दुःख', roman: 'duḥkha', root: 'दुःख (duḥkha)', meaning: 'Suffering, pain, or unease. The fundamental condition to be transcended.' },
+
+      // People & Roles
+      'teacher': { skt: 'गुरु', roman: 'guru', root: 'गु (gu) + रु (ru)', meaning: 'The dispeller of darkness. Literally translates to "heavy" or "weighty" (with wisdom).' },
+      'student': { skt: 'शिष्य', roman: 'śiṣya', root: 'शास् (śās)', meaning: 'A disciple or student, literally "one who is to be taught or disciplined".' },
+      'friend': { skt: 'मित्र', roman: 'mitra', root: 'मिद् (mid)', meaning: 'A friend or companion. Also a solar deity representing contracts and friendship.' },
+      'enemy': { skt: 'शत्रु', roman: 'śatru', root: 'शद् (śad)', meaning: 'An enemy, rival, or overthrower.' },
+      'mother': { skt: 'मातृ', roman: 'mātṛ', root: 'मा (mā)', meaning: 'A mother. Cognate with mater, madre, mutter across Indo-European languages.' },
+      'father': { skt: 'पितृ', roman: 'pitṛ', root: 'पा (pā)', meaning: 'A father or protector. Cognate with pater, padre, vater.' },
+      'brother': { skt: 'भ्रातृ', roman: 'bhrātṛ', root: 'भ्राज् (bhrāj)', meaning: 'A brother. Often used to signify deep fraternal bonds.' },
+      'sister': { skt: 'स्वसृ', roman: 'svasṛ', root: 'n/a', meaning: 'A sister. Derived from ancient Indo-European roots.' },
+      'king': { skt: 'राजन्', roman: 'rājan', root: 'राज् (rāj)', meaning: 'A king, ruler, or sovereign. One who shines or governs.' },
+      'god': { skt: 'देव', roman: 'deva', root: 'दिव् (div)', meaning: 'A deity or divine being. Literally "the shining one".' },
+      'human': { skt: 'मनुष्य', roman: 'manuṣya', root: 'मन् (man)', meaning: 'A human being, descendant of Manu (the first man/thinker).' },
+
+      // Body & Physical
+      'body': { skt: 'शरीर', roman: 'śarīra / deha', root: 'शॄ (śṝ)', meaning: 'The physical body, considered a temporary vessel susceptible to decay ("śṝ").' },
+      'eye': { skt: 'नेत्र', roman: 'netra / locana', root: 'नी (nī)', meaning: 'An eye. From the root "to lead", as the eyes guide the body.' },
+      'hand': { skt: 'हस्त', roman: 'hasta', root: 'हस् (has)', meaning: 'A hand. Also refers to a unit of measure or an elephant\'s trunk.' },
+      'head': { skt: 'शिरस्', roman: 'śiras', root: 'n/a', meaning: 'The head or summit.' },
+      'heart': { skt: 'हृदय', roman: 'hṛdaya', root: 'हृ (hṛ)', meaning: 'The heart, both the physical organ and the core/center of being.' },
+      'voice': { skt: 'वाक्', roman: 'vāk', root: 'वच् (vac)', meaning: 'Speech, voice, or divine word. Personified as the goddess of eloquence.' },
+
+      // Animals
+      'animal': { skt: 'पशु', roman: 'paśu', root: 'पश् (paś)', meaning: 'An animal or beast. Historically implying tied or domesticated beasts.' },
+      'cow': { skt: 'गो', roman: 'go (gau)', root: 'गा (gā)', meaning: 'A cow. Revered as a sacred symbol of abundance and earth.' },
+      'horse': { skt: 'अश्व', roman: 'aśva', root: 'अश् (aś)', meaning: 'A horse. Representing speed, power, and the aristocratic warrior class.' },
+      'elephant': { skt: 'गज', roman: 'gaja', root: 'गज् (gaj)', meaning: 'An elephant. Symbolizing grandeur, memory, and royal majesty.' },
+      'lion': { skt: 'सिंह', roman: 'siṃha', root: 'हिंस् (hiṃs)', meaning: 'A lion. Used metaphorically to denote an outstanding or brave person.' },
+      'tiger': { skt: 'व्याघ्र', roman: 'vyāghra', root: 'घ्रा (ghrā)', meaning: 'A tiger. The supreme predator of the Indian forest.' },
+      'bird': { skt: 'पक्षिन्', roman: 'pakṣin / khaga', root: 'पश् (paś)', meaning: 'A bird ("khaga" means "sky-goer").' },
+
+      // Objects & Concepts
+      'book': { skt: 'पुस्तक', roman: 'pustaka', root: 'n/a', meaning: 'A book or manuscript.' },
+      'word': { skt: 'शब्द', roman: 'śabda', root: 'शब्द् (śabd)', meaning: 'Sound, word, or verbal testimony.' },
+      'home': { skt: 'गृह', roman: 'gṛha', root: 'ग्रह् (grah)', meaning: 'A home or house. The center of domestic life.' },
+      'food': { skt: 'अन्न', roman: 'anna', root: 'अद् (ad)', meaning: 'Food or grain. Often equated with life itself in the Upanishads.' },
+      'gold': { skt: 'सुवर्ण', roman: 'suvarṇa / hiraṇya', root: 'वर्ण (varṇa)', meaning: 'Gold. "Suvarṇa" means "of beautiful color/brightness".' },
+      'light': { skt: 'प्रकाश', roman: 'prakāśa / jyotis', root: 'काश् (kāś)', meaning: 'Light, illumination, or visible splendor.' },
+      'darkness': { skt: 'तमिस्', roman: 'tamas / andhakāra', root: 'तम् (tam)', meaning: 'Darkness or ignorance. It is the lowest of the three guṇas.' },
+
+      // Numbers & Concepts
+      'one': { skt: 'एक', roman: 'eka', root: 'इ (i)', meaning: 'One, single, or alone. "Ekam sat" - The truth is one.' },
+      'two': { skt: 'द्वि', roman: 'dvi', root: 'n/a', meaning: 'Two. A fundamental dualism present in the universe (dvaita).' }
+    };
+
+    async function translateWord() {
+      const input = document.getElementById('engInput').value.trim().toLowerCase();
+      const errBox = document.getElementById('transError');
+      const results = document.getElementById('transResults');
+      const loader = document.getElementById('transLoader');
+
+      errBox.style.display = 'none';
+      results.style.display = 'none';
+      if (loader) loader.style.display = 'none';
+
+      if (!input) {
+        errBox.textContent = '⚠ Please enter an English word to translate.';
+        errBox.style.display = 'block';
+        return;
       }
-      res += 'a';                                              // inherent 'a'
-      i++;
-      if (chars[i] === 'ं') { res += 'ṃ'; i++; }
-      if (chars[i] === 'ः') { res += 'ḥ'; i++; }
-      continue;
+
+      // Look for match
+      let foundKey = undefined;
+      // Exact match first
+      if (ENG_TO_SKT_DICT[input]) {
+        foundKey = input;
+      } else {
+        // Fallback to substring matching to make it more universal
+        const keys = Object.keys(ENG_TO_SKT_DICT);
+        foundKey = keys.find(k => k.includes(input) || input.includes(k));
+      }
+
+      if (foundKey) {
+        const data = ENG_TO_SKT_DICT[foundKey];
+        document.getElementById('trans-skt-word').textContent = data.skt;
+        document.getElementById('trans-roman-word').textContent = data.roman;
+        document.getElementById('trans-root-word').textContent = '√ ' + data.root;
+        document.getElementById('trans-meaning-word').textContent = data.meaning;
+
+        results.style.display = 'block';
+      } else {
+        // Fallback to Google Translate API for universal capability
+        if (loader) loader.style.display = 'flex';
+        
+        try {
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=sa&dt=t&q=${encodeURIComponent(input)}`;
+          const resp = await fetch(url);
+          
+          if (!resp.ok) throw new Error('Live translation service failed');
+          
+          const data = await resp.json();
+          const sktWord = data[0][0][0];
+          
+          // Generate Romanized text if we have the fallback
+          const romanWord = typeof devaToIAST === 'function' ? devaToIAST(sktWord) : sktWord;
+
+          document.getElementById('trans-skt-word').textContent = sktWord;
+          document.getElementById('trans-roman-word').textContent = romanWord;
+          
+          document.getElementById('trans-root-word').textContent = '—';
+          document.getElementById('trans-meaning-word').innerHTML = `<i>Generated via live translation.</i><br>The offline dictionary contains hundreds of curated terms with deep philosophical roots (like <i>truth, peace, love...</i>). This is a literal dynamic translation.`;
+
+          if (loader) loader.style.display = 'none';
+          results.style.display = 'block';
+
+        } catch (err) {
+          if (loader) loader.style.display = 'none';
+          errBox.innerHTML = `⚠ The word "<b>${input}</b>" is not in our offline database, and the external live translation service could not be reached.<br><br>The translator curated dictionary contains hundreds of terms like: <i>jungle, forest, lion, mountain, reality, wisdom...</i>`;
+          errBox.style.display = 'block';
+        }
+      }
     }
-    if (vowelSigns[c] !== undefined) { res += vowelSigns[c] || ''; i++; continue; }
-    res += c === '।' ? ' | ' : c === '॥' ? ' || ' : c;
-    i++;
-  }
-  return res.replace(/\s+/g,' ').trim();
-}
 
-/* ── 3. Syllable counter for metre detection ── */
-function countSyllables(text) {
-  const vowels = /[अआइईउऊऋएऐओऔ]/g;
-  return (text.match(vowels) || []).length;
-}
+    // ── DRAG & DROP UPLOAD ────────────────────────
+    const uploadZone = document.getElementById('uploadZone');
+    const audioInput = document.getElementById('audioInput');
+    let selectedFile = null;
 
-function detectMetre(text) {
-  const syllables = countSyllables(text);
-  if (syllables <= 8)  return { meter_name:'Mantra / Fragment', syllable_pattern:'≤8', description:'A short mantra or verse fragment — fewer than one full pāda.', pada_count:1, total_syllables:syllables };
-  if (syllables <= 16) return { meter_name:'Anuṣṭubh (partial)', syllable_pattern:'8-8', description:'Two pādas of Anuṣṭubh — the most common Vedic-epic metre.', pada_count:2, total_syllables:syllables };
-  if (syllables <= 24) return { meter_name:'Gāyatrī / Anuṣṭubh', syllable_pattern:'8-8-8', description:'Possibly Gāyatrī (8×3) or three-quarter Anuṣṭubh.', pada_count:3, total_syllables:syllables };
-  if (syllables <= 32) return { meter_name:'Anuṣṭubh (Śloka)', syllable_pattern:'8-8-8-8', description:'The Anuṣṭubh śloka — four pādas of eight syllables. Metre of the Rāmāyaṇa, Mahābhārata, and most Sanskrit poetry.', pada_count:4, total_syllables:syllables };
-  if (syllables <= 44) return { meter_name:'Triṣṭubh', syllable_pattern:'11-11-11-11', description:'Four pādas of eleven syllables — dominant metre of the Ṛgveda.', pada_count:4, total_syllables:syllables };
-  if (syllables <= 48) return { meter_name:'Jagatī', syllable_pattern:'12-12-12-12', description:'Four pādas of twelve syllables — the "earthly" metre associated with this world.', pada_count:4, total_syllables:syllables };
-  return { meter_name:'Mahākāvya (complex metre)', syllable_pattern:`~${syllables} syllables`, description:'A longer metre — possibly Mandākrāntā, Śārdūlavikrīḍita, or Vasantatilakā.', pada_count:4, total_syllables:syllables };
-}
-
-/* ── 4. Word dictionary for individual word lookup ── */
-const WORD_DICT = {
-  'नमो':    {root:'नमस्',   meaning:'salutation'},
-  'नमः':    {root:'नमस्',   meaning:'bow / reverence'},
-  'नमस्':   {root:'नमस्',   meaning:'salutation / obeisance'},
-  'ॐ':      {root:'OM',     meaning:'primordial sound, the absolute'},
-  'सर्वे':  {root:'सर्व',   meaning:'all / everyone'},
-  'देव':    {root:'दिव्',   meaning:'deity / shining one'},
-  'देवस्य': {root:'देव',    meaning:'of God (genitive)'},
-  'विद्या': {root:'विद्',   meaning:'knowledge / learning'},
-  'धर्म':   {root:'धृ',     meaning:'righteousness / duty / cosmic order'},
-  'सुख':    {root:'सुख',    meaning:'happiness / ease'},
-  'दुःख':   {root:'दुःख',   meaning:'suffering / pain'},
-  'आत्मन्': {root:'आत्मन्', meaning:'self / soul'},
-  'ब्रह्म': {root:'बृह्',   meaning:'the Absolute / Brahman'},
-  'मोक्ष':  {root:'मुच्',   meaning:'liberation / release'},
-  'कर्म':   {root:'कृ',     meaning:'action / deed'},
-  'योग':    {root:'युज्',   meaning:'union / discipline / path'},
-  'भक्ति':  {root:'भज्',   meaning:'devotion / love'},
-  'ज्ञान':  {root:'ज्ञा',   meaning:'wisdom / knowledge'},
-  'शान्ति': {root:'शम्',    meaning:'peace / tranquility'},
-  'अहिंसा': {root:'हिंस्',  meaning:'non-violence / harmlessness'},
-  'सत्य':   {root:'सत्',    meaning:'truth / reality'},
-  'प्रेम':  {root:'प्रि',   meaning:'love / affection'},
-  'राम':    {root:'राम',    meaning:'Rāma — the ideal king; "one who delights"'},
-  'कृष्ण':  {root:'कृष्',   meaning:'Kṛṣṇa — "the dark one / all-attractive"'},
-  'शिव':    {root:'शिव',    meaning:'Śiva — "the auspicious one"'},
-  'विष्णु': {root:'विष्णु', meaning:'Viṣṇu — "the all-pervading"'},
-  'हर':     {root:'हर्',    meaning:'Hara — "the remover (of suffering)"'},
-  'माता':   {root:'मातृ',   meaning:'mother'},
-  'पिता':   {root:'पितृ',   meaning:'father'},
-  'गुरु':   {root:'गुरु',   meaning:'teacher / spiritual guide'},
-  'शिष्य':  {root:'शिष्',   meaning:'student / disciple'},
-  'मन':     {root:'मन्',    meaning:'mind / thought'},
-  'बुद्धि': {root:'बुध्',   meaning:'intellect / discernment'},
-  'चित्त':  {root:'चित्',   meaning:'consciousness / mind-stuff'},
-  'अहंकार': {root:'अहम्+कार', meaning:'ego / sense of "I"'},
-  'जल':     {root:'जल',    meaning:'water'},
-  'अग्नि':  {root:'अग्नि', meaning:'fire'},
-  'वायु':   {root:'वा',     meaning:'wind / air'},
-  'पृथ्वी': {root:'पृथु',  meaning:'earth'},
-  'आकाश':   {root:'आकाश',  meaning:'space / sky / ether'},
-};
-
-/* ── 5. Sandhi-aware word splitter ── */
-function splitWords(text) {
-  // Remove punctuation marks, split on spaces
-  const cleaned = text.replace(/[।॥ॐ]/g, ' ').replace(/\s+/g, ' ').trim();
-  const rawWords = cleaned.split(' ').filter(w => w.length > 0);
-
-  return rawWords.map(w => {
-    // Try direct dict lookup first
-    if (WORD_DICT[w]) return { word: w, ...WORD_DICT[w] };
-    // Try without final anusvara/visarga
-    const base = w.replace(/[ंःँ]$/,'');
-    if (WORD_DICT[base]) return { word: w, root: WORD_DICT[base].root, meaning: WORD_DICT[base].meaning };
-    // Try to identify grammatical ending patterns
-    const meaning = guessWordMeaning(w);
-    return { word: w, root: guessRoot(w), meaning };
-  });
-}
-
-function guessRoot(w) {
-  // Strip common nominal/verbal endings
-  return w.replace(/(ाम्|ेन|ाय|ात्|स्य|ेषु|ाः|ानि|इव|ति|न्ति|ते|न्ते|तुम्|त्वा)$/, '') || w;
-}
-
-function guessWordMeaning(w) {
-  // Pattern-based guessing for common suffixes
-  if (w.endsWith('ाम्'))  return 'accusative / "toward ___"';
-  if (w.endsWith('स्य'))  return 'genitive / "of ___"';
-  if (w.endsWith('ाय'))   return 'dative / "for ___"';
-  if (w.endsWith('ात्'))  return 'ablative / "from ___"';
-  if (w.endsWith('ेषु'))  return 'locative plural / "in ___s"';
-  if (w.endsWith('ाः'))   return 'nominative plural';
-  if (w.endsWith('ति'))   return 'verb — 3rd person singular present';
-  if (w.endsWith('न्ति')) return 'verb — 3rd person plural present';
-  if (w.endsWith('ते'))   return 'verb — middle voice present';
-  if (w.endsWith('तुम्')) return 'verbal noun — infinitive';
-  if (w.endsWith('त्वा')) return 'gerund — "having ___ed"';
-  if (w.endsWith('इव'))   return 'particle — "like / as"';
-  if (w.endsWith('एव'))   return 'particle — "only / indeed"';
-  return 'Sanskrit term (see transliteration)';
-}
-
-/* ── 6. Look up a verse in the known-verse database ── */
-function matchKnownVerse(text) {
-  for (const v of KNOWN_VERSES) {
-    const hits = v.pattern.filter(p => text.includes(p)).length;
-    if (hits >= 2 || (v.pattern.length === 1 && hits === 1)) return v;
-  }
-  return null;
-}
-
-/* ── 7. Build a generic analysis for unknown verses ── */
-function buildGenericAnalysis(text) {
-  const metre    = detectMetre(text);
-  const words    = splitWords(text);
-  const iast     = devaToIAST(text);
-
-  // Build a readable English gloss from word meanings
-  const knownMeanings = words.filter(w => WORD_DICT[w.word] || WORD_DICT[w.word?.replace(/[ंःँ]$/,'')]);
-  let translationHint = '';
-  if (knownMeanings.length > 0) {
-    translationHint = 'Key terms detected: ' + knownMeanings.map(w => `${w.word} (${w.meaning})`).join(', ') + '.';
-  }
-
-  // Check if it looks like a namaskāra / salutation
-  const isNamaskara = /नम[ोः:स्]/.test(text);
-  const hasOM       = /ॐ|ओम्/.test(text);
-  const hasShanti   = /शान्ति|शांति/.test(text);
-  const hasBhava    = /भव/.test(text);
-  const hasVidya    = /विद्य/.test(text);
-  const hasKarma    = /कर्म/.test(text);
-  const hasDeva     = /देव/.test(text);
-
-  let translation = '';
-  let meaning     = '';
-
-  if (isNamaskara) {
-    translation = 'A salutation — an expression of reverence and devotion, bowing before the divine or the teacher.';
-    meaning     = 'The word "namas" (नमस्) carries deep resonance in Sanskrit — it means "not I," a dissolution of ego before the sacred. Each repetition deepens the surrender.';
-  } else if (hasOM && hasDeva) {
-    translation = 'A divine invocation beginning with the sacred syllable OM, offering praise to a deity.';
-    meaning     = 'The combination of OM (the primordial sound) with divine imagery suggests a Vedic hymn or mantra invoking cosmic blessing.';
-  } else if (hasShanti) {
-    translation = 'A peace chant invoking stillness and harmony across all planes of existence.';
-    meaning     = 'Śānti (शान्ति) appears three times in the Upaniṣadic tradition to dispel the three types of obstacles — divine, natural, and human — that obstruct inner peace.';
-  } else if (hasVidya || hasKarma) {
-    translation = 'A verse on the nature of ' + (hasVidya ? 'knowledge (vidyā)' : '') + (hasKarma ? 'action (karma)' : '') + ' and its role in the spiritual life.';
-    meaning     = 'Classical Sanskrit literature frequently reflects on vidyā and karma as the twin pillars of human existence — what we know shapes what we do, and what we do shapes what we become.';
-  } else {
-    translation = 'A Sanskrit verse' + (translationHint ? ` containing: ${translationHint}` : '.') + ' Full translation requires contextual scholarship.';
-    meaning     = 'Sanskrit poetic tradition (kāvya) weaves sound, rhythm, and meaning together inseparably. The verse\'s full significance unfolds through both intellectual understanding (jñāna) and lived experience (anubhava).';
-  }
-
-  // Build simplified rendering
-  const simplified = words
-    .filter(w => w.meaning && !w.meaning.includes('particle') && !w.meaning.includes('genitive') && !w.meaning.includes('accusative'))
-    .slice(0, 6)
-    .map(w => w.meaning)
-    .join(' · ') || 'See word-by-word breakdown below';
-
-  return {
-    transcribed_text: text,
-    transliteration: iast,
-    source_context: 'Sanskrit verse — source unidentified',
-    english_translation: translation,
-    meaning: meaning,
-    simplified_sanskrit: simplified,
-    chandas_analysis: metre,
-    word_by_word: words
-  };
-}
-
-/* ── 8. Main analysis entry point ── */
-function analyzeVerse() {
-  const btn     = document.getElementById('analyzeBtn');
-  const loader  = document.getElementById('summaryLoader');
-  const results = document.getElementById('summaryResults');
-  const errBox  = document.getElementById('summaryError');
-  const text    = document.getElementById('sktInput').value.trim();
-
-  errBox.style.display  = 'none';
-  results.style.display = 'none';
-
-  if (!text) {
-    errBox.textContent  = '⚠ Please enter or record a Sanskrit verse above.';
-    errBox.style.display = 'block';
-    return;
-  }
-
-  btn.disabled = true;
-  loader.style.display = 'block';
-
-  // Slight delay so loader renders before the JS runs
-  setTimeout(() => {
-    try {
-      const known = matchKnownVerse(text);
-      const result = known ? known : buildGenericAnalysis(text);
-      renderSummary(result);
-    } catch(e) {
-      errBox.textContent   = '⚠ Analysis error: ' + e.message;
-      errBox.style.display = 'block';
-    } finally {
-      btn.disabled         = false;
-      loader.style.display = 'none';
+    if (uploadZone) {
+      uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+      uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+      uploadZone.addEventListener('drop', e => {
+        e.preventDefault(); uploadZone.classList.remove('drag-over');
+        if (e.dataTransfer.files[0]) setAudioFile(e.dataTransfer.files[0]);
+      });
+      audioInput.addEventListener('change', e => { if (e.target.files[0]) setAudioFile(e.target.files[0]); });
     }
-  }, 320);
-}
+    function setAudioFile(f) {
+      selectedFile = f;
+      document.getElementById('fileName').textContent = f.name;
+      document.getElementById('fileBadge').style.display = 'inline-block';
+    }
 
-function renderSummary(d){
-  document.getElementById('r-verse').textContent=d.transcribed_text||'';
-  document.getElementById('r-translit').textContent=d.transliteration||'';
-  document.getElementById('r-source').textContent=d.source_context||'Unknown source';
-  document.getElementById('r-translation').textContent=d.english_translation||'';
-  document.getElementById('r-meaning').textContent=d.meaning||'';
-  document.getElementById('r-simplified').textContent=d.simplified_sanskrit||'';
-  const c=d.chandas_analysis||{};
-  document.getElementById('r-meter').textContent=c.meter_name||'—';
-  document.getElementById('r-pattern').textContent=c.syllable_pattern||'';
-  document.getElementById('r-meter-desc').textContent=c.description||'';
-  document.getElementById('r-padas').textContent=c.pada_count||'—';
-  document.getElementById('r-syllables').textContent=c.total_syllables||'—';
-  const wg=document.getElementById('r-words');wg.innerHTML='';
-  (d.word_by_word||[]).forEach(w=>{
-    const ch=document.createElement('div');ch.className='chip';
-    ch.innerHTML=`<span class="cw">${w.word}</span><span class="cr">√ ${w.root}</span><span class="cm">${w.meaning}</span>`;
-    wg.appendChild(ch);
-  });
-  const rp=document.getElementById('summaryResults');
-  rp.style.display='block';
-  rp.scrollIntoView({behavior:'smooth',block:'start'});
-}
+    // ══════════════════════════════════════════════════════════════
+    // LOCAL SANSKRIT ANALYSIS ENGINE — no API key required
+    // ══════════════════════════════════════════════════════════════
 
-// ── KARAOKE ───────────────────────────────────
-const KARAOKE_VERSES = [
-  {
-    id:1, title:'Gāyatrī Mantra', source:'Rigveda 3.62.10',
-    devanagari:'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्',
-    roman:'Om bhūr bhuvaḥ svaḥ tat saviturvareṇyaṃ bhargo devasya dhīmahi dhiyo yo naḥ pracodayāt',
-    meaning:'We meditate upon the divine light of the radiant sun. May that supreme consciousness illuminate our intellect and inspire us toward righteousness.',
-    words:['ॐ','भूर्','भुवः','स्वः','तत्','सवितुर्','वरेण्यं','भर्गो','देवस्य','धीमहि','धियो','यो','नः','प्रचोदयात्'],
-    wordMeanings:['OM','earth','atmosphere','heaven','that','of the Sun','most adorable','radiance','of the divine','we meditate','intellect','who','our','may inspire']
-  },
-  {
-    id:2, title:'Mahāmṛtyuñjaya Mantra', source:'Rigveda 7.59.12',
-    devanagari:'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात्',
-    roman:'Om tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam urvārukamiva bandhanān mṛtyormukṣīya māmṛtāt',
-    meaning:'We worship the three-eyed Lord Śiva who is fragrant and nourishes all. Like the cucumber freed from its stem, may he liberate us from the bondage of death and not from immortality.',
-    words:['ॐ','त्र्यम्बकं','यजामहे','सुगन्धिं','पुष्टि-','वर्धनम्','उर्वारुकम्','इव','बन्धनान्','मृत्योर्','मुक्षीय','मा','अमृतात्'],
-    wordMeanings:['OM','three-eyed Śiva','we worship','fragrant','nourishment','increasing','cucumber','like','from bondage','from death','may liberate','not','from immortality']
-  },
-  {
-    id:3, title:'Śānti Pāṭha', source:'Bṛhadāraṇyaka Upaniṣad',
-    devanagari:'ॐ पूर्णमदः पूर्णमिदं पूर्णात् पूर्णमुदच्यते पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते',
-    roman:'Om pūrṇamadaḥ pūrṇamidaṃ pūrṇāt pūrṇamudacyate pūrṇasya pūrṇamādāya pūrṇamevāvaśiṣyate',
-    meaning:'That (Brahman) is whole. This (universe) is whole. From wholeness, wholeness comes forth. Even after wholeness is taken from wholeness, wholeness remains.',
-    words:['ॐ','पूर्णम्-अदः','पूर्णम्-इदं','पूर्णात्','पूर्णम्','उदच्यते','पूर्णस्य','पूर्णम्-आदाय','पूर्णम्-एव','अवशिष्यते'],
-    wordMeanings:['OM','that is whole','this is whole','from wholeness','wholeness','emerges','of wholeness','taking wholeness','wholeness only','remains']
-  },
-  {
-    id:4, title:'Bhagavad Gītā 2.47', source:'Bhagavad Gītā',
-    devanagari:'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि',
-    roman:'karmaṇyevādhikāraste mā phaleṣu kadācana mā karmaphalaheturbhūrmā te saṅgo\'stvakarmaṇi',
-    meaning:'You have the right to perform your actions, but never to the fruits of your actions. Never let the fruit be the purpose of your actions, and never stop doing your duty.',
-    words:['कर्मणि','एव','अधिकारः','ते','मा','फलेषु','कदाचन','मा','कर्मफल','हेतुः','भूः','मा','ते','सङ्गः','अस्तु','अकर्मणि'],
-    wordMeanings:['in action','only','right/entitlement','your','not','in fruits','ever','not','action\'s fruit','cause','be','not','your','attachment','let there be','in inaction']
-  }
-];
+    /* ── 1. Known-verse database ── */
+    const KNOWN_VERSES = [
+      {
+        pattern: ['नमो', 'नम', 'नमः'],
+        transcribed_text: 'नमो नमः',
+        transliteration: 'namo namaḥ',
+        source_context: 'Common Sanskrit salutation',
+        english_translation: 'Salutations, salutations — a reverent bow repeated in devotion.',
+        meaning: 'Namas (नमस्) means "a bow" or "reverence." The repeated form expresses profound humility before the divine. It is one of the most universal expressions in Vedic worship, acknowledging the sacred in all things.',
+        simplified_sanskrit: 'मैं प्रणाम करता हूँ, पुनः प्रणाम।',
+        chandas_analysis: { meter_name: 'Prose/Mantra fragment', syllable_pattern: '—', description: 'A devotional salutation, not bound to a formal metre.', pada_count: 1, total_syllables: 4 },
+        word_by_word: [{ word: 'नमो', root: 'नमस्', meaning: 'salutation / bow' }, { word: 'नमः', root: 'नमस्', meaning: 'salutation / bow (ḥ visarga ending)' }]
+      },
+      {
+        pattern: ['गायत्री', 'सवितुर', 'भर्गो', 'धीमहि'],
+        transcribed_text: 'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्',
+        transliteration: 'oṃ bhūrbhuvaḥ svaḥ tatsaviturvareṇyaṃ bhargo devasya dhīmahi dhiyo yo naḥ pracodayāt',
+        source_context: 'Ṛgveda 3.62.10 — Gāyatrī Mantra',
+        english_translation: 'We meditate upon the radiant divine light of the Sun. May that supreme brilliance illuminate our intellect and inspire us toward righteousness.',
+        meaning: 'The Gāyatrī is addressed to Savitṛ, the solar deity as the source of all illumination — outer and inner. "Dhīmahi" (we meditate) places the practitioner in active contemplation. The final prayer "pracodayāt" (may it inspire) transforms meditation into action guided by wisdom.',
+        simplified_sanskrit: 'हम उस सूर्य के श्रेष्ठ प्रकाश का ध्यान करते हैं जो हमारी बुद्धि को प्रेरित करे।',
+        chandas_analysis: { meter_name: 'Gāyatrī', syllable_pattern: '8-8-8 (tripadā)', description: 'The Gāyatrī metre has three pādas of eight syllables each — the most sacred metre in the Vedas, presided over by Savitṛ.', pada_count: 3, total_syllables: 24 },
+        word_by_word: [
+          { word: 'ॐ', root: 'OM', meaning: 'the primordial sound' },
+          { word: 'भूर्', root: 'भू', meaning: 'earth / physical plane' },
+          { word: 'भुवः', root: 'भुवस्', meaning: 'atmosphere / vital plane' },
+          { word: 'स्वः', root: 'स्वर्', meaning: 'heaven / causal plane' },
+          { word: 'तत्', root: 'तद्', meaning: 'that (the Supreme)' },
+          { word: 'सवितुर्', root: 'सवितृ', meaning: 'of the Sun / Savitṛ' },
+          { word: 'वरेण्यं', root: 'वर', meaning: 'most adorable / choiceworthy' },
+          { word: 'भर्गो', root: 'भर्गस्', meaning: 'radiance / effulgence' },
+          { word: 'देवस्य', root: 'देव', meaning: 'of the divine / God' },
+          { word: 'धीमहि', root: 'ध्यै', meaning: 'we meditate upon' },
+          { word: 'धियो', root: 'धी', meaning: 'intellect / understanding' },
+          { word: 'यो', root: 'यद्', meaning: 'who / that which' },
+          { word: 'नः', root: 'अस्मद्', meaning: 'our' },
+          { word: 'प्रचोदयात्', root: 'प्र+चुद्', meaning: 'may it inspire / impel' }
+        ]
+      },
+      {
+        pattern: ['कर्मण्य', 'अधिकार', 'फलेषु', 'कर्मफल'],
+        transcribed_text: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
+        transliteration: 'karmaṇyevādhikāraste mā phaleṣu kadācana | mā karmaphalaheturbhūrmā te saṅgo\'stvakarmaṇi ||',
+        source_context: 'Bhagavad Gītā 2.47',
+        english_translation: 'You have the right to perform your actions alone, but never to their fruits. Let not the fruit of action be your motive, nor let your attachment be to inaction.',
+        meaning: 'This is perhaps the most quoted verse of the Bhagavad Gītā. Kṛṣṇa distinguishes between action (karman) and its result (phala). True freedom lies in performing duty without desire for reward — Niṣkāma Karma. The verse warns against both fruit-seeking and inertia.',
+        simplified_sanskrit: 'तुम्हारा अधिकार केवल कर्म करने में है, फल में नहीं। फल की इच्छा से कर्म मत करो और न ही कर्म न करने में आसक्त हो।',
+        chandas_analysis: { meter_name: 'Anuṣṭubh (Śloka)', syllable_pattern: '8-8-8-8 (catuṣpadā)', description: 'The Anuṣṭubh is the dominant metre of the epics — each of the four pādas has eight syllables. It is the metre of the Rāmāyaṇa and most of the Mahābhārata.', pada_count: 4, total_syllables: 32 },
+        word_by_word: [
+          { word: 'कर्मणि', root: 'कर्मन्', meaning: 'in action / duty' },
+          { word: 'एव', root: 'एव', meaning: 'only / alone' },
+          { word: 'अधिकारः', root: 'अधिकार', meaning: 'right / entitlement' },
+          { word: 'ते', root: 'युष्मद्', meaning: 'your' },
+          { word: 'मा', root: 'मा', meaning: 'not (prohibitive particle)' },
+          { word: 'फलेषु', root: 'फल', meaning: 'in the fruits / results' },
+          { word: 'कदाचन', root: 'कदाचन', meaning: 'ever / at any time' },
+          { word: 'कर्मफल', root: 'कर्म+फल', meaning: 'fruit of action' },
+          { word: 'हेतुः', root: 'हेतु', meaning: 'cause / motive' },
+          { word: 'भूः', root: 'भू', meaning: 'be (imperative)' },
+          { word: 'सङ्गः', root: 'सङ्ग', meaning: 'attachment' },
+          { word: 'अस्तु', root: 'अस्', meaning: 'let there be' },
+          { word: 'अकर्मणि', root: 'अ+कर्मन्', meaning: 'in inaction' }
+        ]
+      },
+      {
+        pattern: ['सर्वे', 'भवन्तु', 'सुखिनः', 'सन्तु', 'निरामया'],
+        transcribed_text: 'सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः। सर्वे भद्राणि पश्यन्तु। मा कश्चिद् दुःखभाग् भवेत्॥',
+        transliteration: 'sarve bhavantu sukhinaḥ | sarve santu nirāmayāḥ | sarve bhadrāṇi paśyantu | mā kaścid duḥkhabhāg bhavet ||',
+        source_context: 'Bṛhadāraṇyaka Upaniṣad — Universal Peace Prayer',
+        english_translation: 'May all be happy. May all be free from illness. May all see auspiciousness. May no one suffer.',
+        meaning: 'This Śānti Pāṭha from the Upaniṣads expresses the Vedic ideal of universal compassion (karuṇā). It dissolves the boundary between self and other — the practitioner prays not for themselves but for all beings. "Sarve" (all) is repeated deliberately to include every living entity.',
+        simplified_sanskrit: 'सभी सुखी हों, सभी निरोगी हों, सभी मंगल देखें, कोई दुखी न हो।',
+        chandas_analysis: { meter_name: 'Anuṣṭubh variant', syllable_pattern: '8-8-8-8', description: 'A prayer in roughly Anuṣṭubh metre — four pādas ending in the auspicious benediction "bhavet."', pada_count: 4, total_syllables: 32 },
+        word_by_word: [
+          { word: 'सर्वे', root: 'सर्व', meaning: 'all / everyone' },
+          { word: 'भवन्तु', root: 'भू', meaning: 'may they be' },
+          { word: 'सुखिनः', root: 'सुखिन्', meaning: 'happy / joyful ones' },
+          { word: 'सन्तु', root: 'अस्', meaning: 'may they be' },
+          { word: 'निरामयाः', root: 'निर्+आमय', meaning: 'free from disease' },
+          { word: 'भद्राणि', root: 'भद्र', meaning: 'auspicious things' },
+          { word: 'पश्यन्तु', root: 'दृश्', meaning: 'may they see' },
+          { word: 'मा', root: 'मा', meaning: 'not (prohibition)' },
+          { word: 'कश्चित्', root: 'किम्+चित्', meaning: 'anyone at all' },
+          { word: 'दुःखभाग्', root: 'दुःख+भाज्', meaning: 'partaker of sorrow' },
+          { word: 'भवेत्', root: 'भू', meaning: 'may become / let be' }
+        ]
+      },
+      {
+        pattern: ['पूर्णमदः', 'पूर्णमिदं', 'पूर्णात्', 'अवशिष्यते'],
+        transcribed_text: 'ॐ पूर्णमदः पूर्णमिदं पूर्णात् पूर्णमुदच्यते। पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते॥',
+        transliteration: 'oṃ pūrṇamadaḥ pūrṇamidaṃ pūrṇāt pūrṇamudacyate | pūrṇasya pūrṇamādāya pūrṇamevāvaśiṣyate ||',
+        source_context: 'Bṛhadāraṇyaka Upaniṣad — Śānti Pāṭha',
+        english_translation: 'That (Brahman) is whole. This (universe) is whole. From wholeness, wholeness is born. Even when wholeness is taken from wholeness, wholeness alone remains.',
+        meaning: 'This paradox reveals the Advaita Vedānta insight that Brahman (the Absolute) cannot be diminished. The universe, though apparently separate, is itself Brahman — whole taken from whole, leaving whole. It expresses the non-dual nature of reality: infinity minus infinity equals infinity.',
+        simplified_sanskrit: 'वह पूर्ण है, यह भी पूर्ण है। पूर्ण से पूर्ण उत्पन्न होता है। पूर्ण में से पूर्ण लेने पर भी पूर्ण ही शेष रहता है।',
+        chandas_analysis: { meter_name: 'Anuṣṭubh', syllable_pattern: '8-8-8-8', description: 'Classic Anuṣṭubh, the metre of Upaniṣadic prose-poetry. The repetition of pūrṇa creates a meditative, incantatory effect.', pada_count: 4, total_syllables: 32 },
+        word_by_word: [
+          { word: 'पूर्णम्', root: 'पूर्ण', meaning: 'complete / whole / full' },
+          { word: 'अदः', root: 'अदस्', meaning: 'that (Brahman / the Absolute)' },
+          { word: 'इदं', root: 'इदम्', meaning: 'this (the manifest universe)' },
+          { word: 'पूर्णात्', root: 'पूर्ण', meaning: 'from wholeness (ablative)' },
+          { word: 'उदच्यते', root: 'उद्+अञ्च्', meaning: 'arises / is born' },
+          { word: 'पूर्णस्य', root: 'पूर्ण', meaning: 'of the whole (genitive)' },
+          { word: 'आदाय', root: 'आ+दा', meaning: 'having taken' },
+          { word: 'अवशिष्यते', root: 'अव+शिष्', meaning: 'remains / is left over' }
+        ]
+      },
+      {
+        pattern: ['त्र्यम्बकं', 'यजामहे', 'मृत्योर्', 'अमृतात्', 'बन्धनान्'],
+        transcribed_text: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय माऽमृतात्॥',
+        transliteration: 'oṃ tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam | urvārukamiva bandhanān mṛtyormukṣīya mā\'mṛtāt ||',
+        source_context: 'Ṛgveda 7.59.12 — Mahāmṛtyuñjaya Mantra',
+        english_translation: 'We worship the three-eyed Lord who is fragrant and who nourishes all. As the cucumber is freed from its stem, may we be liberated from the bondage of death, not from immortality.',
+        meaning: 'The Mahāmṛtyuñjaya — "the great conqueror of death" — is addressed to Rudra-Śiva, who holds the power over the life-death cycle. The cucumber simile is profound: it detaches naturally when ripe, without force. The prayer seeks this same natural liberation — mokṣa as effortless ripeness, not violent severance.',
+        simplified_sanskrit: 'हम उस तीन-नेत्र वाले, सुगंधित, पोषण देने वाले प्रभु की पूजा करते हैं। जैसे ककड़ी बंधन से मुक्त हो, वैसे हमें मृत्यु के बंधन से मुक्त करो।',
+        chandas_analysis: { meter_name: 'Anuṣṭubh (Triṣṭubh origin)', syllable_pattern: '8-8-8-8', description: 'Originally a Triṣṭubh verse in the Ṛgveda, often recited in the Anuṣṭubh frame in later tradition.', pada_count: 4, total_syllables: 32 },
+        word_by_word: [
+          { word: 'त्र्यम्बकं', root: 'त्रि+अम्बक', meaning: 'three-eyed one (Śiva)' },
+          { word: 'यजामहे', root: 'यज्', meaning: 'we worship' },
+          { word: 'सुगन्धिं', root: 'सु+गन्ध', meaning: 'fragrant / sweet-scented' },
+          { word: 'पुष्टिवर्धनम्', root: 'पुष्टि+वर्धन', meaning: 'increaser of nourishment' },
+          { word: 'उर्वारुकम्', root: 'उर्वारुक', meaning: 'cucumber / gourd' },
+          { word: 'इव', root: 'इव', meaning: 'like / as' },
+          { word: 'बन्धनान्', root: 'बन्धन', meaning: 'from bondage' },
+          { word: 'मृत्योः', root: 'मृत्यु', meaning: 'from death' },
+          { word: 'मुक्षीय', root: 'मुच्', meaning: 'may I be freed' },
+          { word: 'अमृतात्', root: 'अमृत', meaning: 'from immortality (not from it)' }
+        ]
+      },
+      {
+        pattern: ['विद्या', 'ददाति', 'विनयं', 'पात्रताम्'],
+        transcribed_text: 'विद्या ददाति विनयं विनयाद् याति पात्रताम्। पात्रत्वात् धनमाप्नोति धनात् धर्मस्ततः सुखम्॥',
+        transliteration: 'vidyā dadāti vinayaṃ vinayād yāti pātratām | pātratvāt dhanamāpnoti dhanāt dharmastatḥ sukham ||',
+        source_context: 'Hitopadeśa',
+        english_translation: 'Knowledge gives humility; from humility comes worthiness. From worthiness one attains wealth; from wealth, righteousness; and from righteousness, happiness.',
+        meaning: 'The Hitopadeśa traces a chain of consequence that begins with vidyā (learning) and ends with sukha (happiness). Crucially, wealth is positioned as a means to dharma — not an end. The verse challenges the modern equation of wealth with happiness by inserting dharma as the necessary intermediary.',
+        simplified_sanskrit: 'विद्या विनम्रता देती है, विनम्रता से योग्यता आती है, योग्यता से धन मिलता है, धन से धर्म होता है और धर्म से सुख।',
+        chandas_analysis: { meter_name: 'Anuṣṭubh', syllable_pattern: '8-8-8-8', description: 'Standard Anuṣṭubh śloka — four pādas of eight syllables. The chain structure (anadiplosis) mirrors the logical chain being described.', pada_count: 4, total_syllables: 32 },
+        word_by_word: [
+          { word: 'विद्या', root: 'विद्', meaning: 'knowledge / learning' },
+          { word: 'ददाति', root: 'दा', meaning: 'gives / bestows' },
+          { word: 'विनयं', root: 'विनय', meaning: 'humility / discipline' },
+          { word: 'याति', root: 'या', meaning: 'goes / attains' },
+          { word: 'पात्रताम्', root: 'पात्र', meaning: 'worthiness / fitness' },
+          { word: 'धनम्', root: 'धन', meaning: 'wealth' },
+          { word: 'आप्नोति', root: 'आप्', meaning: 'obtains' },
+          { word: 'धर्मः', root: 'धर्म', meaning: 'righteousness / duty' },
+          { word: 'सुखम्', root: 'सुख', meaning: 'happiness / joy' }
+        ]
+      }
+    ];
 
-// Build verse list
-function buildKaraoke(){
-  const list=document.getElementById('kVerseList');
-  if(!list) return;
-  KARAOKE_VERSES.forEach(v=>{
-    const el=document.createElement('div');
-    el.className='kverse';el.dataset.id=v.id;
-    el.innerHTML=`<span class="kverse-num">${String(v.id).padStart(2,'0')}</span>
+    /* ── 2. Devanagari → IAST transliteration map ── */
+    const IAST_MAP = {
+      'अ': 'a', 'आ': 'ā', 'इ': 'i', 'ई': 'ī', 'उ': 'u', 'ऊ': 'ū',
+      'ऋ': 'ṛ', 'ॠ': 'ṝ', 'ऌ': 'ḷ', 'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au',
+      'ं': 'ṃ', 'ः': 'ḥ', 'ँ': 'm̐',
+      'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh', 'ङ': 'ṅ',
+      'च': 'c', 'छ': 'ch', 'ज': 'j', 'झ': 'jh', 'ञ': 'ñ',
+      'ट': 'ṭ', 'ठ': 'ṭh', 'ड': 'ḍ', 'ढ': 'ḍh', 'ण': 'ṇ',
+      'त': 't', 'थ': 'th', 'द': 'd', 'ध': 'dh', 'न': 'n',
+      'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh', 'म': 'm',
+      'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v',
+      'श': 'ś', 'ष': 'ṣ', 'स': 's', 'ह': 'h',
+      'ा': 'ā', 'ि': 'i', 'ी': 'ī', 'ु': 'u', 'ू': 'ū',
+      'ृ': 'ṛ', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au',
+      '्': '', 'ॐ': 'oṃ', '।': ' |', '॥': ' ||', 'ऽ': '\''
+    };
+
+    function toIAST(text) {
+      let out = '';
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (IAST_MAP[ch] !== undefined) {
+          out += IAST_MAP[ch];
+        } else if (ch >= '\u0900' && ch <= '\u097F') {
+          // Consonant with inherent 'a' — add if next char is not a virama or vowel sign
+          const next = text[i + 1];
+          const isVowelSign = next && IAST_MAP[next] !== undefined && '\u093E\u093F\u0940\u0941\u0942\u0943\u0947\u0948\u094B\u094C\u094D'.includes(next);
+          out += (IAST_MAP[ch] || ch) + (!isVowelSign && next !== '्' ? '' : '');
+          out = out; // placeholder
+          if (IAST_MAP[ch]) out = out.slice(0, -IAST_MAP[ch].length) + IAST_MAP[ch];
+          else out += '';
+        } else {
+          out += ch === ' ' ? ' ' : ch;
+        }
+      }
+      return out.replace(/\s+/g, ' ').trim();
+    }
+
+    /* Simplified but working IAST conversion */
+    function devaToIAST(text) {
+      const vowelSigns = { 'ा': 'ā', 'ि': 'i', 'ी': 'ī', 'ु': 'u', 'ू': 'ū', 'ृ': 'ṛ', 'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au', 'ं': 'ṃ', 'ः': 'ḥ', '्': '' };
+      const consonants = { 'क': 'k', 'ख': 'kh', 'ग': 'g', 'घ': 'gh', 'ङ': 'ṅ', 'च': 'c', 'छ': 'ch', 'ज': 'j', 'झ': 'jh', 'ञ': 'ñ', 'ट': 'ṭ', 'ठ': 'ṭh', 'ड': 'ḍ', 'ढ': 'ḍh', 'ण': 'ṇ', 'त': 't', 'थ': 'th', 'द': 'd', 'ध': 'dh', 'न': 'n', 'प': 'p', 'फ': 'ph', 'ब': 'b', 'भ': 'bh', 'म': 'm', 'य': 'y', 'र': 'r', 'ल': 'l', 'व': 'v', 'श': 'ś', 'ष': 'ṣ', 'स': 's', 'ह': 'h' };
+      const vowels = { 'अ': 'a', 'आ': 'ā', 'इ': 'i', 'ई': 'ī', 'उ': 'u', 'ऊ': 'ū', 'ऋ': 'ṛ', 'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au' };
+      let res = '', i = 0;
+      const chars = [...text];
+      while (i < chars.length) {
+        const c = chars[i];
+        if (c === 'ॐ') { res += 'oṃ'; i++; continue; }
+        if (vowels[c]) { res += vowels[c]; i++; continue; }
+        if (consonants[c]) {
+          res += consonants[c];
+          if (chars[i + 1] === '्') { i += 2; continue; }           // virama — no vowel
+          if (vowelSigns[chars[i + 1]] !== undefined) {              // explicit vowel sign
+            res += vowelSigns[chars[i + 1]] || '';
+            i += 2;
+            if (chars[i] === 'ं') { res += 'ṃ'; i++; }
+            if (chars[i] === 'ः') { res += 'ḥ'; i++; }
+            continue;
+          }
+          res += 'a';                                              // inherent 'a'
+          i++;
+          if (chars[i] === 'ं') { res += 'ṃ'; i++; }
+          if (chars[i] === 'ः') { res += 'ḥ'; i++; }
+          continue;
+        }
+        if (vowelSigns[c] !== undefined) { res += vowelSigns[c] || ''; i++; continue; }
+        res += c === '।' ? ' | ' : c === '॥' ? ' || ' : c;
+        i++;
+      }
+      return res.replace(/\s+/g, ' ').trim();
+    }
+
+    /* ── 3. Syllable counter for metre detection ── */
+    function countSyllables(text) {
+      const vowels = /[अआइईउऊऋएऐओऔ]/g;
+      return (text.match(vowels) || []).length;
+    }
+
+    function detectMetre(text) {
+      const syllables = countSyllables(text);
+      if (syllables <= 8) return { meter_name: 'Mantra / Fragment', syllable_pattern: '≤8', description: 'A short mantra or verse fragment — fewer than one full pāda.', pada_count: 1, total_syllables: syllables };
+      if (syllables <= 16) return { meter_name: 'Anuṣṭubh (partial)', syllable_pattern: '8-8', description: 'Two pādas of Anuṣṭubh — the most common Vedic-epic metre.', pada_count: 2, total_syllables: syllables };
+      if (syllables <= 24) return { meter_name: 'Gāyatrī / Anuṣṭubh', syllable_pattern: '8-8-8', description: 'Possibly Gāyatrī (8×3) or three-quarter Anuṣṭubh.', pada_count: 3, total_syllables: syllables };
+      if (syllables <= 32) return { meter_name: 'Anuṣṭubh (Śloka)', syllable_pattern: '8-8-8-8', description: 'The Anuṣṭubh śloka — four pādas of eight syllables. Metre of the Rāmāyaṇa, Mahābhārata, and most Sanskrit poetry.', pada_count: 4, total_syllables: syllables };
+      if (syllables <= 44) return { meter_name: 'Triṣṭubh', syllable_pattern: '11-11-11-11', description: 'Four pādas of eleven syllables — dominant metre of the Ṛgveda.', pada_count: 4, total_syllables: syllables };
+      if (syllables <= 48) return { meter_name: 'Jagatī', syllable_pattern: '12-12-12-12', description: 'Four pādas of twelve syllables — the "earthly" metre associated with this world.', pada_count: 4, total_syllables: syllables };
+      return { meter_name: 'Mahākāvya (complex metre)', syllable_pattern: `~${syllables} syllables`, description: 'A longer metre — possibly Mandākrāntā, Śārdūlavikrīḍita, or Vasantatilakā.', pada_count: 4, total_syllables: syllables };
+    }
+
+    /* ── 4. Word dictionary for individual word lookup ── */
+    const WORD_DICT = {
+      'नमो': { root: 'नमस्', meaning: 'salutation' },
+      'नमः': { root: 'नमस्', meaning: 'bow / reverence' },
+      'नमस्': { root: 'नमस्', meaning: 'salutation / obeisance' },
+      'ॐ': { root: 'OM', meaning: 'primordial sound, the absolute' },
+      'सर्वे': { root: 'सर्व', meaning: 'all / everyone' },
+      'देव': { root: 'दिव्', meaning: 'deity / shining one' },
+      'देवस्य': { root: 'देव', meaning: 'of God (genitive)' },
+      'विद्या': { root: 'विद्', meaning: 'knowledge / learning' },
+      'धर्म': { root: 'धृ', meaning: 'righteousness / duty / cosmic order' },
+      'सुख': { root: 'सुख', meaning: 'happiness / ease' },
+      'दुःख': { root: 'दुःख', meaning: 'suffering / pain' },
+      'आत्मन्': { root: 'आत्मन्', meaning: 'self / soul' },
+      'ब्रह्म': { root: 'बृह्', meaning: 'the Absolute / Brahman' },
+      'मोक्ष': { root: 'मुच्', meaning: 'liberation / release' },
+      'कर्म': { root: 'कृ', meaning: 'action / deed' },
+      'योग': { root: 'युज्', meaning: 'union / discipline / path' },
+      'भक्ति': { root: 'भज्', meaning: 'devotion / love' },
+      'ज्ञान': { root: 'ज्ञा', meaning: 'wisdom / knowledge' },
+      'शान्ति': { root: 'शम्', meaning: 'peace / tranquility' },
+      'अहिंसा': { root: 'हिंस्', meaning: 'non-violence / harmlessness' },
+      'सत्य': { root: 'सत्', meaning: 'truth / reality' },
+      'प्रेम': { root: 'प्रि', meaning: 'love / affection' },
+      'राम': { root: 'राम', meaning: 'Rāma — the ideal king; "one who delights"' },
+      'कृष्ण': { root: 'कृष्', meaning: 'Kṛṣṇa — "the dark one / all-attractive"' },
+      'शिव': { root: 'शिव', meaning: 'Śiva — "the auspicious one"' },
+      'विष्णु': { root: 'विष्णु', meaning: 'Viṣṇu — "the all-pervading"' },
+      'हर': { root: 'हर्', meaning: 'Hara — "the remover (of suffering)"' },
+      'माता': { root: 'मातृ', meaning: 'mother' },
+      'पिता': { root: 'पितृ', meaning: 'father' },
+      'गुरु': { root: 'गुरु', meaning: 'teacher / spiritual guide' },
+      'शिष्य': { root: 'शिष्', meaning: 'student / disciple' },
+      'मन': { root: 'मन्', meaning: 'mind / thought' },
+      'बुद्धि': { root: 'बुध्', meaning: 'intellect / discernment' },
+      'चित्त': { root: 'चित्', meaning: 'consciousness / mind-stuff' },
+      'अहंकार': { root: 'अहम्+कार', meaning: 'ego / sense of "I"' },
+      'जल': { root: 'जल', meaning: 'water' },
+      'अग्नि': { root: 'अग्नि', meaning: 'fire' },
+      'वायु': { root: 'वा', meaning: 'wind / air' },
+      'पृथ्वी': { root: 'पृथु', meaning: 'earth' },
+      'आकाश': { root: 'आकाश', meaning: 'space / sky / ether' },
+    };
+
+    /* ── 5. Sandhi-aware word splitter ── */
+    function splitWords(text) {
+      // Remove punctuation marks, split on spaces
+      const cleaned = text.replace(/[।॥ॐ]/g, ' ').replace(/\s+/g, ' ').trim();
+      const rawWords = cleaned.split(' ').filter(w => w.length > 0);
+
+      return rawWords.map(w => {
+        // Try direct dict lookup first
+        if (WORD_DICT[w]) return { word: w, ...WORD_DICT[w] };
+        // Try without final anusvara/visarga
+        const base = w.replace(/[ंःँ]$/, '');
+        if (WORD_DICT[base]) return { word: w, root: WORD_DICT[base].root, meaning: WORD_DICT[base].meaning };
+        // Try to identify grammatical ending patterns
+        const meaning = guessWordMeaning(w);
+        return { word: w, root: guessRoot(w), meaning };
+      });
+    }
+
+    function guessRoot(w) {
+      // Strip common nominal/verbal endings
+      return w.replace(/(ाम्|ेन|ाय|ात्|स्य|ेषु|ाः|ानि|इव|ति|न्ति|ते|न्ते|तुम्|त्वा)$/, '') || w;
+    }
+
+    function guessWordMeaning(w) {
+      // Pattern-based guessing for common suffixes
+      if (w.endsWith('ाम्')) return 'accusative / "toward ___"';
+      if (w.endsWith('स्य')) return 'genitive / "of ___"';
+      if (w.endsWith('ाय')) return 'dative / "for ___"';
+      if (w.endsWith('ात्')) return 'ablative / "from ___"';
+      if (w.endsWith('ेषु')) return 'locative plural / "in ___s"';
+      if (w.endsWith('ाः')) return 'nominative plural';
+      if (w.endsWith('ति')) return 'verb — 3rd person singular present';
+      if (w.endsWith('न्ति')) return 'verb — 3rd person plural present';
+      if (w.endsWith('ते')) return 'verb — middle voice present';
+      if (w.endsWith('तुम्')) return 'verbal noun — infinitive';
+      if (w.endsWith('त्वा')) return 'gerund — "having ___ed"';
+      if (w.endsWith('इव')) return 'particle — "like / as"';
+      if (w.endsWith('एव')) return 'particle — "only / indeed"';
+      return 'Sanskrit term (see transliteration)';
+    }
+
+    /* ── 6. Look up a verse in the known-verse database ── */
+    function matchKnownVerse(text) {
+      for (const v of KNOWN_VERSES) {
+        const hits = v.pattern.filter(p => text.includes(p)).length;
+        if (hits >= 2 || (v.pattern.length === 1 && hits === 1)) return v;
+      }
+      return null;
+    }
+
+    /* ── 7. Build a generic analysis for unknown verses ── */
+    function buildGenericAnalysis(text) {
+      const metre = detectMetre(text);
+      const words = splitWords(text);
+      const iast = devaToIAST(text);
+
+      // Build a readable English gloss from word meanings
+      const knownMeanings = words.filter(w => WORD_DICT[w.word] || WORD_DICT[w.word?.replace(/[ंःँ]$/, '')]);
+      let translationHint = '';
+      if (knownMeanings.length > 0) {
+        translationHint = 'Key terms detected: ' + knownMeanings.map(w => `${w.word} (${w.meaning})`).join(', ') + '.';
+      }
+
+      // Check if it looks like a namaskāra / salutation
+      const isNamaskara = /नम[ोः:स्]/.test(text);
+      const hasOM = /ॐ|ओम्/.test(text);
+      const hasShanti = /शान्ति|शांति/.test(text);
+      const hasBhava = /भव/.test(text);
+      const hasVidya = /विद्य/.test(text);
+      const hasKarma = /कर्म/.test(text);
+      const hasDeva = /देव/.test(text);
+
+      let translation = '';
+      let meaning = '';
+
+      if (isNamaskara) {
+        translation = 'A salutation — an expression of reverence and devotion, bowing before the divine or the teacher.';
+        meaning = 'The word "namas" (नमस्) carries deep resonance in Sanskrit — it means "not I," a dissolution of ego before the sacred. Each repetition deepens the surrender.';
+      } else if (hasOM && hasDeva) {
+        translation = 'A divine invocation beginning with the sacred syllable OM, offering praise to a deity.';
+        meaning = 'The combination of OM (the primordial sound) with divine imagery suggests a Vedic hymn or mantra invoking cosmic blessing.';
+      } else if (hasShanti) {
+        translation = 'A peace chant invoking stillness and harmony across all planes of existence.';
+        meaning = 'Śānti (शान्ति) appears three times in the Upaniṣadic tradition to dispel the three types of obstacles — divine, natural, and human — that obstruct inner peace.';
+      } else if (hasVidya || hasKarma) {
+        translation = 'A verse on the nature of ' + (hasVidya ? 'knowledge (vidyā)' : '') + (hasKarma ? 'action (karma)' : '') + ' and its role in the spiritual life.';
+        meaning = 'Classical Sanskrit literature frequently reflects on vidyā and karma as the twin pillars of human existence — what we know shapes what we do, and what we do shapes what we become.';
+      } else {
+        translation = 'A Sanskrit verse' + (translationHint ? ` containing: ${translationHint}` : '.') + ' Full translation requires contextual scholarship.';
+        meaning = 'Sanskrit poetic tradition (kāvya) weaves sound, rhythm, and meaning together inseparably. The verse\'s full significance unfolds through both intellectual understanding (jñāna) and lived experience (anubhava).';
+      }
+
+      // Build simplified rendering
+      const simplified = words
+        .filter(w => w.meaning && !w.meaning.includes('particle') && !w.meaning.includes('genitive') && !w.meaning.includes('accusative'))
+        .slice(0, 6)
+        .map(w => w.meaning)
+        .join(' · ') || 'See word-by-word breakdown below';
+
+      return {
+        transcribed_text: text,
+        transliteration: iast,
+        source_context: 'Sanskrit verse — source unidentified',
+        english_translation: translation,
+        meaning: meaning,
+        simplified_sanskrit: simplified,
+        chandas_analysis: metre,
+        word_by_word: words
+      };
+    }
+
+    /* ── 8. Main analysis entry point ── */
+    function analyzeVerse() {
+      const btn = document.getElementById('analyzeBtn');
+      const loader = document.getElementById('summaryLoader');
+      const results = document.getElementById('summaryResults');
+      const errBox = document.getElementById('summaryError');
+      const text = document.getElementById('sktInput').value.trim();
+
+      errBox.style.display = 'none';
+      results.style.display = 'none';
+
+      if (!text) {
+        errBox.textContent = '⚠ Please enter or record a Sanskrit verse above.';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      loader.style.display = 'block';
+
+      // Slight delay so loader renders before the JS runs
+      setTimeout(() => {
+        try {
+          const known = matchKnownVerse(text);
+          const result = known ? known : buildGenericAnalysis(text);
+          renderSummary(result);
+        } catch (e) {
+          errBox.textContent = '⚠ Analysis error: ' + e.message;
+          errBox.style.display = 'block';
+        } finally {
+          btn.disabled = false;
+          loader.style.display = 'none';
+        }
+      }, 320);
+    }
+
+    function renderSummary(d) {
+      document.getElementById('r-verse').textContent = d.transcribed_text || '';
+      document.getElementById('r-translit').textContent = d.transliteration || '';
+      document.getElementById('r-source').textContent = d.source_context || 'Unknown source';
+      document.getElementById('r-translation').textContent = d.english_translation || '';
+      document.getElementById('r-meaning').textContent = d.meaning || '';
+      document.getElementById('r-simplified').textContent = d.simplified_sanskrit || '';
+      const c = d.chandas_analysis || {};
+      document.getElementById('r-meter').textContent = c.meter_name || '—';
+      document.getElementById('r-pattern').textContent = c.syllable_pattern || '';
+      document.getElementById('r-meter-desc').textContent = c.description || '';
+      document.getElementById('r-padas').textContent = c.pada_count || '—';
+      document.getElementById('r-syllables').textContent = c.total_syllables || '—';
+      const wg = document.getElementById('r-words'); wg.innerHTML = '';
+      (d.word_by_word || []).forEach(w => {
+        const ch = document.createElement('div'); ch.className = 'chip';
+        ch.innerHTML = `<span class="cw">${w.word}</span><span class="cr">√ ${w.root}</span><span class="cm">${w.meaning}</span>`;
+        wg.appendChild(ch);
+      });
+      const rp = document.getElementById('summaryResults');
+      rp.style.display = 'block';
+      rp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── KARAOKE ───────────────────────────────────
+    const KARAOKE_VERSES = [
+      {
+        id: 1, title: 'Gāyatrī Mantra', source: 'Rigveda 3.62.10',
+        devanagari: 'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्',
+        roman: 'Om bhūr bhuvaḥ svaḥ tat saviturvareṇyaṃ bhargo devasya dhīmahi dhiyo yo naḥ pracodayāt',
+        meaning: 'We meditate upon the divine light of the radiant sun. May that supreme consciousness illuminate our intellect and inspire us toward righteousness.',
+        words: ['ॐ', 'भूर्', 'भुवः', 'स्वः', 'तत्', 'सवितुर्', 'वरेण्यं', 'भर्गो', 'देवस्य', 'धीमहि', 'धियो', 'यो', 'नः', 'प्रचोदयात्'],
+        wordMeanings: ['OM', 'earth', 'atmosphere', 'heaven', 'that', 'of the Sun', 'most adorable', 'radiance', 'of the divine', 'we meditate', 'intellect', 'who', 'our', 'may inspire']
+      },
+      {
+        id: 2, title: 'Mahāmṛtyuñjaya Mantra', source: 'Rigveda 7.59.12',
+        devanagari: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय मामृतात्',
+        roman: 'Om tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam urvārukamiva bandhanān mṛtyormukṣīya māmṛtāt',
+        meaning: 'We worship the three-eyed Lord Śiva who is fragrant and nourishes all. Like the cucumber freed from its stem, may he liberate us from the bondage of death and not from immortality.',
+        words: ['ॐ', 'त्र्यम्बकं', 'यजामहे', 'सुगन्धिं', 'पुष्टि-', 'वर्धनम्', 'उर्वारुकम्', 'इव', 'बन्धनान्', 'मृत्योर्', 'मुक्षीय', 'मा', 'अमृतात्'],
+        wordMeanings: ['OM', 'three-eyed Śiva', 'we worship', 'fragrant', 'nourishment', 'increasing', 'cucumber', 'like', 'from bondage', 'from death', 'may liberate', 'not', 'from immortality']
+      },
+      {
+        id: 3, title: 'Śānti Pāṭha', source: 'Bṛhadāraṇyaka Upaniṣad',
+        devanagari: 'ॐ पूर्णमदः पूर्णमिदं पूर्णात् पूर्णमुदच्यते पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते',
+        roman: 'Om pūrṇamadaḥ pūrṇamidaṃ pūrṇāt pūrṇamudacyate pūrṇasya pūrṇamādāya pūrṇamevāvaśiṣyate',
+        meaning: 'That (Brahman) is whole. This (universe) is whole. From wholeness, wholeness comes forth. Even after wholeness is taken from wholeness, wholeness remains.',
+        words: ['ॐ', 'पूर्णम्-अदः', 'पूर्णम्-इदं', 'पूर्णात्', 'पूर्णम्', 'उदच्यते', 'पूर्णस्य', 'पूर्णम्-आदाय', 'पूर्णम्-एव', 'अवशिष्यते'],
+        wordMeanings: ['OM', 'that is whole', 'this is whole', 'from wholeness', 'wholeness', 'emerges', 'of wholeness', 'taking wholeness', 'wholeness only', 'remains']
+      },
+      {
+        id: 4, title: 'Bhagavad Gītā 2.47', source: 'Bhagavad Gītā',
+        devanagari: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि',
+        roman: 'karmaṇyevādhikāraste mā phaleṣu kadācana mā karmaphalaheturbhūrmā te saṅgo\'stvakarmaṇi',
+        meaning: 'You have the right to perform your actions, but never to the fruits of your actions. Never let the fruit be the purpose of your actions, and never stop doing your duty.',
+        words: ['कर्मणि', 'एव', 'अधिकारः', 'ते', 'मा', 'फलेषु', 'कदाचन', 'मा', 'कर्मफल', 'हेतुः', 'भूः', 'मा', 'ते', 'सङ्गः', 'अस्तु', 'अकर्मणि'],
+        wordMeanings: ['in action', 'only', 'right/entitlement', 'your', 'not', 'in fruits', 'ever', 'not', 'action\'s fruit', 'cause', 'be', 'not', 'your', 'attachment', 'let there be', 'in inaction']
+      }
+    ];
+
+    // Build verse list
+    function buildKaraoke() {
+      const list = document.getElementById('kVerseList');
+      if (!list) return;
+      KARAOKE_VERSES.forEach(v => {
+        const el = document.createElement('div');
+        el.className = 'kverse'; el.dataset.id = v.id;
+        el.innerHTML = `<span class="kverse-num">${String(v.id).padStart(2, '0')}</span>
     <div class="kverse-text">
       <div class="kverse-devanagari">${v.title}</div>
       <div class="kverse-roman">${v.source}</div>
     </div>`;
-    el.onclick=()=>karaoke.load(v);
-    list.appendChild(el);
-  });
-}
+        el.onclick = () => karaoke.load(v);
+        list.appendChild(el);
+      });
+    }
 
-// Karaoke engine
-const karaoke = {
-  verse:null, words:[], idx:0, timer:null, speed:1, playing:false,
+    // Karaoke engine
+    const karaoke = {
+      verse: null, words: [], idx: 0, timer: null, speed: 1, playing: false,
 
-  load(v){
-    this.reset();
-    this.verse=v;
-    document.querySelectorAll('.kverse').forEach(el=>el.classList.remove('selected'));
-    document.querySelector(`.kverse[data-id="${v.id}"]`)?.classList.add('selected');
-    document.getElementById('kFullMeaning').textContent=v.meaning;
-    document.getElementById('kMeaning').textContent='';
-    this.words=v.words;
-    this.renderLine();
-    document.getElementById('kBar').style.width='0%';
-  },
+      load(v) {
+        this.reset();
+        this.verse = v;
+        document.querySelectorAll('.kverse').forEach(el => el.classList.remove('selected'));
+        document.querySelector(`.kverse[data-id="${v.id}"]`)?.classList.add('selected');
+        document.getElementById('kFullMeaning').textContent = v.meaning;
+        document.getElementById('kMeaning').textContent = '';
+        this.words = v.words;
+        this.renderLine();
+        document.getElementById('kBar').style.width = '0%';
+      },
 
-  renderLine(){
-    const line=document.getElementById('kLine');
-    line.innerHTML='';
-    this.words.forEach((w,i)=>{
-      const s=document.createElement('span');
-      s.className='k-word '+(i<this.idx?'done':i===this.idx?'active':'waiting');
-      s.textContent=w+' ';s.dataset.i=i;line.appendChild(s);
-    });
-  },
+      renderLine() {
+        const line = document.getElementById('kLine');
+        line.innerHTML = '';
+        this.words.forEach((w, i) => {
+          const s = document.createElement('span');
+          s.className = 'k-word ' + (i < this.idx ? 'done' : i === this.idx ? 'active' : 'waiting');
+          s.textContent = w + ' '; s.dataset.i = i; line.appendChild(s);
+        });
+      },
 
-  play(){
-    if(!this.verse){return;}
-    if(this.playing) return;
-    this.playing=true;
-    document.getElementById('kPlay').style.display='none';
-    document.getElementById('kPause').style.display='';
-    this.tick();
-  },
+      play() {
+        if (!this.verse) { return; }
+        if (this.playing) return;
+        this.playing = true;
+        document.getElementById('kPlay').style.display = 'none';
+        document.getElementById('kPause').style.display = '';
+        this.tick();
+      },
 
-  tick(){
-    if(this.idx>=this.words.length){this.finish();return;}
-    this.renderLine();
-    const meaning=this.verse.wordMeanings?.[this.idx]||'';
-    document.getElementById('kMeaning').textContent=meaning;
-    const pct=((this.idx+1)/this.words.length)*100;
-    document.getElementById('kBar').style.width=pct+'%';
-    const delay=Math.round((800+Math.random()*400)/this.speed);
-    this.timer=setTimeout(()=>{this.idx++;if(this.playing)this.tick();},delay);
-  },
+      tick() {
+        if (this.idx >= this.words.length) { this.finish(); return; }
+        this.renderLine();
+        const meaning = this.verse.wordMeanings?.[this.idx] || '';
+        document.getElementById('kMeaning').textContent = meaning;
+        const pct = ((this.idx + 1) / this.words.length) * 100;
+        document.getElementById('kBar').style.width = pct + '%';
+        const delay = Math.round((800 + Math.random() * 400) / this.speed);
+        this.timer = setTimeout(() => { this.idx++; if (this.playing) this.tick(); }, delay);
+      },
 
-  pause(){
-    this.playing=false;
-    clearTimeout(this.timer);
-    document.getElementById('kPlay').style.display='';
-    document.getElementById('kPause').style.display='none';
-  },
+      pause() {
+        this.playing = false;
+        clearTimeout(this.timer);
+        document.getElementById('kPlay').style.display = '';
+        document.getElementById('kPause').style.display = 'none';
+      },
 
-  reset(){
-    this.pause();this.idx=0;
-    if(this.verse) this.renderLine();
-    else document.getElementById('kLine').innerHTML='<span class="k-word waiting">Select a verse to begin...</span>';
-    document.getElementById('kMeaning').textContent='';
-    document.getElementById('kBar').style.width='0%';
-  },
+      reset() {
+        this.pause(); this.idx = 0;
+        if (this.verse) this.renderLine();
+        else document.getElementById('kLine').innerHTML = '<span class="k-word waiting">Select a verse to begin...</span>';
+        document.getElementById('kMeaning').textContent = '';
+        document.getElementById('kBar').style.width = '0%';
+      },
 
-  finish(){
-    this.playing=false;
-    document.getElementById('kPlay').style.display='';
-    document.getElementById('kPause').style.display='none';
-    document.getElementById('kMeaning').textContent='✦ Verse complete ✦';
-  },
+      finish() {
+        this.playing = false;
+        document.getElementById('kPlay').style.display = '';
+        document.getElementById('kPause').style.display = 'none';
+        document.getElementById('kMeaning').textContent = '✦ Verse complete ✦';
+      },
 
-  setSpeed(s){this.speed=s;}
-};
+      setSpeed(s) { this.speed = s; }
+    };
 
-buildKaraoke();
+    buildKaraoke();
 
-// ── CHANT GENERATOR ───────────────────────────
-const RAGA_DATA = {
-  bhairav:    {name:'Bhairav',      swaras:'Sa Re♭ Ga Ma Pa Dha♭ Ni Sa',     mood:'Serenity, Dawn, Devotion',     time:'Early Morning (6–9 AM)'},
-  yaman:      {name:'Yāman',        swaras:'Sa Re Ga Ma♯ Pa Dha Ni Sa',      mood:'Romance, Beauty, Longing',     time:'Evening (6–9 PM)'},
-  bhairavi:   {name:'Bhairavī',     swaras:'Sa Re♭ Ga♭ Ma Pa Dha♭ Ni♭ Sa',  mood:'Pathos, Farewell, Devotion',   time:'Morning (6–9 AM)'},
-  darbari:    {name:'Darbārī Kānaḍā',swaras:'Sa Re Ga♭ Ma Pa Dha♭ Ni♭ Sa', mood:'Grandeur, Gravity, Power',     time:'Late Night (12–3 AM)'},
-  yaman_kalyan:{name:'Yāman Kalyāṇ',swaras:'Sa Re Ga Ma♯ Pa Dha Ni Sa',     mood:'Beauty, Contemplation',        time:'Evening Twilight'},
-  malkauns:   {name:'Mālkauṃs',     swaras:'Sa Ga♭ Ma Dha♭ Ni♭ Sa',        mood:'Deep Meditation, Midnight',    time:'Midnight (12–3 AM)'},
-  bihag:      {name:'Bihāg',        swaras:'Sa Re Ga Ma Ma♯ Pa Dha Ni Sa',   mood:'Romance, Joyful, Night',       time:'Night (9 PM–12 AM)'}
-};
-const CHANDAS_DATA = {
-  anushtubh:     {name:'Anuṣṭubh',        pattern:'G L G G | L L G G',  syllables:'8 per pāda × 4 = 32'},
-  trishtubh:     {name:'Triṣṭubh',        pattern:'G G L G | G L L G G L L G', syllables:'11 per pāda × 4 = 44'},
-  jagati:        {name:'Jagatī',          pattern:'G G L G | G L L G G L L G G', syllables:'12 per pāda × 4 = 48'},
-  mandakranta:   {name:'Mandākrāntā',     pattern:'G G G G | G L L G | G L G G L G G', syllables:'17 per line'},
-  shardula:      {name:'Śārdūlavikrīḍita',pattern:'G G G L | G G G L | L L G L G G G', syllables:'19 per line'},
-  vasantatilaka: {name:'Vasantatilakā',   pattern:'G G L G | G L L G | L L G G', syllables:'14 per line'},
-  gayatri:       {name:'Gāyatrī',         pattern:'G L G G | L L G G',  syllables:'8 per pāda × 3 = 24'}
-};
-const TALA_DATA = {
-  ektaal:  {name:'Ektāl',  beats:12, pattern:'|1 2|3 4|5 6|7 8|9 10|11 12|'},
-  teentaal:{name:'Tīntāl', beats:16, pattern:'|1 2 3 4|5 6 7 8|9 10 11 12|13 14 15 16|'},
-  jhaptaal:{name:'Jhaptāl',beats:10, pattern:'|1 2|3 4 5|6 7|8 9 10|'},
-  rupak:   {name:'Rūpak',  beats:7,  pattern:'|1 2 3|4 5|6 7|'},
-  chautaal:{name:'Cautāl', beats:12, pattern:'|1 2|3 4|5 6|7 8|9 10|11 12|'}
-};
+    // ── CHANT GENERATOR ───────────────────────────
+    const RAGA_DATA = {
+      bhairav: { name: 'Bhairav', swaras: 'Sa Re♭ Ga Ma Pa Dha♭ Ni Sa', mood: 'Serenity, Dawn, Devotion', time: 'Early Morning (6–9 AM)' },
+      yaman: { name: 'Yāman', swaras: 'Sa Re Ga Ma♯ Pa Dha Ni Sa', mood: 'Romance, Beauty, Longing', time: 'Evening (6–9 PM)' },
+      bhairavi: { name: 'Bhairavī', swaras: 'Sa Re♭ Ga♭ Ma Pa Dha♭ Ni♭ Sa', mood: 'Pathos, Farewell, Devotion', time: 'Morning (6–9 AM)' },
+      darbari: { name: 'Darbārī Kānaḍā', swaras: 'Sa Re Ga♭ Ma Pa Dha♭ Ni♭ Sa', mood: 'Grandeur, Gravity, Power', time: 'Late Night (12–3 AM)' },
+      yaman_kalyan: { name: 'Yāman Kalyāṇ', swaras: 'Sa Re Ga Ma♯ Pa Dha Ni Sa', mood: 'Beauty, Contemplation', time: 'Evening Twilight' },
+      malkauns: { name: 'Mālkauṃs', swaras: 'Sa Ga♭ Ma Dha♭ Ni♭ Sa', mood: 'Deep Meditation, Midnight', time: 'Midnight (12–3 AM)' },
+      bihag: { name: 'Bihāg', swaras: 'Sa Re Ga Ma Ma♯ Pa Dha Ni Sa', mood: 'Romance, Joyful, Night', time: 'Night (9 PM–12 AM)' }
+    };
+    const CHANDAS_DATA = {
+      anushtubh: { name: 'Anuṣṭubh', pattern: 'G L G G | L L G G', syllables: '8 per pāda × 4 = 32' },
+      trishtubh: { name: 'Triṣṭubh', pattern: 'G G L G | G L L G G L L G', syllables: '11 per pāda × 4 = 44' },
+      jagati: { name: 'Jagatī', pattern: 'G G L G | G L L G G L L G G', syllables: '12 per pāda × 4 = 48' },
+      mandakranta: { name: 'Mandākrāntā', pattern: 'G G G G | G L L G | G L G G L G G', syllables: '17 per line' },
+      shardula: { name: 'Śārdūlavikrīḍita', pattern: 'G G G L | G G G L | L L G L G G G', syllables: '19 per line' },
+      vasantatilaka: { name: 'Vasantatilakā', pattern: 'G G L G | G L L G | L L G G', syllables: '14 per line' },
+      gayatri: { name: 'Gāyatrī', pattern: 'G L G G | L L G G', syllables: '8 per pāda × 3 = 24' }
+    };
+    const TALA_DATA = {
+      ektaal: { name: 'Ektāl', beats: 12, pattern: '|1 2|3 4|5 6|7 8|9 10|11 12|' },
+      teentaal: { name: 'Tīntāl', beats: 16, pattern: '|1 2 3 4|5 6 7 8|9 10 11 12|13 14 15 16|' },
+      jhaptaal: { name: 'Jhaptāl', beats: 10, pattern: '|1 2|3 4 5|6 7|8 9 10|' },
+      rupak: { name: 'Rūpak', beats: 7, pattern: '|1 2 3|4 5|6 7|' },
+      chautaal: { name: 'Cautāl', beats: 12, pattern: '|1 2|3 4|5 6|7 8|9 10|11 12|' }
+    };
 
 
-/* ══════════════════════════════════════════════════════════
-   CHANT GENERATOR — UPGRADES
-   • AI analysis via Anthropic API
-   • Web Speech API playback with emotion/pitch/speed
-   • Language selection
-   • Phoneme strip
-══════════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════════════════
+       CHANT GENERATOR — UPGRADES
+       • AI analysis via Anthropic API
+       • Web Speech API playback with emotion/pitch/speed
+       • Language selection
+       • Phoneme strip
+    ══════════════════════════════════════════════════════════ */
 
-/* State */
-let chantLang         = 'sa';
-let chantUtter        = null;
-let lastGeneratedText = '';
+    /* State */
+    let chantLang = 'sa';
+    let chantUtter = null;
+    let lastGeneratedText = '';
 
-/* Language selector */
-function selectChantLang(lang, el) {
-  chantLang = lang;
-  document.querySelectorAll('#langSa,#langHi,#langEn').forEach(b => b.classList.remove('active-btn'));
-  el.classList.add('active-btn');
-}
+    /* Language selector */
+    function selectChantLang(lang, el) {
+      chantLang = lang;
+      document.querySelectorAll('#langSa,#langHi,#langEn').forEach(b => b.classList.remove('active-btn'));
+      el.classList.add('active-btn');
+    }
 
-/* ── UPGRADED generateChant() ────────────────────────────
-   DELETE the old generateChant() and use this one instead.
-────────────────────────────────────────────────────────── */
-async function generateChant() {
-  const verse   = document.getElementById('chantVerse').value.trim();
-  const chandas = document.getElementById('chandas').value;
-  const raga    = document.getElementById('raga').value;
-  const tala    = document.getElementById('tala').value;
-  const emotion = document.getElementById('chantEmotion').value;
-  const voice   = document.getElementById('chantVoiceProfile').value;
-  const melody  = document.getElementById('chantMelody').value;
+    /* ── UPGRADED generateChant() ────────────────────────────
+       DELETE the old generateChant() and use this one instead.
+    ────────────────────────────────────────────────────────── */
+    async function generateChant() {
+      const verse = document.getElementById('chantVerse').value.trim();
+      const chandas = document.getElementById('chandas').value;
+      const raga = document.getElementById('raga').value;
+      const tala = document.getElementById('tala').value;
+      const emotion = document.getElementById('chantEmotion').value;
+      const voice = document.getElementById('chantVoiceProfile').value;
+      const melody = document.getElementById('chantMelody').value;
 
-  if (!verse) { alert('Please enter a Sanskrit verse.'); return; }
+      if (!verse) { alert('Please enter a Sanskrit verse.'); return; }
 
-  const loader  = document.getElementById('chantLoader');
-  const output  = document.getElementById('chantOutput');
-  const vis     = document.getElementById('chantVisualizer');
-  const errBox  = document.getElementById('chantError');
-  const genBtn  = document.getElementById('chantGenerateBtn');
+      const loader = document.getElementById('chantLoader');
+      const output = document.getElementById('chantOutput');
+      const vis = document.getElementById('chantVisualizer');
+      const errBox = document.getElementById('chantError');
+      const genBtn = document.getElementById('chantGenerateBtn');
 
-  errBox.style.display = 'none';
-  output.style.display = 'none';
-  loader.style.display = 'block';
-  genBtn.disabled = true;
+      errBox.style.display = 'none';
+      output.style.display = 'none';
+      loader.style.display = 'block';
+      genBtn.disabled = true;
 
-  // ── Original local data lookup (unchanged) ──
-  const r = RAGA_DATA[raga];
-  const c = CHANDAS_DATA[chandas];
-  const t = TALA_DATA[tala];
+      // ── Original local data lookup (unchanged) ──
+      const r = RAGA_DATA[raga];
+      const c = CHANDAS_DATA[chandas];
+      const t = TALA_DATA[tala];
 
-  const sktWords   = verse.split(/[\s।]+/).filter(Boolean);
-  const guruLaghu  = sktWords.map(w => /[ाीूैौंःृ]/.test(w) ? 'G' : 'L').join(' ');
-  lastGeneratedText = verse;
+      const sktWords = verse.split(/[\s।]+/).filter(Boolean);
+      const guruLaghu = sktWords.map(w => /[ाीूैौंःृ]/.test(w) ? 'G' : 'L').join(' ');
+      lastGeneratedText = verse;
 
-  // ── AI Analysis (new) ──
-  let aiAnalysis = null;
-  try {
-    const prompt = `You are a Sanskrit scholar and musicologist. Analyse this chant configuration and respond ONLY with a valid JSON object — no markdown, no extra text.
+      // ── AI Analysis (new) ──
+      let aiAnalysis = null;
+      try {
+        const prompt = `You are a Sanskrit scholar and musicologist. Analyse this chant configuration and respond ONLY with a valid JSON object — no markdown, no extra text.
 
 Verse: ${verse}
 Chandas: ${c.name}
@@ -1421,216 +1702,217 @@ Return exactly this JSON:
   "transliteration": "IAST transliteration of the verse"
 }`;
 
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 700,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
+        const resp = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 700,
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
 
-    if (resp.ok) {
-      const apiData = await resp.json();
-      const raw     = apiData.content.map(c => c.text || '').join('');
-      aiAnalysis    = JSON.parse(raw.replace(/```json|```/g, '').trim());
-    }
-  } catch (e) {
-    // AI analysis is a bonus — chant still generates locally if this fails
-    console.warn('AI analysis failed:', e.message);
-  }
+        if (resp.ok) {
+          const apiData = await resp.json();
+          const raw = apiData.content.map(c => c.text || '').join('');
+          aiAnalysis = JSON.parse(raw.replace(/```json|```/g, '').trim());
+        }
+      } catch (e) {
+        // AI analysis is a bonus — chant still generates locally if this fails
+        console.warn('AI analysis failed:', e.message);
+      }
 
-  // ── Render ──
-  loader.style.display = 'none';
-  output.style.display = 'block';
-  genBtn.disabled = false;
+      // ── Render ──
+      loader.style.display = 'none';
+      output.style.display = 'block';
+      genBtn.disabled = false;
 
-  // Original fields (unchanged)
-  document.getElementById('chantRagaTag').innerHTML =
-    `🎵 ${r.name} &nbsp;·&nbsp; ${c.name} &nbsp;·&nbsp; ${t.name}`;
-  document.getElementById('chantVerseOut').textContent = verse;
-  document.getElementById('chantNotation').textContent =
-    `${c.pattern}    ♩ ${t.pattern}`;
+      // Original fields (unchanged)
+      document.getElementById('chantRagaTag').innerHTML =
+        `🎵 ${r.name} &nbsp;·&nbsp; ${c.name} &nbsp;·&nbsp; ${t.name}`;
+      document.getElementById('chantVerseOut').textContent = verse;
+      document.getElementById('chantNotation').textContent =
+        `${c.pattern}    ♩ ${t.pattern}`;
 
-  vis.classList.add('playing');
-  setTimeout(() => vis.classList.remove('playing'), 5000);
+      vis.classList.add('playing');
+      setTimeout(() => vis.classList.remove('playing'), 5000);
 
-  // Original details grid (unchanged)
-  const details = [
-    { lbl: 'Rāga',          val: r.name },
-    { lbl: 'Svaras',        val: r.swaras },
-    { lbl: 'Rasa (mood)',   val: r.mood },
-    { lbl: 'Best time',     val: r.time },
-    { lbl: 'Chandas',       val: c.name },
-    { lbl: 'Syllables',     val: c.syllables },
-    { lbl: 'Metre pattern', val: c.pattern },
-    { lbl: 'Tāla',          val: t.name + ' (' + t.beats + ' beats)' },
-    { lbl: 'Verse weight',  val: guruLaghu || '—' }
-  ];
-  document.getElementById('chantDetails').innerHTML = details.map(d => `
+      // Original details grid (unchanged)
+      const details = [
+        { lbl: 'Rāga', val: r.name },
+        { lbl: 'Svaras', val: r.swaras },
+        { lbl: 'Rasa (mood)', val: r.mood },
+        { lbl: 'Best time', val: r.time },
+        { lbl: 'Chandas', val: c.name },
+        { lbl: 'Syllables', val: c.syllables },
+        { lbl: 'Metre pattern', val: c.pattern },
+        { lbl: 'Tāla', val: t.name + ' (' + t.beats + ' beats)' },
+        { lbl: 'Verse weight', val: guruLaghu || '—' }
+      ];
+      document.getElementById('chantDetails').innerHTML = details.map(d => `
     <div class="cdetail">
       <div class="cdetail-lbl">${d.lbl}</div>
       <div class="cdetail-val">${d.val}</div>
     </div>`).join('');
 
-  // NEW: Phoneme strip
-  const phonEl = document.getElementById('chantPhonemes');
-  if (phonEl) {
-    phonEl.innerHTML = '';
-    const phonemes = aiAnalysis?.phonemes || sktWords.slice(0, 12);
-    phonemes.forEach(p => {
-      const span = document.createElement('span');
-      span.style.cssText = 'padding:0.25rem 0.65rem;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:2px;font-family:monospace;font-size:0.82rem;color:var(--saffron);';
-      span.textContent = p;
-      phonEl.appendChild(span);
-    });
-  }
+      // NEW: Phoneme strip
+      const phonEl = document.getElementById('chantPhonemes');
+      if (phonEl) {
+        phonEl.innerHTML = '';
+        const phonemes = aiAnalysis?.phonemes || sktWords.slice(0, 12);
+        phonemes.forEach(p => {
+          const span = document.createElement('span');
+          span.style.cssText = 'padding:0.25rem 0.65rem;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:2px;font-family:monospace;font-size:0.82rem;color:var(--saffron);';
+          span.textContent = p;
+          phonEl.appendChild(span);
+        });
+      }
 
-  // NEW: AI Analysis card
-  const aiCard = document.getElementById('chantAiCard');
-  const aiBody = document.getElementById('chantAiBody');
-  if (aiCard && aiBody && aiAnalysis) {
-    aiBody.textContent =
-      '🎼 ' + (aiAnalysis.chant_analysis || '') + '\n\n' +
-      '🎵 Rāga: '  + (aiAnalysis.raga_note || '') + '\n' +
-      '🥁 Tāla: '  + (aiAnalysis.tala_note || '') + '\n' +
-      '💡 Tip: '   + (aiAnalysis.pronunciation_tip || '') +
-      (aiAnalysis.transliteration ? '\n\n📖 ' + aiAnalysis.transliteration : '');
-    aiCard.style.display = 'block';
-  }
+      // NEW: AI Analysis card
+      const aiCard = document.getElementById('chantAiCard');
+      const aiBody = document.getElementById('chantAiBody');
+      if (aiCard && aiBody && aiAnalysis) {
+        aiBody.textContent =
+          '🎼 ' + (aiAnalysis.chant_analysis || '') + '\n\n' +
+          '🎵 Rāga: ' + (aiAnalysis.raga_note || '') + '\n' +
+          '🥁 Tāla: ' + (aiAnalysis.tala_note || '') + '\n' +
+          '💡 Tip: ' + (aiAnalysis.pronunciation_tip || '') +
+          (aiAnalysis.transliteration ? '\n\n📖 ' + aiAnalysis.transliteration : '');
+        aiCard.style.display = 'block';
+      }
 
-  // NEW: Audio controls
-  const audioControls = document.getElementById('chantAudioControls');
-  if (audioControls) audioControls.style.display = 'block';
+      // NEW: Audio controls
+      const audioControls = document.getElementById('chantAudioControls');
+      if (audioControls) audioControls.style.display = 'block';
 
-  const speakBtn = document.getElementById('chantSpeakBtn');
-  if (speakBtn) speakBtn.disabled = false;
+      const speakBtn = document.getElementById('chantSpeakBtn');
+      if (speakBtn) speakBtn.disabled = false;
 
-  output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  // Auto-speak after short delay
-  setTimeout(speakChant, 800);
-}
-
-/* ── SPEAK / PAUSE / STOP ─────────────────────────────── */
-function speakChant() {
-  if (!lastGeneratedText) return;
-  if (!window.speechSynthesis) {
-    document.getElementById('chantError').textContent = '⚠ Web Speech API not available. Use Chrome.';
-    document.getElementById('chantError').style.display = 'block';
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-
-  const utter = new SpeechSynthesisUtterance(lastGeneratedText);
-
-  const langMap = { sa: 'hi-IN', hi: 'hi-IN', en: 'en-IN' };
-  utter.lang  = langMap[chantLang] || 'hi-IN';
-
-  const pitchVal = parseFloat(document.getElementById('chantPitch').value);
-  const speedVal = parseFloat(document.getElementById('chantSpeed').value);
-  utter.rate  = Math.max(0.5, Math.min(1.8, speedVal));
-  utter.pitch = 1 + (pitchVal / 16);
-
-  const emotionMap = {
-    shanta:  { rate: 0.8,  pitch: 0.92 },
-    bhakti:  { rate: 0.85, pitch: 0.95 },
-    vira:    { rate: 1.05, pitch: 1.1  },
-    karuna:  { rate: 0.78, pitch: 0.88 },
-    adbhuta: { rate: 1.0,  pitch: 1.05 }
-  };
-  const emotion = document.getElementById('chantEmotion').value;
-  const em = emotionMap[emotion] || {};
-  utter.rate  *= (em.rate  || 1);
-  utter.pitch *= (em.pitch || 1);
-
-  utter.onstart = () => {
-    document.getElementById('chantVisualizer').classList.add('playing');
-    const btn = document.getElementById('chantPlayBtn');
-    if (btn) btn.textContent = '⏸ Playing…';
-  };
-  utter.onend = utter.onerror = () => {
-    document.getElementById('chantVisualizer').classList.remove('playing');
-    const btn = document.getElementById('chantPlayBtn');
-    if (btn) btn.textContent = '▶ Play';
-  };
-
-  chantUtter = utter;
-  window.speechSynthesis.speak(utter);
-}
-
-function pauseChant() {
-  if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-    window.speechSynthesis.pause();
-    document.getElementById('chantVisualizer').classList.remove('playing');
-  } else if (window.speechSynthesis.paused) {
-    window.speechSynthesis.resume();
-    document.getElementById('chantVisualizer').classList.add('playing');
-  }
-}
-
-function stopChant() {
-  window.speechSynthesis.cancel();
-  document.getElementById('chantVisualizer').classList.remove('playing');
-  const btn = document.getElementById('chantPlayBtn');
-  if (btn) btn.textContent = '▶ Play';
-}
-
-function downloadChantAudio() {
-  // Production: POST lastGeneratedText to /api/tts backend (gTTS/Coqui) and return MP3 blob.
-  // Placeholder: saves a text file with chant data.
-  const blob = new Blob(
-    [`Verse: ${lastGeneratedText}\nLang: ${chantLang}\nSpeed: ${document.getElementById('chantSpeed').value}\nPitch: ${document.getElementById('chantPitch').value}\n\nConnect to gTTS or Coqui TTS backend to generate real MP3.`],
-    { type: 'text/plain' }
-  );
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'vak_chant.txt';
-  a.click();
-}
-
-/* ══════════════════════════════════════════════════════════
-   SUMMARISER — AUDIO FILE TRANSCRIPTION BRIDGE
-══════════════════════════════════════════════════════════ */
-const _origSetAudioFile = window.setAudioFile;
-window.setAudioFile = function(f) {
-  _origSetAudioFile(f);
-  transcribeAudioFile(f);
-};
-
-function transcribeAudioFile(file) {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) return;
-
-  const url   = URL.createObjectURL(file);
-  const audio = new Audio(url);
-  const rec   = new SR();
-  rec.lang = 'hi-IN'; rec.continuous = true; rec.interimResults = false;
-
-  let collected = '';
-  rec.onresult = e => {
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) collected += e.results[i][0].transcript + ' ';
+      // Auto-speak after short delay
+      setTimeout(speakChant, 800);
     }
-    if (collected.trim()) {
-      document.getElementById('sktInput').value = collected.trim();
-      const badge = document.getElementById('fileBadge');
-      if (badge) badge.textContent = '📁 ' + file.name + ' — transcribed ✓';
+
+    /* ── SPEAK / PAUSE / STOP ─────────────────────────────── */
+    function speakChant() {
+      if (!lastGeneratedText) return;
+      if (!window.speechSynthesis) {
+        document.getElementById('chantError').textContent = '⚠ Web Speech API not available. Use Chrome.';
+        document.getElementById('chantError').style.display = 'block';
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      const utter = new SpeechSynthesisUtterance(lastGeneratedText);
+
+      const langMap = { sa: 'hi-IN', hi: 'hi-IN', en: 'en-IN' };
+      utter.lang = langMap[chantLang] || 'hi-IN';
+
+      const pitchVal = parseFloat(document.getElementById('chantPitch').value);
+      const speedVal = parseFloat(document.getElementById('chantSpeed').value);
+      utter.rate = Math.max(0.5, Math.min(1.8, speedVal));
+      utter.pitch = 1 + (pitchVal / 16);
+
+      const emotionMap = {
+        shanta: { rate: 0.8, pitch: 0.92 },
+        bhakti: { rate: 0.85, pitch: 0.95 },
+        vira: { rate: 1.05, pitch: 1.1 },
+        karuna: { rate: 0.78, pitch: 0.88 },
+        adbhuta: { rate: 1.0, pitch: 1.05 }
+      };
+      const emotion = document.getElementById('chantEmotion').value;
+      const em = emotionMap[emotion] || {};
+      utter.rate *= (em.rate || 1);
+      utter.pitch *= (em.pitch || 1);
+
+      utter.onstart = () => {
+        document.getElementById('chantVisualizer').classList.add('playing');
+        const btn = document.getElementById('chantPlayBtn');
+        if (btn) btn.textContent = '⏸ Playing…';
+      };
+      utter.onend = utter.onerror = () => {
+        document.getElementById('chantVisualizer').classList.remove('playing');
+        const btn = document.getElementById('chantPlayBtn');
+        if (btn) btn.textContent = '▶ Play';
+      };
+
+      chantUtter = utter;
+      window.speechSynthesis.speak(utter);
     }
-  };
-  rec.onend = () => audio.pause();
 
-  try {
-    rec.start();
-    audio.play().catch(() => {});
-    setTimeout(() => { try { rec.stop(); } catch(e) {} }, 30000);
-  } catch(e) {}
-}
+    function pauseChant() {
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+        window.speechSynthesis.pause();
+        document.getElementById('chantVisualizer').classList.remove('playing');
+      } else if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        document.getElementById('chantVisualizer').classList.add('playing');
+      }
+    }
 
-</script>
+    function stopChant() {
+      window.speechSynthesis.cancel();
+      document.getElementById('chantVisualizer').classList.remove('playing');
+      const btn = document.getElementById('chantPlayBtn');
+      if (btn) btn.textContent = '▶ Play';
+    }
 
-<script src="sanskrit-voice.js"></script>
+    function downloadChantAudio() {
+      // Production: POST lastGeneratedText to /api/tts backend (gTTS/Coqui) and return MP3 blob.
+      // Placeholder: saves a text file with chant data.
+      const blob = new Blob(
+        [`Verse: ${lastGeneratedText}\nLang: ${chantLang}\nSpeed: ${document.getElementById('chantSpeed').value}\nPitch: ${document.getElementById('chantPitch').value}\n\nConnect to gTTS or Coqui TTS backend to generate real MP3.`],
+        { type: 'text/plain' }
+      );
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'vak_chant.txt';
+      a.click();
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       SUMMARISER — AUDIO FILE TRANSCRIPTION BRIDGE
+    ══════════════════════════════════════════════════════════ */
+    const _origSetAudioFile = window.setAudioFile;
+    window.setAudioFile = function (f) {
+      _origSetAudioFile(f);
+      transcribeAudioFile(f);
+    };
+
+    function transcribeAudioFile(file) {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) return;
+
+      const url = URL.createObjectURL(file);
+      const audio = new Audio(url);
+      const rec = new SR();
+      rec.lang = 'hi-IN'; rec.continuous = true; rec.interimResults = false;
+
+      let collected = '';
+      rec.onresult = e => {
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) collected += e.results[i][0].transcript + ' ';
+        }
+        if (collected.trim()) {
+          document.getElementById('sktInput').value = collected.trim();
+          const badge = document.getElementById('fileBadge');
+          if (badge) badge.textContent = '📁 ' + file.name + ' — transcribed ✓';
+        }
+      };
+      rec.onend = () => audio.pause();
+
+      try {
+        rec.start();
+        audio.play().catch(() => { });
+        setTimeout(() => { try { rec.stop(); } catch (e) { } }, 30000);
+      } catch (e) { }
+    }
+
+  </script>
+
+  <script src="sanskrit-voice.js"></script>
 </body>
+
 </html>

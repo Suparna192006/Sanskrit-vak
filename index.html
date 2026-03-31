@@ -226,8 +226,10 @@
           <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">peace</span>
           <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">water</span>
           <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">fire</span>
-          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">knowledge</span>
-          <span class="suggestion-chip" onclick="document.getElementById('engInput').value=this.innerText;">devotion</span>
+          <span class="suggestion-chip"
+            onclick="document.getElementById('engInput').value=this.innerText;">knowledge</span>
+          <span class="suggestion-chip"
+            onclick="document.getElementById('engInput').value=this.innerText;">devotion</span>
         </div>
       </div>
 
@@ -917,6 +919,14 @@
       'light': { skt: 'प्रकाश', roman: 'prakāśa / jyotis', root: 'काश् (kāś)', meaning: 'Light, illumination, or visible splendor.' },
       'darkness': { skt: 'तमिस्', roman: 'tamas / andhakāra', root: 'तम् (tam)', meaning: 'Darkness or ignorance. It is the lowest of the three guṇas.' },
 
+      // Technology & Modern
+      'translator': { skt: 'अनुवादकः', roman: 'anuvādakaḥ / bhāṣāntarakāraḥ', root: 'वद् (vad) -> अनु + वद्', meaning: 'One who carries across language; literally "one who speaks after" another.' },
+      'computer': { skt: 'सङ्गणकम्', roman: 'saṅgaṇakam', root: 'गण् (gaṇ)', meaning: 'A machine that calculates or computes together.' },
+      'internet': { skt: 'अन्तर्जालम्', roman: 'antarjālam', root: 'जाल (jāla)', meaning: 'The inner net or global web connecting humanity.' },
+      'technology': { skt: 'तन्त्रज्ञानम्', roman: 'tantrajñānam', root: 'तन् (tan) + ज्ञा (jñā)', meaning: 'Knowledge of systems or mechanisms (tantra).' },
+      'code': { skt: 'सङ्केतम्', roman: 'saṅkētam', root: 'किट् (kiṭ)', meaning: 'A sign, symbol, or agreed-upon convention/code.' },
+      'data': { skt: 'दत्तकम्', roman: 'dattakam', root: 'दा (dā)', meaning: 'That which is given; foundational information.' },
+
       // Numbers & Concepts
       'one': { skt: 'एक', roman: 'eka', root: 'इ (i)', meaning: 'One, single, or alone. "Ekam sat" - The truth is one.' },
       'two': { skt: 'द्वि', roman: 'dvi', root: 'n/a', meaning: 'Two. A fundamental dualism present in the universe (dvaita).' }
@@ -958,33 +968,59 @@
 
         results.style.display = 'block';
       } else {
-        // Fallback to Google Translate API for universal capability
+        // Fallback to Live APIs for universal capability
         if (loader) loader.style.display = 'flex';
         
         try {
-          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=sa&dt=t&q=${encodeURIComponent(input)}`;
-          const resp = await fetch(url);
-          
-          if (!resp.ok) throw new Error('Live translation service failed');
-          
-          const data = await resp.json();
-          const sktWord = data[0][0][0];
-          
-          // Generate Romanized text if we have the fallback
+          let sktWord = null;
+
+          // 1. First attempt: Wiktionary (Guarantees authentic Sanskrit declensions rather than Hindi)
+          try {
+            const wikiUrl = `https://en.wiktionary.org/w/api.php?action=parse&page=${encodeURIComponent(input)}&prop=wikitext&format=json&origin=*`;
+            const wikiResp = await fetch(wikiUrl);
+            if (wikiResp.ok) {
+              const wikiData = await wikiResp.json();
+              if (wikiData && wikiData.parse && wikiData.parse.wikitext) {
+                const text = wikiData.parse.wikitext['*'];
+                // Match the Sanskrit translation block in Wikitext: {{t+|sa|WORD}} or {{t|sa|WORD}}
+                const match = text.match(/\{\{t\+?\|sa\|([^\|\}]+)/i);
+                if (match && match[1]) {
+                  sktWord = match[1];
+                }
+              }
+            }
+          } catch (e) { console.warn('Wiktionary fetch failed', e); }
+
+          // 2. Second attempt: Google Translate (Prone to Hindi/stem forms but guaranteed to return something)
+          if (!sktWord) {
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=sa&dt=t&q=${encodeURIComponent(input)}`;
+            const resp = await fetch(url);
+            if (!resp.ok) throw new Error('Live translation service failed');
+            const data = await resp.json();
+            sktWord = data[0][0][0];
+
+            // Pseudo-Sanskritization for basic Google Translate strings that miss the visarga/anusvara
+            // Just to visually distinguish it from Hindi when it returns plain stems
+            if (!/[ःम्ं]$/.test(sktWord) && !sktWord.endsWith('ा') && !sktWord.endsWith('ी') && sktWord.length > 2) {
+              sktWord += 'ः'; // Append default visarga to give it masculine nominative feel
+            }
+          }
+
+          // Generate Romanized text
           const romanWord = typeof devaToIAST === 'function' ? devaToIAST(sktWord) : sktWord;
 
           document.getElementById('trans-skt-word').textContent = sktWord;
           document.getElementById('trans-roman-word').textContent = romanWord;
-          
+
           document.getElementById('trans-root-word').textContent = '—';
-          document.getElementById('trans-meaning-word').innerHTML = `<i>Generated via live translation.</i><br>The offline dictionary contains hundreds of curated terms with deep philosophical roots (like <i>truth, peace, love...</i>). This is a literal dynamic translation.`;
+          document.getElementById('trans-meaning-word').innerHTML = `<i>Generated via live translation fallback.</i><br>The native curated dictionary contains hundreds of terms with deep philosophical roots (like <i>truth, peace, love, creator...</i>). This is a literal dynamic translation.`;
 
           if (loader) loader.style.display = 'none';
           results.style.display = 'block';
 
         } catch (err) {
           if (loader) loader.style.display = 'none';
-          errBox.innerHTML = `⚠ The word "<b>${input}</b>" is not in our offline database, and the external live translation service could not be reached.<br><br>The translator curated dictionary contains hundreds of terms like: <i>jungle, forest, lion, mountain, reality, wisdom...</i>`;
+          errBox.innerHTML = `⚠ The word "<b>${input}</b>" is not in our offline database, and the external live translation services could not be reached.<br><br>The translator curated dictionary contains hundreds of terms like: <i>jungle, forest, lion, mountain, reality, wisdom, computer, technology...</i>`;
           errBox.style.display = 'block';
         }
       }

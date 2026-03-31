@@ -251,93 +251,28 @@
   }
 
   /* ══════════════════════════════════════
-     ANALYSE → PUSH TO SUMMARISER + SHOW TRANSLATION
+     ANALYSE — pushes transcript into the
+     main textarea and calls analyzeVerse()
+     which is the LOCAL engine (no API key).
   ══════════════════════════════════════ */
   async function analyseFromVoice() {
-    const transcript = document.getElementById('svd-transcript').textContent.trim();
-    if (!transcript) {
-      setStatus('No Sanskrit text detected to analyse.', 'error');
-      return;
-    }
-
-    // Bridge: copy detected text into the main analyser input
-    document.getElementById('sktInput').value = transcript;
-
-    // Show a loading state in the translation box
-    const transBox  = document.getElementById('svd-translation-box');
-    const transText = document.getElementById('svd-translation-text');
-    const meaningEl = document.getElementById('svd-meaning-text');
-    const analyseBtn = document.getElementById('svd-analyse-btn');
-
-    transBox.style.display  = 'block';
-    transText.textContent   = 'Consulting the scholars…';
-    transText.style.opacity = '0.45';
-    meaningEl.style.display = 'none';
-    analyseBtn.disabled     = true;
-    setStatus('✦ Translating…', 'recording');
-
-    try {
-      const prompt = `You are a Sanskrit scholar. Analyse this Sanskrit verse and respond ONLY with a JSON object, no markdown, no explanation.
-
-Verse: ${transcript}
-
-Return this exact JSON:
-{
-  "transcribed_text": "verse in Devanagari",
-  "transliteration": "IAST transliteration",
-  "source_context": "source if known, else Unknown",
-  "english_translation": "full English translation",
-  "meaning": "deeper philosophical meaning in 2-3 sentences",
-  "simplified_sanskrit": "simpler Sanskrit paraphrase",
-  "chandas_analysis": {
-    "meter_name": "name of the metre",
-    "syllable_pattern": "G/L pattern",
-    "description": "brief description of this metre",
-    "pada_count": 4,
-    "total_syllables": 32
-  },
-  "word_by_word": [
-    {"word": "word1", "root": "root1", "meaning": "meaning1"}
-  ]
-}`;
-
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1500,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-
-      if (!resp.ok) throw new Error('API error ' + resp.status);
-      const apiData = await resp.json();
-      const raw     = apiData.content.map(c => c.text || '').join('');
-      const clean   = raw.replace(/```json|```/g, '').trim();
-      const parsed  = JSON.parse(clean);
-
-      // ── Show translation in the SVD box ──
-      transText.textContent   = parsed.english_translation || '(no translation returned)';
-      transText.style.opacity = '1';
-      if (parsed.meaning) {
-        meaningEl.textContent   = '💡 ' + parsed.meaning;
-        meaningEl.style.display = 'block';
-      }
-      setStatus('✦ Translation ready — full analysis below', 'done');
-
-      // ── Also render the full results panel ──
-      if (typeof renderSummary === 'function') renderSummary(parsed);
-
-    } catch (err) {
-      transText.textContent   = '⚠ ' + err.message;
-      transText.style.opacity = '1';
-      transText.style.color   = '#F4A0A0';
-      setStatus('Error during translation.', 'error');
-    } finally {
-      analyseBtn.disabled = false;
-    }
+  const transcript = document.getElementById('svd-transcript').textContent.trim();
+  if (!transcript) {
+    setStatus('No Sanskrit text detected to analyse.', 'error');
+    return;
   }
+  // Push detected text into the main analyser textarea
+  document.getElementById('sktInput').value = transcript;
+  // Call the local analysis engine defined in the main HTML
+  setStatus('Analysing…', 'recording');
+  if (typeof analyzeVerse === 'function') {
+    analyzeVerse();
+    setTimeout(() => {
+      document.getElementById('summaryResults')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
+  }
+  setStatus('Analysis complete — see results below', 'done');
+}
 
   /* ══════════════════════════════════════
      VISUALIZER

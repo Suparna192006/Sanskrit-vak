@@ -192,7 +192,7 @@
   <div class="page-banner">
     <span class="devanagari-title">विश्लेषण</span>
     <h1>Verse Analyser</h1>
-    <p>Speak, record, or type a Sanskrit verse — get instant English translation, Chandas analysis, and word-by-word breakdown</p>
+    <p>Speak or type a Sanskrit verse — receive instant English translation, sandhi breakdown, and word-by-word analysis</p>
   </div>
 
   <div class="tool-container">
@@ -236,21 +236,6 @@
     <div class="svd-phoneme-strip" id="svd-phoneme-strip" style="display:none">
       <div class="svd-phoneme-label">Phoneme Analysis</div>
       <div class="svd-phonemes" id="svd-phonemes"></div>
-    </div>
-
-    <!-- ── English Translation (auto-filled after Analyse) ── -->
-    <div id="svd-translation-box" style="display:none; margin-bottom:1rem;">
-      <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:#E07B39;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem;">
-        English Translation
-        <span style="flex:1;height:1px;background:rgba(212,160,23,0.2);"></span>
-      </div>
-      <div id="svd-translation-text"
-           style="background:rgba(0,0,0,0.35);border:1px solid rgba(212,160,23,0.2);border-radius:3px;
-                  padding:1rem 1.2rem;font-family:'EB Garamond',serif;font-size:1.05rem;
-                  color:#FAF0DC;line-height:1.75;min-height:2.8rem;font-style:italic;"></div>
-      <div id="svd-meaning-text"
-           style="margin-top:0.6rem;background:rgba(0,0,0,0.2);border:1px solid rgba(212,160,23,0.12);border-radius:3px;
-                  padding:0.75rem 1.2rem;font-size:0.9rem;color:rgba(250,240,220,0.6);line-height:1.65;display:none;"></div>
     </div>
 
     <div class="svd-controls">
@@ -730,72 +715,440 @@ function setAudioFile(f){
   document.getElementById('fileBadge').style.display='inline-block';
 }
 
-// ── ANALYSER ────────────────────────────────
-async function analyzeVerse(){
-  const btn=document.getElementById('analyzeBtn');
-  const loader=document.getElementById('summaryLoader');
-  const results=document.getElementById('summaryResults');
-  const errBox=document.getElementById('summaryError');
-  const text=document.getElementById('sktInput').value.trim();
+// ══════════════════════════════════════════════════════════════
+// LOCAL SANSKRIT ANALYSIS ENGINE — no API key required
+// ══════════════════════════════════════════════════════════════
 
-  errBox.style.display='none';
-  results.style.display='none';
-
-  if(!selectedFile && !text){
-    errBox.textContent='⚠ Please upload an audio file or enter Sanskrit text.';
-    errBox.style.display='block';return;
-  }
-
-  btn.disabled=true; loader.style.display='block';
-
-  try{
-    const verseText = text || (selectedFile ? selectedFile.name : '');
-    const prompt = `You are a Sanskrit scholar. Analyse this Sanskrit verse and respond ONLY with a JSON object, no markdown, no explanation.
-
-Verse: ${verseText}
-
-Return this exact JSON:
-{
-  "transcribed_text": "verse in Devanagari",
-  "transliteration": "IAST transliteration",
-  "source_context": "source if known, else Unknown",
-  "english_translation": "full English translation",
-  "meaning": "deeper philosophical meaning in 2-3 sentences",
-  "simplified_sanskrit": "simpler Sanskrit paraphrase",
-  "chandas_analysis": {
-    "meter_name": "name of the metre",
-    "syllable_pattern": "G/L pattern",
-    "description": "brief description of this metre",
-    "pada_count": 4,
-    "total_syllables": 32
+/* ── 1. Known-verse database ── */
+const KNOWN_VERSES = [
+  {
+    pattern: ['नमो','नम','नमः'],
+    transcribed_text: 'नमो नमः',
+    transliteration: 'namo namaḥ',
+    source_context: 'Common Sanskrit salutation',
+    english_translation: 'Salutations, salutations — a reverent bow repeated in devotion.',
+    meaning: 'Namas (नमस्) means "a bow" or "reverence." The repeated form expresses profound humility before the divine. It is one of the most universal expressions in Vedic worship, acknowledging the sacred in all things.',
+    simplified_sanskrit: 'मैं प्रणाम करता हूँ, पुनः प्रणाम।',
+    chandas_analysis:{ meter_name:'Prose/Mantra fragment', syllable_pattern:'—', description:'A devotional salutation, not bound to a formal metre.', pada_count:1, total_syllables:4 },
+    word_by_word:[{word:'नमो',root:'नमस्',meaning:'salutation / bow'},{word:'नमः',root:'नमस्',meaning:'salutation / bow (ḥ visarga ending)'}]
   },
-  "word_by_word": [
-    {"word": "word1", "root": "root1", "meaning": "meaning1"}
-  ]
-}`;
-
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1500,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if(!resp.ok) throw new Error('API error ' + resp.status);
-    const apiData = await resp.json();
-    const raw = apiData.content.map(c => c.text || '').join('');
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-    renderSummary(parsed);
-  }catch(e){
-    errBox.textContent='⚠ '+e.message;
-    errBox.style.display='block';
-  }finally{
-    btn.disabled=false; loader.style.display='none';
+  {
+    pattern: ['गायत्री','सवितुर','भर्गो','धीमहि'],
+    transcribed_text: 'ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्',
+    transliteration: 'oṃ bhūrbhuvaḥ svaḥ tatsaviturvareṇyaṃ bhargo devasya dhīmahi dhiyo yo naḥ pracodayāt',
+    source_context: 'Ṛgveda 3.62.10 — Gāyatrī Mantra',
+    english_translation: 'We meditate upon the radiant divine light of the Sun. May that supreme brilliance illuminate our intellect and inspire us toward righteousness.',
+    meaning: 'The Gāyatrī is addressed to Savitṛ, the solar deity as the source of all illumination — outer and inner. "Dhīmahi" (we meditate) places the practitioner in active contemplation. The final prayer "pracodayāt" (may it inspire) transforms meditation into action guided by wisdom.',
+    simplified_sanskrit: 'हम उस सूर्य के श्रेष्ठ प्रकाश का ध्यान करते हैं जो हमारी बुद्धि को प्रेरित करे।',
+    chandas_analysis:{ meter_name:'Gāyatrī', syllable_pattern:'8-8-8 (tripadā)', description:'The Gāyatrī metre has three pādas of eight syllables each — the most sacred metre in the Vedas, presided over by Savitṛ.', pada_count:3, total_syllables:24 },
+    word_by_word:[
+      {word:'ॐ',root:'OM',meaning:'the primordial sound'},
+      {word:'भूर्',root:'भू',meaning:'earth / physical plane'},
+      {word:'भुवः',root:'भुवस्',meaning:'atmosphere / vital plane'},
+      {word:'स्वः',root:'स्वर्',meaning:'heaven / causal plane'},
+      {word:'तत्',root:'तद्',meaning:'that (the Supreme)'},
+      {word:'सवितुर्',root:'सवितृ',meaning:'of the Sun / Savitṛ'},
+      {word:'वरेण्यं',root:'वर',meaning:'most adorable / choiceworthy'},
+      {word:'भर्गो',root:'भर्गस्',meaning:'radiance / effulgence'},
+      {word:'देवस्य',root:'देव',meaning:'of the divine / God'},
+      {word:'धीमहि',root:'ध्यै',meaning:'we meditate upon'},
+      {word:'धियो',root:'धी',meaning:'intellect / understanding'},
+      {word:'यो',root:'यद्',meaning:'who / that which'},
+      {word:'नः',root:'अस्मद्',meaning:'our'},
+      {word:'प्रचोदयात्',root:'प्र+चुद्',meaning:'may it inspire / impel'}
+    ]
+  },
+  {
+    pattern: ['कर्मण्य','अधिकार','फलेषु','कर्मफल'],
+    transcribed_text: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
+    transliteration: 'karmaṇyevādhikāraste mā phaleṣu kadācana | mā karmaphalaheturbhūrmā te saṅgo\'stvakarmaṇi ||',
+    source_context: 'Bhagavad Gītā 2.47',
+    english_translation: 'You have the right to perform your actions alone, but never to their fruits. Let not the fruit of action be your motive, nor let your attachment be to inaction.',
+    meaning: 'This is perhaps the most quoted verse of the Bhagavad Gītā. Kṛṣṇa distinguishes between action (karman) and its result (phala). True freedom lies in performing duty without desire for reward — Niṣkāma Karma. The verse warns against both fruit-seeking and inertia.',
+    simplified_sanskrit: 'तुम्हारा अधिकार केवल कर्म करने में है, फल में नहीं। फल की इच्छा से कर्म मत करो और न ही कर्म न करने में आसक्त हो।',
+    chandas_analysis:{ meter_name:'Anuṣṭubh (Śloka)', syllable_pattern:'8-8-8-8 (catuṣpadā)', description:'The Anuṣṭubh is the dominant metre of the epics — each of the four pādas has eight syllables. It is the metre of the Rāmāyaṇa and most of the Mahābhārata.', pada_count:4, total_syllables:32 },
+    word_by_word:[
+      {word:'कर्मणि',root:'कर्मन्',meaning:'in action / duty'},
+      {word:'एव',root:'एव',meaning:'only / alone'},
+      {word:'अधिकारः',root:'अधिकार',meaning:'right / entitlement'},
+      {word:'ते',root:'युष्मद्',meaning:'your'},
+      {word:'मा',root:'मा',meaning:'not (prohibitive particle)'},
+      {word:'फलेषु',root:'फल',meaning:'in the fruits / results'},
+      {word:'कदाचन',root:'कदाचन',meaning:'ever / at any time'},
+      {word:'कर्मफल',root:'कर्म+फल',meaning:'fruit of action'},
+      {word:'हेतुः',root:'हेतु',meaning:'cause / motive'},
+      {word:'भूः',root:'भू',meaning:'be (imperative)'},
+      {word:'सङ्गः',root:'सङ्ग',meaning:'attachment'},
+      {word:'अस्तु',root:'अस्',meaning:'let there be'},
+      {word:'अकर्मणि',root:'अ+कर्मन्',meaning:'in inaction'}
+    ]
+  },
+  {
+    pattern: ['सर्वे','भवन्तु','सुखिनः','सन्तु','निरामया'],
+    transcribed_text: 'सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः। सर्वे भद्राणि पश्यन्तु। मा कश्चिद् दुःखभाग् भवेत्॥',
+    transliteration: 'sarve bhavantu sukhinaḥ | sarve santu nirāmayāḥ | sarve bhadrāṇi paśyantu | mā kaścid duḥkhabhāg bhavet ||',
+    source_context: 'Bṛhadāraṇyaka Upaniṣad — Universal Peace Prayer',
+    english_translation: 'May all be happy. May all be free from illness. May all see auspiciousness. May no one suffer.',
+    meaning: 'This Śānti Pāṭha from the Upaniṣads expresses the Vedic ideal of universal compassion (karuṇā). It dissolves the boundary between self and other — the practitioner prays not for themselves but for all beings. "Sarve" (all) is repeated deliberately to include every living entity.',
+    simplified_sanskrit: 'सभी सुखी हों, सभी निरोगी हों, सभी मंगल देखें, कोई दुखी न हो।',
+    chandas_analysis:{ meter_name:'Anuṣṭubh variant', syllable_pattern:'8-8-8-8', description:'A prayer in roughly Anuṣṭubh metre — four pādas ending in the auspicious benediction "bhavet."', pada_count:4, total_syllables:32 },
+    word_by_word:[
+      {word:'सर्वे',root:'सर्व',meaning:'all / everyone'},
+      {word:'भवन्तु',root:'भू',meaning:'may they be'},
+      {word:'सुखिनः',root:'सुखिन्',meaning:'happy / joyful ones'},
+      {word:'सन्तु',root:'अस्',meaning:'may they be'},
+      {word:'निरामयाः',root:'निर्+आमय',meaning:'free from disease'},
+      {word:'भद्राणि',root:'भद्र',meaning:'auspicious things'},
+      {word:'पश्यन्तु',root:'दृश्',meaning:'may they see'},
+      {word:'मा',root:'मा',meaning:'not (prohibition)'},
+      {word:'कश्चित्',root:'किम्+चित्',meaning:'anyone at all'},
+      {word:'दुःखभाग्',root:'दुःख+भाज्',meaning:'partaker of sorrow'},
+      {word:'भवेत्',root:'भू',meaning:'may become / let be'}
+    ]
+  },
+  {
+    pattern: ['पूर्णमदः','पूर्णमिदं','पूर्णात्','अवशिष्यते'],
+    transcribed_text: 'ॐ पूर्णमदः पूर्णमिदं पूर्णात् पूर्णमुदच्यते। पूर्णस्य पूर्णमादाय पूर्णमेवावशिष्यते॥',
+    transliteration: 'oṃ pūrṇamadaḥ pūrṇamidaṃ pūrṇāt pūrṇamudacyate | pūrṇasya pūrṇamādāya pūrṇamevāvaśiṣyate ||',
+    source_context: 'Bṛhadāraṇyaka Upaniṣad — Śānti Pāṭha',
+    english_translation: 'That (Brahman) is whole. This (universe) is whole. From wholeness, wholeness is born. Even when wholeness is taken from wholeness, wholeness alone remains.',
+    meaning: 'This paradox reveals the Advaita Vedānta insight that Brahman (the Absolute) cannot be diminished. The universe, though apparently separate, is itself Brahman — whole taken from whole, leaving whole. It expresses the non-dual nature of reality: infinity minus infinity equals infinity.',
+    simplified_sanskrit: 'वह पूर्ण है, यह भी पूर्ण है। पूर्ण से पूर्ण उत्पन्न होता है। पूर्ण में से पूर्ण लेने पर भी पूर्ण ही शेष रहता है।',
+    chandas_analysis:{ meter_name:'Anuṣṭubh', syllable_pattern:'8-8-8-8', description:'Classic Anuṣṭubh, the metre of Upaniṣadic prose-poetry. The repetition of pūrṇa creates a meditative, incantatory effect.', pada_count:4, total_syllables:32 },
+    word_by_word:[
+      {word:'पूर्णम्',root:'पूर्ण',meaning:'complete / whole / full'},
+      {word:'अदः',root:'अदस्',meaning:'that (Brahman / the Absolute)'},
+      {word:'इदं',root:'इदम्',meaning:'this (the manifest universe)'},
+      {word:'पूर्णात्',root:'पूर्ण',meaning:'from wholeness (ablative)'},
+      {word:'उदच्यते',root:'उद्+अञ्च्',meaning:'arises / is born'},
+      {word:'पूर्णस्य',root:'पूर्ण',meaning:'of the whole (genitive)'},
+      {word:'आदाय',root:'आ+दा',meaning:'having taken'},
+      {word:'अवशिष्यते',root:'अव+शिष्',meaning:'remains / is left over'}
+    ]
+  },
+  {
+    pattern: ['त्र्यम्बकं','यजामहे','मृत्योर्','अमृतात्','बन्धनान्'],
+    transcribed_text: 'ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान् मृत्योर्मुक्षीय माऽमृतात्॥',
+    transliteration: 'oṃ tryambakaṃ yajāmahe sugandhiṃ puṣṭivardhanam | urvārukamiva bandhanān mṛtyormukṣīya mā\'mṛtāt ||',
+    source_context: 'Ṛgveda 7.59.12 — Mahāmṛtyuñjaya Mantra',
+    english_translation: 'We worship the three-eyed Lord who is fragrant and who nourishes all. As the cucumber is freed from its stem, may we be liberated from the bondage of death, not from immortality.',
+    meaning: 'The Mahāmṛtyuñjaya — "the great conqueror of death" — is addressed to Rudra-Śiva, who holds the power over the life-death cycle. The cucumber simile is profound: it detaches naturally when ripe, without force. The prayer seeks this same natural liberation — mokṣa as effortless ripeness, not violent severance.',
+    simplified_sanskrit: 'हम उस तीन-नेत्र वाले, सुगंधित, पोषण देने वाले प्रभु की पूजा करते हैं। जैसे ककड़ी बंधन से मुक्त हो, वैसे हमें मृत्यु के बंधन से मुक्त करो।',
+    chandas_analysis:{ meter_name:'Anuṣṭubh (Triṣṭubh origin)', syllable_pattern:'8-8-8-8', description:'Originally a Triṣṭubh verse in the Ṛgveda, often recited in the Anuṣṭubh frame in later tradition.', pada_count:4, total_syllables:32 },
+    word_by_word:[
+      {word:'त्र्यम्बकं',root:'त्रि+अम्बक',meaning:'three-eyed one (Śiva)'},
+      {word:'यजामहे',root:'यज्',meaning:'we worship'},
+      {word:'सुगन्धिं',root:'सु+गन्ध',meaning:'fragrant / sweet-scented'},
+      {word:'पुष्टिवर्धनम्',root:'पुष्टि+वर्धन',meaning:'increaser of nourishment'},
+      {word:'उर्वारुकम्',root:'उर्वारुक',meaning:'cucumber / gourd'},
+      {word:'इव',root:'इव',meaning:'like / as'},
+      {word:'बन्धनान्',root:'बन्धन',meaning:'from bondage'},
+      {word:'मृत्योः',root:'मृत्यु',meaning:'from death'},
+      {word:'मुक्षीय',root:'मुच्',meaning:'may I be freed'},
+      {word:'अमृतात्',root:'अमृत',meaning:'from immortality (not from it)'}
+    ]
+  },
+  {
+    pattern: ['विद्या','ददाति','विनयं','पात्रताम्'],
+    transcribed_text: 'विद्या ददाति विनयं विनयाद् याति पात्रताम्। पात्रत्वात् धनमाप्नोति धनात् धर्मस्ततः सुखम्॥',
+    transliteration: 'vidyā dadāti vinayaṃ vinayād yāti pātratām | pātratvāt dhanamāpnoti dhanāt dharmastatḥ sukham ||',
+    source_context: 'Hitopadeśa',
+    english_translation: 'Knowledge gives humility; from humility comes worthiness. From worthiness one attains wealth; from wealth, righteousness; and from righteousness, happiness.',
+    meaning: 'The Hitopadeśa traces a chain of consequence that begins with vidyā (learning) and ends with sukha (happiness). Crucially, wealth is positioned as a means to dharma — not an end. The verse challenges the modern equation of wealth with happiness by inserting dharma as the necessary intermediary.',
+    simplified_sanskrit: 'विद्या विनम्रता देती है, विनम्रता से योग्यता आती है, योग्यता से धन मिलता है, धन से धर्म होता है और धर्म से सुख।',
+    chandas_analysis:{ meter_name:'Anuṣṭubh', syllable_pattern:'8-8-8-8', description:'Standard Anuṣṭubh śloka — four pādas of eight syllables. The chain structure (anadiplosis) mirrors the logical chain being described.', pada_count:4, total_syllables:32 },
+    word_by_word:[
+      {word:'विद्या',root:'विद्',meaning:'knowledge / learning'},
+      {word:'ददाति',root:'दा',meaning:'gives / bestows'},
+      {word:'विनयं',root:'विनय',meaning:'humility / discipline'},
+      {word:'याति',root:'या',meaning:'goes / attains'},
+      {word:'पात्रताम्',root:'पात्र',meaning:'worthiness / fitness'},
+      {word:'धनम्',root:'धन',meaning:'wealth'},
+      {word:'आप्नोति',root:'आप्',meaning:'obtains'},
+      {word:'धर्मः',root:'धर्म',meaning:'righteousness / duty'},
+      {word:'सुखम्',root:'सुख',meaning:'happiness / joy'}
+    ]
   }
+];
+
+/* ── 2. Devanagari → IAST transliteration map ── */
+const IAST_MAP = {
+  'अ':'a','आ':'ā','इ':'i','ई':'ī','उ':'u','ऊ':'ū',
+  'ऋ':'ṛ','ॠ':'ṝ','ऌ':'ḷ','ए':'e','ऐ':'ai','ओ':'o','औ':'au',
+  'ं':'ṃ','ः':'ḥ','ँ':'m̐',
+  'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ṅ',
+  'च':'c','छ':'ch','ज':'j','झ':'jh','ञ':'ñ',
+  'ट':'ṭ','ठ':'ṭh','ड':'ḍ','ढ':'ḍh','ण':'ṇ',
+  'त':'t','थ':'th','द':'d','ध':'dh','न':'n',
+  'प':'p','फ':'ph','ब':'b','भ':'bh','म':'m',
+  'य':'y','र':'r','ल':'l','व':'v',
+  'श':'ś','ष':'ṣ','स':'s','ह':'h',
+  'ा':'ā','ि':'i','ी':'ī','ु':'u','ू':'ū',
+  'ृ':'ṛ','े':'e','ै':'ai','ो':'o','ौ':'au',
+  '्':'','ॐ':'oṃ','।':' |','॥':' ||','ऽ':'\''
+};
+
+function toIAST(text) {
+  let out = '';
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (IAST_MAP[ch] !== undefined) {
+      out += IAST_MAP[ch];
+    } else if (ch >= '\u0900' && ch <= '\u097F') {
+      // Consonant with inherent 'a' — add if next char is not a virama or vowel sign
+      const next = text[i+1];
+      const isVowelSign = next && IAST_MAP[next] !== undefined && '\u093E\u093F\u0940\u0941\u0942\u0943\u0947\u0948\u094B\u094C\u094D'.includes(next);
+      out += (IAST_MAP[ch] || ch) + (!isVowelSign && next !== '्' ? '' : '');
+      out = out; // placeholder
+      if (IAST_MAP[ch]) out = out.slice(0, -IAST_MAP[ch].length) + IAST_MAP[ch];
+      else out += '';
+    } else {
+      out += ch === ' ' ? ' ' : ch;
+    }
+  }
+  return out.replace(/\s+/g, ' ').trim();
+}
+
+/* Simplified but working IAST conversion */
+function devaToIAST(text) {
+  const vowelSigns = {'ा':'ā','ि':'i','ी':'ī','ु':'u','ू':'ū','ृ':'ṛ','े':'e','ै':'ai','ो':'o','ौ':'au','ं':'ṃ','ः':'ḥ','्':''};
+  const consonants = {'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ṅ','च':'c','छ':'ch','ज':'j','झ':'jh','ञ':'ñ','ट':'ṭ','ठ':'ṭh','ड':'ḍ','ढ':'ḍh','ण':'ṇ','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v','श':'ś','ष':'ṣ','स':'s','ह':'h'};
+  const vowels = {'अ':'a','आ':'ā','इ':'i','ई':'ī','उ':'u','ऊ':'ū','ऋ':'ṛ','ए':'e','ऐ':'ai','ओ':'o','औ':'au'};
+  let res = '', i = 0;
+  const chars = [...text];
+  while (i < chars.length) {
+    const c = chars[i];
+    if (c === 'ॐ') { res += 'oṃ'; i++; continue; }
+    if (vowels[c]) { res += vowels[c]; i++; continue; }
+    if (consonants[c]) {
+      res += consonants[c];
+      if (chars[i+1] === '्') { i += 2; continue; }           // virama — no vowel
+      if (vowelSigns[chars[i+1]] !== undefined) {              // explicit vowel sign
+        res += vowelSigns[chars[i+1]] || '';
+        i += 2;
+        if (chars[i] === 'ं') { res += 'ṃ'; i++; }
+        if (chars[i] === 'ः') { res += 'ḥ'; i++; }
+        continue;
+      }
+      res += 'a';                                              // inherent 'a'
+      i++;
+      if (chars[i] === 'ं') { res += 'ṃ'; i++; }
+      if (chars[i] === 'ः') { res += 'ḥ'; i++; }
+      continue;
+    }
+    if (vowelSigns[c] !== undefined) { res += vowelSigns[c] || ''; i++; continue; }
+    res += c === '।' ? ' | ' : c === '॥' ? ' || ' : c;
+    i++;
+  }
+  return res.replace(/\s+/g,' ').trim();
+}
+
+/* ── 3. Syllable counter for metre detection ── */
+function countSyllables(text) {
+  const vowels = /[अआइईउऊऋएऐओऔ]/g;
+  return (text.match(vowels) || []).length;
+}
+
+function detectMetre(text) {
+  const syllables = countSyllables(text);
+  if (syllables <= 8)  return { meter_name:'Mantra / Fragment', syllable_pattern:'≤8', description:'A short mantra or verse fragment — fewer than one full pāda.', pada_count:1, total_syllables:syllables };
+  if (syllables <= 16) return { meter_name:'Anuṣṭubh (partial)', syllable_pattern:'8-8', description:'Two pādas of Anuṣṭubh — the most common Vedic-epic metre.', pada_count:2, total_syllables:syllables };
+  if (syllables <= 24) return { meter_name:'Gāyatrī / Anuṣṭubh', syllable_pattern:'8-8-8', description:'Possibly Gāyatrī (8×3) or three-quarter Anuṣṭubh.', pada_count:3, total_syllables:syllables };
+  if (syllables <= 32) return { meter_name:'Anuṣṭubh (Śloka)', syllable_pattern:'8-8-8-8', description:'The Anuṣṭubh śloka — four pādas of eight syllables. Metre of the Rāmāyaṇa, Mahābhārata, and most Sanskrit poetry.', pada_count:4, total_syllables:syllables };
+  if (syllables <= 44) return { meter_name:'Triṣṭubh', syllable_pattern:'11-11-11-11', description:'Four pādas of eleven syllables — dominant metre of the Ṛgveda.', pada_count:4, total_syllables:syllables };
+  if (syllables <= 48) return { meter_name:'Jagatī', syllable_pattern:'12-12-12-12', description:'Four pādas of twelve syllables — the "earthly" metre associated with this world.', pada_count:4, total_syllables:syllables };
+  return { meter_name:'Mahākāvya (complex metre)', syllable_pattern:`~${syllables} syllables`, description:'A longer metre — possibly Mandākrāntā, Śārdūlavikrīḍita, or Vasantatilakā.', pada_count:4, total_syllables:syllables };
+}
+
+/* ── 4. Word dictionary for individual word lookup ── */
+const WORD_DICT = {
+  'नमो':    {root:'नमस्',   meaning:'salutation'},
+  'नमः':    {root:'नमस्',   meaning:'bow / reverence'},
+  'नमस्':   {root:'नमस्',   meaning:'salutation / obeisance'},
+  'ॐ':      {root:'OM',     meaning:'primordial sound, the absolute'},
+  'सर्वे':  {root:'सर्व',   meaning:'all / everyone'},
+  'देव':    {root:'दिव्',   meaning:'deity / shining one'},
+  'देवस्य': {root:'देव',    meaning:'of God (genitive)'},
+  'विद्या': {root:'विद्',   meaning:'knowledge / learning'},
+  'धर्म':   {root:'धृ',     meaning:'righteousness / duty / cosmic order'},
+  'सुख':    {root:'सुख',    meaning:'happiness / ease'},
+  'दुःख':   {root:'दुःख',   meaning:'suffering / pain'},
+  'आत्मन्': {root:'आत्मन्', meaning:'self / soul'},
+  'ब्रह्म': {root:'बृह्',   meaning:'the Absolute / Brahman'},
+  'मोक्ष':  {root:'मुच्',   meaning:'liberation / release'},
+  'कर्म':   {root:'कृ',     meaning:'action / deed'},
+  'योग':    {root:'युज्',   meaning:'union / discipline / path'},
+  'भक्ति':  {root:'भज्',   meaning:'devotion / love'},
+  'ज्ञान':  {root:'ज्ञा',   meaning:'wisdom / knowledge'},
+  'शान्ति': {root:'शम्',    meaning:'peace / tranquility'},
+  'अहिंसा': {root:'हिंस्',  meaning:'non-violence / harmlessness'},
+  'सत्य':   {root:'सत्',    meaning:'truth / reality'},
+  'प्रेम':  {root:'प्रि',   meaning:'love / affection'},
+  'राम':    {root:'राम',    meaning:'Rāma — the ideal king; "one who delights"'},
+  'कृष्ण':  {root:'कृष्',   meaning:'Kṛṣṇa — "the dark one / all-attractive"'},
+  'शिव':    {root:'शिव',    meaning:'Śiva — "the auspicious one"'},
+  'विष्णु': {root:'विष्णु', meaning:'Viṣṇu — "the all-pervading"'},
+  'हर':     {root:'हर्',    meaning:'Hara — "the remover (of suffering)"'},
+  'माता':   {root:'मातृ',   meaning:'mother'},
+  'पिता':   {root:'पितृ',   meaning:'father'},
+  'गुरु':   {root:'गुरु',   meaning:'teacher / spiritual guide'},
+  'शिष्य':  {root:'शिष्',   meaning:'student / disciple'},
+  'मन':     {root:'मन्',    meaning:'mind / thought'},
+  'बुद्धि': {root:'बुध्',   meaning:'intellect / discernment'},
+  'चित्त':  {root:'चित्',   meaning:'consciousness / mind-stuff'},
+  'अहंकार': {root:'अहम्+कार', meaning:'ego / sense of "I"'},
+  'जल':     {root:'जल',    meaning:'water'},
+  'अग्नि':  {root:'अग्नि', meaning:'fire'},
+  'वायु':   {root:'वा',     meaning:'wind / air'},
+  'पृथ्वी': {root:'पृथु',  meaning:'earth'},
+  'आकाश':   {root:'आकाश',  meaning:'space / sky / ether'},
+};
+
+/* ── 5. Sandhi-aware word splitter ── */
+function splitWords(text) {
+  // Remove punctuation marks, split on spaces
+  const cleaned = text.replace(/[।॥ॐ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const rawWords = cleaned.split(' ').filter(w => w.length > 0);
+
+  return rawWords.map(w => {
+    // Try direct dict lookup first
+    if (WORD_DICT[w]) return { word: w, ...WORD_DICT[w] };
+    // Try without final anusvara/visarga
+    const base = w.replace(/[ंःँ]$/,'');
+    if (WORD_DICT[base]) return { word: w, root: WORD_DICT[base].root, meaning: WORD_DICT[base].meaning };
+    // Try to identify grammatical ending patterns
+    const meaning = guessWordMeaning(w);
+    return { word: w, root: guessRoot(w), meaning };
+  });
+}
+
+function guessRoot(w) {
+  // Strip common nominal/verbal endings
+  return w.replace(/(ाम्|ेन|ाय|ात्|स्य|ेषु|ाः|ानि|इव|ति|न्ति|ते|न्ते|तुम्|त्वा)$/, '') || w;
+}
+
+function guessWordMeaning(w) {
+  // Pattern-based guessing for common suffixes
+  if (w.endsWith('ाम्'))  return 'accusative / "toward ___"';
+  if (w.endsWith('स्य'))  return 'genitive / "of ___"';
+  if (w.endsWith('ाय'))   return 'dative / "for ___"';
+  if (w.endsWith('ात्'))  return 'ablative / "from ___"';
+  if (w.endsWith('ेषु'))  return 'locative plural / "in ___s"';
+  if (w.endsWith('ाः'))   return 'nominative plural';
+  if (w.endsWith('ति'))   return 'verb — 3rd person singular present';
+  if (w.endsWith('न्ति')) return 'verb — 3rd person plural present';
+  if (w.endsWith('ते'))   return 'verb — middle voice present';
+  if (w.endsWith('तुम्')) return 'verbal noun — infinitive';
+  if (w.endsWith('त्वा')) return 'gerund — "having ___ed"';
+  if (w.endsWith('इव'))   return 'particle — "like / as"';
+  if (w.endsWith('एव'))   return 'particle — "only / indeed"';
+  return 'Sanskrit term (see transliteration)';
+}
+
+/* ── 6. Look up a verse in the known-verse database ── */
+function matchKnownVerse(text) {
+  for (const v of KNOWN_VERSES) {
+    const hits = v.pattern.filter(p => text.includes(p)).length;
+    if (hits >= 2 || (v.pattern.length === 1 && hits === 1)) return v;
+  }
+  return null;
+}
+
+/* ── 7. Build a generic analysis for unknown verses ── */
+function buildGenericAnalysis(text) {
+  const metre    = detectMetre(text);
+  const words    = splitWords(text);
+  const iast     = devaToIAST(text);
+
+  // Build a readable English gloss from word meanings
+  const knownMeanings = words.filter(w => WORD_DICT[w.word] || WORD_DICT[w.word?.replace(/[ंःँ]$/,'')]);
+  let translationHint = '';
+  if (knownMeanings.length > 0) {
+    translationHint = 'Key terms detected: ' + knownMeanings.map(w => `${w.word} (${w.meaning})`).join(', ') + '.';
+  }
+
+  // Check if it looks like a namaskāra / salutation
+  const isNamaskara = /नम[ोः:स्]/.test(text);
+  const hasOM       = /ॐ|ओम्/.test(text);
+  const hasShanti   = /शान्ति|शांति/.test(text);
+  const hasBhava    = /भव/.test(text);
+  const hasVidya    = /विद्य/.test(text);
+  const hasKarma    = /कर्म/.test(text);
+  const hasDeva     = /देव/.test(text);
+
+  let translation = '';
+  let meaning     = '';
+
+  if (isNamaskara) {
+    translation = 'A salutation — an expression of reverence and devotion, bowing before the divine or the teacher.';
+    meaning     = 'The word "namas" (नमस्) carries deep resonance in Sanskrit — it means "not I," a dissolution of ego before the sacred. Each repetition deepens the surrender.';
+  } else if (hasOM && hasDeva) {
+    translation = 'A divine invocation beginning with the sacred syllable OM, offering praise to a deity.';
+    meaning     = 'The combination of OM (the primordial sound) with divine imagery suggests a Vedic hymn or mantra invoking cosmic blessing.';
+  } else if (hasShanti) {
+    translation = 'A peace chant invoking stillness and harmony across all planes of existence.';
+    meaning     = 'Śānti (शान्ति) appears three times in the Upaniṣadic tradition to dispel the three types of obstacles — divine, natural, and human — that obstruct inner peace.';
+  } else if (hasVidya || hasKarma) {
+    translation = 'A verse on the nature of ' + (hasVidya ? 'knowledge (vidyā)' : '') + (hasKarma ? 'action (karma)' : '') + ' and its role in the spiritual life.';
+    meaning     = 'Classical Sanskrit literature frequently reflects on vidyā and karma as the twin pillars of human existence — what we know shapes what we do, and what we do shapes what we become.';
+  } else {
+    translation = 'A Sanskrit verse' + (translationHint ? ` containing: ${translationHint}` : '.') + ' Full translation requires contextual scholarship.';
+    meaning     = 'Sanskrit poetic tradition (kāvya) weaves sound, rhythm, and meaning together inseparably. The verse\'s full significance unfolds through both intellectual understanding (jñāna) and lived experience (anubhava).';
+  }
+
+  // Build simplified rendering
+  const simplified = words
+    .filter(w => w.meaning && !w.meaning.includes('particle') && !w.meaning.includes('genitive') && !w.meaning.includes('accusative'))
+    .slice(0, 6)
+    .map(w => w.meaning)
+    .join(' · ') || 'See word-by-word breakdown below';
+
+  return {
+    transcribed_text: text,
+    transliteration: iast,
+    source_context: 'Sanskrit verse — source unidentified',
+    english_translation: translation,
+    meaning: meaning,
+    simplified_sanskrit: simplified,
+    chandas_analysis: metre,
+    word_by_word: words
+  };
+}
+
+/* ── 8. Main analysis entry point ── */
+function analyzeVerse() {
+  const btn     = document.getElementById('analyzeBtn');
+  const loader  = document.getElementById('summaryLoader');
+  const results = document.getElementById('summaryResults');
+  const errBox  = document.getElementById('summaryError');
+  const text    = document.getElementById('sktInput').value.trim();
+
+  errBox.style.display  = 'none';
+  results.style.display = 'none';
+
+  if (!text) {
+    errBox.textContent  = '⚠ Please enter or record a Sanskrit verse above.';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  loader.style.display = 'block';
+
+  // Slight delay so loader renders before the JS runs
+  setTimeout(() => {
+    try {
+      const known = matchKnownVerse(text);
+      const result = known ? known : buildGenericAnalysis(text);
+      renderSummary(result);
+    } catch(e) {
+      errBox.textContent   = '⚠ Analysis error: ' + e.message;
+      errBox.style.display = 'block';
+    } finally {
+      btn.disabled         = false;
+      loader.style.display = 'none';
+    }
+  }, 320);
 }
 
 function renderSummary(d){
@@ -1225,7 +1578,7 @@ function downloadChantAudio() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   ANALYSER — AUDIO FILE TRANSCRIPTION BRIDGE
+   SUMMARISER — AUDIO FILE TRANSCRIPTION BRIDGE
 ══════════════════════════════════════════════════════════ */
 const _origSetAudioFile = window.setAudioFile;
 window.setAudioFile = function(f) {

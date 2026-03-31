@@ -1,20 +1,38 @@
 /* ═══════════════════════════════════════════════════════════
-   SANSKRIT VOICE DETECTOR — FULLY FIXED
+   SANSKRIT VOICE DETECTOR — CROSS-BROWSER FIXED
+   Works on: Chrome ✓  Edge ✓  Safari (iOS/Mac) ✓
+   Brave: shows setup guide  Firefox: shows manual fallback
 ═══════════════════════════════════════════════════════════ */
 
 (function () {
 
   document.addEventListener('DOMContentLoaded', init);
 
-  let mediaRecorder = null;
-  let isRecording   = false;
-  let recognition   = null;
-  let stream        = null;
-  let silenceTimer  = null;
-  let anim          = null;
-  let analyser      = null;
-  let timerInterval = null;
-  let timerSecs     = 0;
+  let mediaRecorder  = null;
+  let isRecording    = false;
+  let recognition    = null;
+  let stream         = null;
+  let silenceTimer   = null;
+  let anim           = null;
+  let analyser       = null;
+  let timerInterval  = null;
+  let timerSecs      = 0;
+  let audioCtx       = null;
+
+  /* ══════════════════════════════════════
+     BROWSER / SUPPORT DETECTION
+  ══════════════════════════════════════ */
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  /* Brave exposes navigator.brave — use it to warn user */
+  function isBrave() {
+    return !!(navigator.brave && navigator.brave.isBrave);
+  }
+
+  /* Safari on iOS/Mac uses webkitSpeechRecognition */
+  function isSafari() {
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  }
 
   /* ══════════════════════════════════════
      INIT
@@ -22,9 +40,71 @@
   function init() {
     buildBars();
     injectStyles();
+    checkBrowserSupport();
     document.getElementById('svd-record-btn')?.addEventListener('click', toggleRecording);
     document.getElementById('svd-clear-btn')?.addEventListener('click',  clearTranscript);
     document.getElementById('svd-analyse-btn')?.addEventListener('click', analyseFromVoice);
+    /* Manual fallback textarea submit */
+    document.getElementById('svd-manual-submit')?.addEventListener('click', submitManualText);
+  }
+
+  /* ══════════════════════════════════════
+     BROWSER SUPPORT CHECK
+     Shows appropriate UI for each browser
+  ══════════════════════════════════════ */
+  function checkBrowserSupport() {
+    const recordBtn   = document.getElementById('svd-record-btn');
+    const browserNote = document.getElementById('svd-browser-note');
+    const manualBlock = document.getElementById('svd-manual-block');
+
+    /* ── BRAVE: SR API exists but is blocked by shields ── */
+    if (isBrave()) {
+      if (browserNote) {
+        browserNote.style.display = 'block';
+        browserNote.innerHTML = `
+          <span style="color:#F0C040;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.1em;">⚠ Brave Browser Detected</span><br>
+          <span style="font-size:0.82rem;color:rgba(250,240,220,0.6);line-height:1.7;">
+            Brave Shields blocks the microphone API by default.<br>
+            To enable: click the <strong style="color:#D4A017;">Lion icon</strong> in the address bar →
+            turn off <strong style="color:#D4A017;">"Block fingerprinting"</strong> or lower Shields to Standard for this site.
+            Or use the text input below.
+          </span>`;
+      }
+      if (manualBlock) manualBlock.style.display = 'block';
+      return;
+    }
+
+    /* ── NO SpeechRecognition at all (Firefox, old browsers) ── */
+    if (!SR) {
+      if (recordBtn) {
+        recordBtn.disabled = true;
+        recordBtn.title = 'Not supported in this browser';
+        recordBtn.style.opacity = '0.4';
+        recordBtn.style.cursor = 'not-allowed';
+      }
+      if (browserNote) {
+        browserNote.style.display = 'block';
+        browserNote.innerHTML = `
+          <span style="color:#F0C040;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.1em;">⚠ Voice not supported in this browser</span><br>
+          <span style="font-size:0.82rem;color:rgba(250,240,220,0.6);line-height:1.7;">
+            Voice detection requires Chrome, Edge, or Safari.<br>
+            Use the text input below to type or paste your Sanskrit verse instead.
+          </span>`;
+      }
+      if (manualBlock) manualBlock.style.display = 'block';
+      return;
+    }
+
+    /* ── SAFARI specific note ── */
+    if (isSafari()) {
+      if (browserNote) {
+        browserNote.style.display = 'block';
+        browserNote.innerHTML = `
+          <span style="color:rgba(250,240,220,0.5);font-size:0.78rem;font-style:italic;">
+            Safari note: Allow microphone access when prompted. If voice stops unexpectedly, tap Record again.
+          </span>`;
+      }
+    }
   }
 
   /* ══════════════════════════════════════
@@ -42,6 +122,10 @@
      TOGGLE RECORDING
   ══════════════════════════════════════ */
   async function toggleRecording() {
+    if (!SR) {
+      setStatus('Voice not supported — use text input below.', 'error');
+      return;
+    }
     if (isRecording) stopRecording();
     else await startRecording();
   }
@@ -50,23 +134,60 @@
      START RECORDING
   ══════════════════════════════════════ */
   async function startRecording() {
+    /* Must resume AudioContext from a user gesture on iOS Safari */
+    if (audioCtx && audioCtx.state === 'suspended') {
+      try { await audioCtx.resume(); } catch(e) {}
+    }
+
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
-      setStatus('Microphone permission denied', 'error');
+    } catch (err) {
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        if (isBrave()) {
+          setStatus('Blocked by Brave Shields — lower shields or use text input.', 'error');
+        } else {
+          setStatus('Microphone permission denied — please allow mic access.', 'error');
+        }
+      } else if (err.name === 'NotFoundError') {
+        setStatus('No microphone found on this device.', 'error');
+      } else {
+        setStatus('Microphone error: ' + err.message, 'error');
+      }
       return;
     }
 
     isRecording = true;
 
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.start();
+    /* MediaRecorder — use supported MIME type */
+    const mimeType = getSupportedMimeType();
+    try {
+      mediaRecorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
+      mediaRecorder.start();
+    } catch(e) {
+      /* MediaRecorder not critical — speech recognition still works */
+    }
 
     startVisualizer(stream);
     startTimer();
     startSpeechRecognition();
     setRecordingUI(true);
     setStatus('🎙 Listening for Sanskrit…', 'recording');
+  }
+
+  /* Pick a MIME type supported by this browser */
+  function getSupportedMimeType() {
+    const types = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/ogg;codecs=opus',
+      'audio/mp4',
+    ];
+    for (const t of types) {
+      if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) return t;
+    }
+    return null;
   }
 
   /* ══════════════════════════════════════
@@ -76,7 +197,9 @@
     isRecording = false;
     clearTimeout(silenceTimer);
 
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      try { mediaRecorder.stop(); } catch(e) {}
+    }
     if (stream) stream.getTracks().forEach(t => t.stop());
     if (recognition) { try { recognition.stop(); } catch(e) {} }
 
@@ -90,25 +213,21 @@
 
   /* ══════════════════════════════════════
      SPEECH RECOGNITION
-     Uses hi-IN (Hindi/Devanagari) for best
-     Sanskrit phoneme coverage.
-     sa-IN is NOT supported by Chrome —
-     using it causes immediate error + restart loop.
+     hi-IN = best Devanagari coverage.
+     sa-IN not supported by any browser.
   ══════════════════════════════════════ */
   function startSpeechRecognition() {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      setStatus('Speech Recognition not available. Use Chrome.', 'error');
-      return;
-    }
+    if (!SR) return;
 
     recognition = new SR();
-    recognition.lang             = 'hi-IN'; /* Best for Devanagari/Sanskrit */
-    recognition.continuous       = true;
-    recognition.interimResults   = true;
-    recognition.maxAlternatives  = 5;
+    recognition.lang            = 'hi-IN';
+    recognition.continuous      = true;
+    recognition.interimResults  = true;
+    recognition.maxAlternatives = 5;
 
     let finalText = '';
+    let restartCount = 0;
+    const MAX_RESTARTS = 10;
 
     recognition.onstart = () => {
       setStatus('🎙 Listening…', 'recording');
@@ -116,68 +235,69 @@
 
     recognition.onresult = (e) => {
       let interim = '';
-
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        /* Pick best Sanskrit-matching alternative */
-        let best = pickBestResult(e.results[i]);
-
+        const best = pickBestResult(e.results[i]);
         if (e.results[i].isFinal) {
           finalText += best + ' ';
           resetSilenceTimer();
+          restartCount = 0; /* Reset on successful speech */
         } else {
           interim = best;
         }
       }
-
       const display = (finalText + interim).trim();
       if (display) updateTranscript(display, finalText.trim());
     };
 
     recognition.onerror = (e) => {
-      /* Only restart on recoverable errors, ignore no-speech */
-      if (e.error === 'no-speech') return;
+      if (e.error === 'no-speech') return; /* Ignore silence */
+      if (e.error === 'aborted') return;   /* Ignore intentional stops */
+
       if (e.error === 'not-allowed') {
-        setStatus('Microphone blocked.', 'error');
+        setStatus('Microphone blocked — check browser permissions.', 'error');
         stopRecording();
         return;
       }
-      /* For other errors, attempt restart */
-      if (isRecording) {
+
+      if (e.error === 'network') {
+        /* Network error — recognition needs internet connection */
+        setStatus('Network error — check connection. Trying again…', 'error');
+      }
+
+      /* Attempt restart for recoverable errors */
+      if (isRecording && restartCount < MAX_RESTARTS) {
+        restartCount++;
         setTimeout(() => {
           if (isRecording) try { recognition.start(); } catch(err) {}
-        }, 500);
+        }, 600);
       }
     };
 
     recognition.onend = () => {
-      if (isRecording) {
+      if (isRecording && restartCount < MAX_RESTARTS) {
         setTimeout(() => {
-          if (isRecording) try { recognition.start(); } catch(err) {}
-        }, 200);
+          if (isRecording) {
+            try { recognition.start(); } catch(err) {}
+          }
+        }, 250);
       }
     };
 
-    try { recognition.start(); } catch(e) {}
+    try { recognition.start(); } catch(e) {
+      setStatus('Could not start voice recognition. Try refreshing.', 'error');
+    }
   }
 
   /* ══════════════════════════════════════
      PICK BEST RESULT
-     Prefers Devanagari results over romanised.
-     Falls back to highest confidence.
+     Prefers Devanagari, falls back to highest confidence.
   ══════════════════════════════════════ */
   function pickBestResult(result) {
     const DEVA = /[\u0900-\u097F]/;
-
-    /* First pass — find Devanagari alternative */
     for (let j = 0; j < result.length; j++) {
-      if (DEVA.test(result[j].transcript)) {
-        return result[j].transcript;
-      }
+      if (DEVA.test(result[j].transcript)) return result[j].transcript;
     }
-
-    /* Second pass — highest confidence */
-    let best = result[0].transcript;
-    let bestConf = result[0].confidence || 0;
+    let best = result[0].transcript, bestConf = result[0].confidence || 0;
     for (let j = 1; j < result.length; j++) {
       if ((result[j].confidence || 0) > bestConf) {
         best = result[j].transcript;
@@ -188,7 +308,7 @@
   }
 
   /* ══════════════════════════════════════
-     SILENCE TIMER — auto stop after 4s quiet
+     SILENCE TIMER
   ══════════════════════════════════════ */
   function resetSilenceTimer() {
     clearTimeout(silenceTimer);
@@ -202,9 +322,6 @@
 
   /* ══════════════════════════════════════
      UPDATE TRANSCRIPT
-     Shows both Devanagari AND roman text —
-     does NOT strip roman since Chrome often
-     returns roman even for Sanskrit speech.
   ══════════════════════════════════════ */
   function updateTranscript(display, confirmed) {
     const wrap       = document.getElementById('svd-transcript-wrap');
@@ -213,14 +330,29 @@
     const analyseBtn = document.getElementById('svd-analyse-btn');
     const clearBtn   = document.getElementById('svd-clear-btn');
 
-    wrap.style.display      = 'block';
-    transcEl.textContent    = display;
-    confEl.textContent      = getConfidenceLabel(display);
+    if (wrap)     wrap.style.display = 'block';
+    if (transcEl) transcEl.textContent = display;
+    if (confEl)   confEl.textContent   = getConfidenceLabel(display);
 
     if (confirmed) {
-      analyseBtn.style.display = '';
-      clearBtn.style.display   = '';
+      if (analyseBtn) analyseBtn.style.display = '';
+      if (clearBtn)   clearBtn.style.display   = '';
     }
+  }
+
+  /* ══════════════════════════════════════
+     MANUAL TEXT FALLBACK
+  ══════════════════════════════════════ */
+  function submitManualText() {
+    const manualInput = document.getElementById('svd-manual-input');
+    if (!manualInput) return;
+    const text = manualInput.value.trim();
+    if (!text) {
+      setStatus('Please type or paste a Sanskrit verse first.', 'error');
+      return;
+    }
+    updateTranscript(text, text);
+    setStatus('✦ Text entered — click Analyse', 'done');
   }
 
   /* ══════════════════════════════════════
@@ -230,8 +362,7 @@
     const devaCount = (text.match(/[\u0900-\u097F]/g) || []).length;
     const total     = text.replace(/\s/g, '').length || 1;
     const pct       = Math.min(Math.round((devaCount / total) * 100 + 20), 99);
-
-    const el = document.getElementById('svd-confidence');
+    const el        = document.getElementById('svd-confidence');
     if (el) {
       el.className = 'svd-confidence ' + (pct > 60 ? 'high' : pct > 30 ? 'mid' : 'low');
     }
@@ -242,70 +373,89 @@
      CLEAR
   ══════════════════════════════════════ */
   function clearTranscript() {
-    document.getElementById('svd-transcript').textContent       = '';
-    document.getElementById('svd-transcript-wrap').style.display = 'none';
-    document.getElementById('svd-clear-btn').style.display       = 'none';
-    document.getElementById('svd-analyse-btn').style.display     = 'none';
-    document.getElementById('svd-confidence').textContent        = '';
+    const transcEl   = document.getElementById('svd-transcript');
+    const wrap       = document.getElementById('svd-transcript-wrap');
+    const clearBtn   = document.getElementById('svd-clear-btn');
+    const analyseBtn = document.getElementById('svd-analyse-btn');
+    const confEl     = document.getElementById('svd-confidence');
+    const manualInput = document.getElementById('svd-manual-input');
+
+    if (transcEl)   transcEl.textContent       = '';
+    if (wrap)       wrap.style.display         = 'none';
+    if (clearBtn)   clearBtn.style.display     = 'none';
+    if (analyseBtn) analyseBtn.style.display   = 'none';
+    if (confEl)     confEl.textContent         = '';
+    if (manualInput) manualInput.value         = '';
+
     setStatus('Ready — click Start Recording', 'idle');
   }
 
   /* ══════════════════════════════════════
-     ANALYSE — pushes transcript into the
-     main textarea and calls analyzeVerse()
-     which is the LOCAL engine (no API key).
+     ANALYSE — pushes transcript into main textarea
   ══════════════════════════════════════ */
-  async function analyseFromVoice() {
-  const transcript = document.getElementById('svd-transcript').textContent.trim();
-  if (!transcript) {
-    setStatus('No Sanskrit text detected to analyse.', 'error');
-    return;
+  function analyseFromVoice() {
+    const transcript = document.getElementById('svd-transcript')?.textContent.trim();
+    if (!transcript) {
+      setStatus('No Sanskrit text detected to analyse.', 'error');
+      return;
+    }
+
+    const inp = document.getElementById('sktInput');
+    if (inp) inp.value = transcript;
+
+    setStatus('Analysing…', 'recording');
+
+    if (typeof analyzeVerse === 'function') {
+      analyzeVerse();
+      setTimeout(() => {
+        setStatus('Analysis complete — see results below', 'done');
+        const results = document.getElementById('summaryResults');
+        if (results && results.style.display !== 'none') {
+          results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 600);
+    } else {
+      setStatus('Analysis engine not ready — please refresh the page.', 'error');
+    }
   }
-  // Push detected text into the main analyser textarea
-  document.getElementById('sktInput').value = transcript;
-  // Call the local analysis engine defined in the main HTML
-  setStatus('Analysing…', 'recording');
-  if (typeof analyzeVerse === 'function') {
-    analyzeVerse();
-    setTimeout(() => {
-      document.getElementById('summaryResults')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
-  }
-  setStatus('Analysis complete — see results below', 'done');
-}
 
   /* ══════════════════════════════════════
      VISUALIZER
   ══════════════════════════════════════ */
-  function startVisualizer(stream) {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
+  function startVisualizer(micStream) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    const src  = ctx.createMediaStreamSource(stream);
-    analyser   = ctx.createAnalyser();
-    analyser.fftSize = 64;
-    src.connect(analyser);
+      /* iOS Safari requires resume() after user gesture — already done in startRecording */
+      if (audioCtx.state === 'suspended') audioCtx.resume();
 
-    const idle     = document.getElementById('svd-idle');
-    const barsWrap = document.getElementById('svd-bars');
-    if (idle)     idle.style.display     = 'none';
-    if (barsWrap) barsWrap.style.display = 'flex';
+      const src = audioCtx.createMediaStreamSource(micStream);
+      analyser  = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      src.connect(analyser);
 
-    const bars = document.querySelectorAll('.svd-bar');
-    const data = new Uint8Array(analyser.frequencyBinCount);
+      const idle     = document.getElementById('svd-idle');
+      const barsWrap = document.getElementById('svd-bars');
+      if (idle)     idle.style.display     = 'none';
+      if (barsWrap) barsWrap.style.display = 'flex';
 
-    anim = 1; /* Mark as active before first frame */
+      const bars = document.querySelectorAll('.svd-bar');
+      const data = new Uint8Array(analyser.frequencyBinCount);
 
-    function draw() {
-      if (!anim) return;
-      analyser.getByteFrequencyData(data);
-      bars.forEach((b, i) => {
-        const h = Math.max(5, (data[i % data.length] / 255) * 80);
-        b.style.height = h + 'px';
-      });
-      anim = requestAnimationFrame(draw);
+      anim = 1;
+      function draw() {
+        if (!anim) return;
+        analyser.getByteFrequencyData(data);
+        bars.forEach((b, i) => {
+          const h = Math.max(5, (data[i % data.length] / 255) * 80);
+          b.style.height = h + 'px';
+        });
+        anim = requestAnimationFrame(draw);
+      }
+      draw();
+    } catch(e) {
+      /* Visualizer is non-critical — silently skip */
     }
-    draw();
   }
 
   function stopVisualizer() {
@@ -318,6 +468,11 @@
     const barsWrap = document.getElementById('svd-bars');
     if (idle)     idle.style.display     = 'flex';
     if (barsWrap) barsWrap.style.display = 'none';
+
+    if (audioCtx) {
+      try { audioCtx.close(); } catch(e) {}
+      audioCtx = null;
+    }
   }
 
   /* ══════════════════════════════════════
@@ -327,8 +482,8 @@
     timerSecs = 0;
     timerInterval = setInterval(() => {
       timerSecs++;
-      const m = Math.floor(timerSecs / 60);
-      const s = timerSecs % 60;
+      const m  = Math.floor(timerSecs / 60);
+      const s  = timerSecs % 60;
       const el = document.getElementById('svd-timer');
       if (el) el.textContent = `${m}:${String(s).padStart(2, '0')}`;
     }, 1000);
@@ -346,6 +501,8 @@
     const label = document.getElementById('svd-btn-label');
     const icon  = document.getElementById('svd-btn-icon');
     const vis   = document.getElementById('svd-visualizer');
+
+    if (!btn) return;
 
     if (state) {
       btn.classList.add('svd-recording');
@@ -368,7 +525,7 @@
   }
 
   /* ══════════════════════════════════════
-     INJECT STYLES — fixes broken layout
+     INJECT STYLES
   ══════════════════════════════════════ */
   function injectStyles() {
     if (document.getElementById('svd-styles')) return;
@@ -391,7 +548,6 @@
         background: linear-gradient(90deg, transparent, #D4A017, #E07B39, #D4A017, transparent);
       }
 
-      /* Header */
       .svd-header {
         display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem;
       }
@@ -409,6 +565,63 @@
         border-radius: 20px;
         font-family: 'Tiro Devanagari Sanskrit', serif;
         font-size: 0.95rem; color: #D4A017; white-space: nowrap;
+      }
+
+      /* Browser note */
+      .svd-browser-note {
+        display: none;
+        background: rgba(212,160,23,0.06);
+        border: 1px solid rgba(212,160,23,0.25);
+        border-radius: 3px;
+        padding: 0.85rem 1rem;
+        margin-bottom: 1rem;
+        line-height: 1.65;
+      }
+
+      /* Manual fallback */
+      .svd-manual-block {
+        display: none;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(212,160,23,0.15);
+        padding-top: 1rem;
+      }
+      .svd-manual-label {
+        font-family: 'Cinzel', serif; font-size: 0.68rem;
+        letter-spacing: 0.18em; color: #E07B39;
+        text-transform: uppercase; margin-bottom: 0.5rem;
+        display: block;
+      }
+      .svd-manual-input {
+        width: 100%;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(212,160,23,0.3);
+        border-radius: 3px;
+        color: #FAF0DC;
+        font-family: 'Tiro Devanagari Sanskrit', 'EB Garamond', serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        padding: 0.75rem 1rem;
+        outline: none;
+        resize: vertical;
+        min-height: 70px;
+        margin-bottom: 0.6rem;
+        transition: border-color 0.25s;
+      }
+      .svd-manual-input:focus { border-color: #D4A017; }
+      .svd-manual-input::placeholder { color: rgba(250,240,220,0.3); font-style: italic; }
+      .svd-manual-submit {
+        padding: 0.6rem 1.4rem;
+        background: linear-gradient(135deg, rgba(212,160,23,0.15), rgba(224,123,57,0.1));
+        border: 1px solid rgba(212,160,23,0.5);
+        border-radius: 3px;
+        color: #F0C040;
+        font-family: 'Cinzel', serif; font-size: 0.75rem;
+        letter-spacing: 0.15em; text-transform: uppercase;
+        cursor: pointer; transition: all 0.25s;
+      }
+      .svd-manual-submit:hover {
+        background: linear-gradient(135deg, rgba(212,160,23,0.25), rgba(224,123,57,0.2));
+        transform: translateY(-1px);
       }
 
       /* Visualizer */
@@ -461,7 +674,7 @@
         box-shadow: 0 0 8px rgba(220,80,80,0.7);
         animation: svd-blink 1s ease-in-out infinite;
       }
-      .svd-dot-done { background: #D4A017; box-shadow: 0 0 8px rgba(212,160,23,0.6); }
+      .svd-dot-done  { background: #D4A017; box-shadow: 0 0 8px rgba(212,160,23,0.6); }
       .svd-dot-error { background: #e05050; }
       .svd-dot-idle  { background: rgba(250,240,220,0.2); }
       @keyframes svd-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
